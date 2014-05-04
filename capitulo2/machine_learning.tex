@@ -1,0 +1,44 @@
+\subsection{Aprendizaje automático}
+
+	En los últimos años, con el crecimiento exponencial de la información hemos entrado en la era de Big Data o grandes datos. Para dar un idea del concepto, por ejemplo, podemos tener en cuenta la cantidad de horas de video que se suben por minuto al sitio YouTube que según las últimas estadísticas~\cite{YoutubeStats} rondan las 100 horas por minuto. El sitio acumula en promedio un total de 10 años de contenido por día con lo cual se puede ver claramente la necesidad, por ejemplo, de filtrar y bloquear el contenido restringido por copyright de millones de videos. Otro caso de mayor escala lo podemos encontrar en la empresa Google, en el buscador de esta empresa, se realizan en promedio 5 mil millones de búsquedas diarias~\cite{GoogleSearches}. Lo impresionante de este último caso es la cantidad de sitios web creados sobre los cuales el buscador de Google tiene que trabajar, estadísticas recientes~\cite{Websites}, aseguran que hay aproximadamente 1 trillón de sitios web. Se puede ver que Google para poder procesar esa cantidad de información incalculable necesita de la automatización de miles de procesos.
+	
+	 Debido a esto, es imperativo tener algún método automático que nos ayude a clasificar y analizar toda esta información ya que sobrepasa la capacidad de las personas de hacerlo por sí mismas. De ahí surge el campo de \textit{aprendizaje automático} o \textit{machine learning} para proveer métodos que resuelvan estos problemas. En particular, se define al aprendizaje automático como un conjunto de métodos que pueden detectar automáticamente patrones en los datos y luego usar esos patrones descubiertos para predecir datos futuros o poder tomar ciertas decisiones en condiciones de incertidumbre.
+	
+	\input{capitulo2/probability_concepts.tex}
+	
+	%El campo del aprendizaje automático se puede dividir en dos tipos principales. En el enfoque \textit{predictivo} o de \textit{aprendizaje supervisado} y el enfoque \textit{descriptivo} o de \textit{aprendizaje no supervisado}.
+	
+	\subsubsection{Aprendizaje supervisado}
+	
+	En el aprendizaje supervisado, el objetivo es aprender un mapeo desde las entradas $x$ a las salidas $y$, dado un conjunto etiquetado de pares de entrada-salida $M=\{(x_i,y_i)\}^{N}_{i=1}$ donde $M$ es llamado el \textit{conjunto de entrenamiento} y $N$ es el número de ejemplos de entrenamiento.
+	
+	En la configuración más simple, cada entrada de entrenamiento $x_i$ es un vector $D$-dimensional de números. Estas son llamadas características o features. En general, sin embargo, $x_i$ puede ser un objeto con una estructura compleja, como una imagen, un mensaje de correo, etc.
+	
+	Dependiendo del tipo de problema a tratar, la salida $y_i$ puede ser una variable categórica, donde $y_i \in \{1,\dots,C\}$ (conjunto finito clases), o puede ser un valor real. Cuando $y_i$ es una variable categórica, estamos frente a un problemas de \textit{clasificación} donde el objetivo es ``etiquetar'' o nombrar los objetos observados. Cuando $y_i$ es una variable real, estamos en presencia de un problema de regresión donde el objetivo es predecir una variable continua.
+	
+	\paragraph{Clasificación}  ~\\
+	
+		Como se explicó anteriormente, el objetivo del aprendizaje supervisado es aprender un mapeo desde las entradas $x$ a las salidas $y$, donde $y_i \in \{1,\dots,C\}$ con $C$ siendo el número de clases. Dependiendo de la cantidad de clases, podemos encontrarnos con distintos tipos de clasificación. Si $C=2$, nos encontramos ante una \textit{clasificación binaria}(en el cual asumimos que $y\in\{0,1\}$); mientras que si $C>2$, la clasificación pasa a ser \textit{multiclase}. Existe otro tipo de clasificación denominada \textit{clasificación multi-etiqueta}, que difiere de la multiclase en cuanto a que las clases no son mutuamente excluyentes, es decir, una muestra puede pertenecer a dos o más categorías o clases. En este último caso, el mapeo se realiza desde la entrada $x$ a un vector $z$, más que a una salida escalar.
+		
+		Una manera de formalizar el problema es como una función de aproximación. Se asume $y = f(x)$ para cierta función desconocida $f$, y el objetivo del apredizaje es estimar la función $f$ dado un conjunto de entrenamiento etiquetado, y posteriormente realizar predicciones usando $\hat{y} = \hat{f}(x)$ (usamos el símbolo \string^ para denotar estimación). El objetivo principal es realizar predicciones en entradas nuevas, es decir, que no se han visto antes(a esto se le llama \textit{generalización}).
+		
+	\paragraph{Clasificadores probabilísticos} ~\\
+
+		Los clasificadores probabilísticos son una rama de los clasificadores que hacen uso de la inferencia estadística para encontrar la mejor clase dada una muestra. A diferencia de otros clasificadores que simplemente dan como salida la mejor clase, los clasificadores probabilísticos muestran en su salida la probabilidad de que la muestra sea miembro de cada una de las clases posibles.
+
+
+	\paragraph{Regresión} ~\\
+	
+		La regresión es como la clasificación excepto que la respuesta es una variable continua. Ejemplos de problemas reales de regresión:
+		\begin{itemize}
+			\item Predecir el precio de mañana del mercado de stock dado las condiciones actuales de mercado y dada cualquier otra información relevante.
+			\item Predecir la edad de un espectador que mira un video de YouTube.
+			\item Predecir la temperatura en cualquier ubicación de una construcción usando el clima, el tiempo, etc.
+		\end{itemize}
+	
+	
+	\subsubsection{Aprendizaje no supervisado}
+
+		En el aprendizaje no supervisado, el objetivo es encontrar ``estructuras interesantes'' en los datos. A diferencia del aprendizaje supervisado, no se establece qué salida se tiene que dar para cada entrada. En cambio, se busca construir modelos de la forma $p(x_i | \theta)$ donde $\theta$ es un vector de parámetros y $x_i$ es un dato de entada. Hay dos diferencias con el aprendizaje supervisado. La primera, es que hemos establecido $p(x_i | \theta)$ en vez de $p(x_i | y_i, \theta)$; es decir, el aprendizaje supervisado es una estimación condicional, mientras que el aprendizaje no supervisado es una estimación no condicional. La segunda, $x_i$ es un vector de características, por lo que se requiere crear modelos de probabilidad multivariable. Por el contrario, en el aprendizaje supervisado, $y_i$ es usualmente una simple variable que se está intentado predecir.
+		
+		El aprendizaje no supervisado no requiere de que haya una persona que etiquete los datos manualmente, lo cual no solo es costoso, sino que además contiene relativamente poca información, sin duda no es suficiente para estimar de forma fiable los parámetros en modelos más complejos.

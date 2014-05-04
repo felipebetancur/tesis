@@ -1,0 +1,40 @@
+\subsubsection{Random Ferns}
+	
+		Random Ferns es un clasificador propuesto por Ozuysal et. al.~\cite{Ozuysal}. Al igual que Random Forest, es un clasificador multi-clase, compuesto de un determinado número de entidades o clasificadores y es una alternativa más rápida y simple que este último. En oposición a Random Forest, Ferns es una estrutura no jerárquica donde cada entidad que constituye el clasificador es básicamente un conjunto de prueba binario. En Random Forest el conjunto de prueba de cada árbol es la colección de diferentes pruebas que se distribuyen a lo largo de los nodos que forman el árbol. Debido a la estructura plana de cada entidad en un clasificador Ferns, el conjunto de prueba es una sencilla lista ordenada de las posiciones de los features o características a ser evaluados.
+		
+		Sea $c_i, i=1,\dots,H$ el conjunto de clases y  sea $f_j, j=1,\dots,N$ el conjunto de características binarias. Formalmente, se busca:
+		$$\underset{c_i}{argmax}P(C=c_i \vert f_1,f_2,\dots,f_N),$$
+		donde $C$ es una variable aleatoria que representa a la clase. La fórmula de Bayes produce:
+		$$P(C=c_i \vert f_1,f_2,\dots,f_N) = \frac{P(f_1,f_2,\dots,f_N \vert C=c_i)P(C=c_i)}{P(f_1,f_2,\dots,f_N)}$$
+		Asumiendo una probabilidad uniforme a prior $P(C)$, dado que el denominador es simplemente un factor de escala que es independiente de la clase, el problema se reduce a encontrar:
+		\begin{align}\label{eq:class}
+			c_i  = \underset{c_i}{argmax}P(f_1,f_2,\dots,f_N \vert C=c_i)
+		\end{align}
+		Por lo tanto, una completa representación de la probabilidad conjunta en la ecuación \ref{eq:class} no es factible dado que requeriría estimar y almacenar $2^N$ entradas por cada clase. Una forma de comprimir la representación es asumir independencia entre características. Una versión extrema es la de asumir independencia completa, es decir
+		$$P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{j=1}^NP(f_j \vert C=c_i)$$
+		Sin embargo, esto ignora completamente la correlación entra las características. Para hacer el problema manejable, un buen método es partir las características en $M$ grupos de tamaño $S=\lfloor \frac{N}{M} \rfloor$. Estos grupos son los que se denominan \textit{ferns} y se calcula la probabilidad conjunta de cada característica en cada fern. La probabilidad condicional se vuelve
+		\begin{align}\label{eq:class2}
+			P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{k=1}^MP(F_k \vert C=c_i)
+		\end{align}
+		donde $F_k = \{ f_{\sigma(k,1)},f_{\sigma(k,2)},\dots,f_{\sigma(k,S)}, k=1,\dots,M$ representa el $k^{th}$ fern y $\sigma(k,j)$ es una función de permutación aleatoria con rango $1,\dots,N$. De ahí que se sigue un enfoque bayesiano Semi-Na\"{i}ve modelando algunas de las dependencias entre características.
+
+		La fase de entrenamiento estima la probabilidad condicional de clase $P(F_m|C=c_i)$ para cada fern $F_m$	 y cada clase $c_i$, como está descripto en la ecuación \ref{eq:class2}. Para cada fern $F_m$ escribimos estos términos como:
+		\begin{align}
+			p_{k,c_i} = P(F_m = k | C = c_i)
+		\end{align}
+		donde se simplifica la notación considerando que $F_m$ es igual a $k$ si el número en base $2$ formado por los features binarios de $F_m$ tomados en secuencia es igual a $k$. Con esta convención, ferns puede tomar $K=2^S$ valores, y para cada uno, es necesario estimar $p_{k,c_i}, k=1,2,\dots,K$ bajo la restricción
+		\begin{align*}
+			\sum_{k=1}^Kp_{k,c_i} = 1
+		\end{align*}		
+		
+		El enfoque más simple sería asignar la estimación de máxima verosimilitud a estos parámetros a partir de las muestras de entrenamiento. Para el parámetro $p_{k,c_i}$ es
+		\begin{align*}
+			p_{k,c_i} = \frac{N_{k,c_i}}{N_{c_i}}
+		\end{align*}
+		donde $N_{k,c_i}$ es el número de muestras de entrenamiento de la clase $c_i$ y $N_{c_i}$ es el número total de muestras para la clase $c_i$. Estos parámetros por lo tanto, pueden ser estimados para cada fern independientemente.
+		
+		En la práctica sin embargo, este simple esquema da pobres resultados porque si ninguna muestra de entrenamiento para la clase $c_i$ evalua a $k$, lo cual puede pasar con facilidad cuando el número de muestras	no es infinitamente largo, ambos $N_{k,c_i}$ y $p_{k,c_i}$ serán cero. Dado que se multiplica $p_{k,c_j}$ por todos los ferns, esto implica que, si el fern evalua a $k$, la correspondiente muestra nunca va a ser asociada a la clase $c_i$, sin importar la respuestas de los otros ferns. Para superar este problema, se considera $p_{k,c_i}$ de la siguiente manera
+		\begin{align*}
+			p_{k,c_i} = \frac{N_{k,c_i} + N_r}{N_{c_i} + K \times N_r},
+		\end{align*}
+		donde $N_r$ representa un término de regularización, el cual se comporta como (as a uniform Dirichlet prior --> preguntar a  jorge) sobre los valores de las características. Si una muestra con un valor específico de fern no se encuentra durante el entrenamiento, este esquema, aún le va a asignar un valor distinto de cero a la probabilidad correspondiente.

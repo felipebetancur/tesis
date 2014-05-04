@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+\setlength\parindent{24pt}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{subfig}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{setspace}		% para doublespacing 
+\usepackage{hyperref}		% para hipervinculos
+\usepackage[none]{hyphenat}		% para evitar hyphenation
+\usepackage{amsmath} % para centrar las ecuaciones 
+\numberwithin{equation}{subsection}
+\usepackage[section]{placeins}  % para que LaTeX no ponga los floats(imágenes) fuera de sección
+
+\begin{document}
+
+	%\input{titulo_abstract/titulo.tex}
+
+	%\input{agradecimientos.tex}
+	
+	\newpage  % 
+	\newpage  % dejamos estas páginas en blanco a propósito
+	
+	\tableofcontents{}
+    \listoffigures{}
+    %\listoftables{}
+    
+	\input{titulo_abstract/abstract.tex}
+	
+	\newpage
+	\input{capitulo1/capt1.tex}
+	
+	\input{capitulo2/capt2.tex}
+	
+	\input{capitulo3/capt3.tex}
+	
+	\input{capitulo4/capt4.tex}
+	
+	\input{capitulo5/capt5.tex}
+
+	\input{referencias/referencias.tex}
+	
+	%\input{apendices/apendices.tex}
+
+	%\input{titulo_abstract/final.tex}
+	
+\end{document}

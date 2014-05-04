@@ -1,0 +1,38 @@
+\subsubsection{Random Forest}
+
+	Random Forest o bosque aleatorio es un método de aprendizaje conjunto o\textit{ ensemble learning} para la clasificación o regresión. Es un clasificador que consiste en una colección de clasificadores con estructura de árbol $\{h(x,\Theta_k), k = 1,\dots\}$ donde $\{\Theta_k\}$ son vectores aleatorios independientes e identicamente distribuidos y cada árbol emite un único voto para la elección de la clase más popular dada la entrada $x$~\cite{Breiman01}.
+
+	El algoritmo de entrenamiento para random forest aplica la técnica general de \textit{bootstrap aggregating}(agregación bootstrap) o \textit{bagging}(embolsado). Dado un conjunto de entrenamiento $X = x_1, x_2, \dots, x_n $ con respuestas $ Y = y_1, y_2, \dots, y_n $, la técnica de bagging selecciona repetidamente muestras de bootstrap del conjunto de entrenamiento y ajusta los árboles a estas muestras:
+	
+	Para $b=1$ hasta $B$:
+	\begin{itemize}
+		\item Se realiza un muestreo, con reemplazo, de $n$ ejemplos de entrenamiento de $X$, $Y$; llamados $X_b$, $Y_b$.
+		\item Entrena un árbol de decisión o regresión $f_b$ en $X_b$, $Y_b$.
+	\end{itemize}
+	
+	Después del entrenamiento, las predicciones para ejemplos no vistos $x'$ se pueden realizar promediando las predicciones de todos los árboles de regresión en $x'$:
+	$$\bar{f} = \frac{1}{B}\sum_{b=1}^B\bar{f_b}(x')$$
+	o tomar el voto mayoritario en caso de árboles de decisión.
+	
+	En el algoritmo de arriba, B es un parámetro libre. Típicamente, algunos cientos o miles de árboles son usados, dependiendo del tamaño y naturaleza del conjunto de entrenamiento. Incrementar el número de árboles tiende a decrecer la varianza del modelo, sin incrementar la parcialidad.
+		
+	El procedimiento anterior describe el algoritmo original de \textit{bagging} para árboles. Desafortunadamente, volver a correr el mismo algoritmo de aprendizaje en diferentes subconjuntos de los datos puede resultar en predictores altamente correlacionados, lo cual limita la reducción de varianza. La técnica conocida como random forest, construye árboles basados en un subconjunto de variables de entrada elegidas al azar. Cada árbol es construido siguiendo el siguiente algoritmo:
+	\begin{itemize}
+		\item Si el número de muestras en el conjunto de entrenamiento es $N$, muestrear $N$ casos aleatoriamente - pero con remplazo, a partir de los datos originales. Esta muestra va a ser el conjunto de entrenamiento para la construcción del árbol.
+		\item Si hay $M$ variables de entrada, se especifica un número $m<<M$ tal que en cada nodo, se seleccionen $m$ variables al azar de las $M$ y la mejor división a partir de estas $m$ variables se utilice para dividir al nodo. El valor de $m$ se mantiene constante durante el crecimiento del bosque o forest.
+		\item Cada árbol se construye hasta su máxima extensión posible. No hay pruning(poda).
+	\end{itemize}
+	Las ventajas random forests son:
+	\begin{itemize}
+		\item Ser uno de los más certeros algoritmos de aprendizaje disponible. Para muchos sets de datos produce un clasificador muy certero.
+		\item Correr eficientemente en grandes bases de datos.
+		\item Poder manejar cientos de variables entrantes sin excluir ninguna.
+		\item Dar estimaciones de qué variables son importantes en la clasificación.
+		\item Ofrecer un método experimental para detectar las interacciones de las variables.
+	\end{itemize}
+	Las desventajas de este algoritmo se pueden resumir en estos puntos:
+	\begin{itemize}
+		\item A diferencia de los árboles de decisión, la clasificación hecha por random forests es difícil de interpretar por el hombre.
+		\item Si los datos contienen grupos de atributos correlacionados de relevancia similar para el rendimiento, entonces los grupos más pequeños están favorecidos por sobre los grupos más grandes.
+		\item Se ha observado que el algoritmo random forests tiende a sobreajustar en ciertos conjuntos de datos con tareas de clasificación/regresión ruidosas.
+	\end{itemize}

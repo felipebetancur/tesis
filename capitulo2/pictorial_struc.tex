@@ -1,0 +1,24 @@
+\subsubsection{Estructuras Pictóricas}
+
+	Un modelo de estructura pictórica para un objeto es dado por una colección de partes con conexiones entre ciertos pares de partes. El cuadro de trabajo es bastante general, en el sentido que es independiente del esquema específico usado para modelar la apariencia de cada parte así como el tipo de conexiones entre partes. Una forma natural de expresar dicho modelo es en términos de un grafo no dirigido $G=(V,E)$, donde los vértices $V=\{v_1,\dots,v_n \}$ corresponde a las $n$ partes, y hay una arista	 $(v_i,v_j) \in E$ para cada par de partes conectadas $v_i$ y $v_j$. Una instancia del objeto es dada por la configuración $L=(l_1,\dots,l_n)$ donde cada $l_i$ especifica la ubicación de la parte $v_i$. Aveces, nos referimos a $L$ simplemente como la ubicación del objeto, pero "configuración" enfatiza la representación basada en partes. La ubicación de cada parte puede especificar simplemente su posición en la imagen, pero parametrizaciones más complejas son posibles también.	
+	
+	En \cite{fischler} el problema de encajar una estructura pictórica a una imagen está definida en términos de una función de energía a ser minimizada. El costo o energía de una configuración particular, depende tanto de que tan bien cada parte ajusta en la imagen en su ubicación y lo bien que las ubicaciones relativas de las partes estén de acuerdo con el modelo deformable. Dada una imagen, sea $m_i(l_i)$ una función que mide el grado de desajuste cuando la parte $v_i$ es puesta en la ubicación $l_i$ en la imagen. Para un par de partes conectadas, sea $d_{ij}(l_i,l_j)$ sea una función que mide el grado de deformación del modelo cuando la parte $v_i$ es puesta en la ubicación $l_i$ y la parte $v_j$ es puesta en la ubicación $v_j$. Luego, un ajuste óptimo del modelo de la imagen esta naturalmente definido como
+	$$L^*= \underset{L}{argmin}\left( \sum_{i=1}^nm_i(l_i) + \sum_{(v_i, v_j) \in E}d_{ij}(l_i, l_j) \right)$$
+	la cual es una configuración que minimiza la suma del coste de ajuste $m_i$ para cada parte y el coste de deformación $d_{ij}$ para cada pares conectados piezas. Generalmente los costos de deformación son sólo en función de la posición relativa de una parte con respecto a la otra, haciendo al modelo invariante a ciertas transformaciones globales. Notar que ajustar un modelo de estructura pictórica a una imagen no involucra tomar decisiones iniciales sobre la ubicaciones de las partes individuales, más bien un decisión general se hace basado tanto en el costo de ajuste de parte como el costo de deformación juntos.
+	
+	\textbf{Lo de arriba pertenece al paper "Pictorial Structures for Object Recognition", lo de abajo al paper de Wang.}
+	
+	En este trabajo, para detectar palabras en una imagen, se hace uso de la formulación de Estructuras Pictóricas que toma la ubicación y el puntaje de los caracteres detectados como entrada y encuentra la configuración óptima para una palabra en particular. Mas formalmente, sea $w=(c_1,c_2,\dots,c_n)$ una palabra con $n$ caracteres de nuestro léxicon, sea $L_i$ el conjunto de localizaciones para el $i^{th}$ caracter en $w$, y sea $u(l_i,c_i)$ el puntaje de una detección particular de $l_i \in L_i$ computada con la siguiente ecuación
+		\begin{eqnarray}
+			u(l,c) &=& log\left( \frac{p(c \vert x)}{p(C_{bg} \vert x)} \right) \\
+			&=& log(p(x\vert c)) - log(p(x\vert C_{bg})) + log\left( \frac{p(c)}{p(C_{bg})} \right)
+		\end{eqnarray}
+		Buscamos encontrar una configuración $L^{*} = (l_1^*, l_2^*, \dots, l_n^*)$ optimizando la siguiente función objetivo:		
+		$$L^* = \underset{\forall i, l_i \in L_i}{argmin}\left( \sum_{i=1}^n-u(l_i,c_i) + \sum_{i=1}^{n-1}d(l_i,l_{i+1}) \right)$$
+		donde $d(l_i,l_j)$ es el costo por parejas que incorpora diseño espacial y similitud de escala entre dos caracteres vecino. En la práctica, un parámetro de compensación es usado para balancear las contribuciones de ambos términos.
+		
+		El objetivo de arriba puede ser optimizado usando programación dinámica de la siguiente manera. Sea $D(l_i)$ el costo de la colocación óptima para los caracteres $i+1$ a $n$ con la ubicación del caracter $i^th$ fijada en $l_i$:
+		\begin{eqnarray}
+			D(l_i) = -u(l_i,c_i) + \underset{l_{i+1} \in L_{i+1}}{min} d(l_i, l_{i+1}) + D(l_{i+1})
+		\end{eqnarray}
+		Observar que el coste total de la configuración óptima $L^*$ es $\underset{l_1 \in L_1}{min}D(l_1)$. Debido a la naturaleza recursiva de $D(\cdot)$ se puede encontrar la configuración óptima pre-computando $D(l_n) = -u(l_n,c_n)$ para cada $l_n \in L_n$ y luego trabajando hacia atrás hacia la primera letra de la palabra.

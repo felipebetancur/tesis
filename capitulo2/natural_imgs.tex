@@ -1,0 +1,38 @@
+\paragraph{Imágenes naturales} ~\\
+
+	\textbf{Cambiar el título}
+	
+	Las imágenes naturales siempre han sido un tema de interés en el campo de investigación de visión por computadora. La cantidad de información que puede proveer una imagen es gigantesca y la necesidad de poder procesar y reconocer es información ha llevado a los investigadores a proponer métodos para poder procesarla.	Aparte del puro interés científico, la popularidad se debe a la cantidad de aplicaciones prácticas que tiene el tema. Uno de los ejemplos más claros es el reconocimiento de patentes o LPR(por sus siglas en inglés)~\cite{DAB}, o el reconomiento de personas~\cite{DT05}, entre otros; sin embargo, no es una tarea sencilla ya que las imágenes naturales tienen infinitas variaciones que hacen díficil el reconomiento de objetos dentro de ellas.
+	
+	
+	\subparagraph{Características} ~\\
+	
+		Las características en las imágenes naturales son muy variadas. Todas estas variaciones dificultan el trabajo sobre ellas por lo cual en general es necesario realizar un trabajo de pre-procesamiento antes de trabajar con las mismas. Las características que podemos encontrar en este tipo de imágenes son las variaciones de intensidad en la iluminación, la resolución, el ángulo en el que son tomadas las mismas, el fondo, las texturas, entre otros. Mas específicamente, dependiendo del objeto que se esté analizando, por ejemplo, texto en imágenes naturales, surgen más características como el tipo de fuente, el tamaño, la posición y orientación de los caracteres en el texto, la contaminación que pueda llegar a tener el texto por suciedad u oclusión, etc.
+	
+\paragraph{Gradientes} ~\\
+
+	Sea $f(x_1,\dots,x_n)$ una función escalar de múltiples variables. El gradiente de $f$ representa la pendiente de la tangente del gráfico de $f$.  Mas precisamente, el gradiente apunta en la dirección donde se registra la mayor tasa de incremento de la función $f$ y su magnitud es la pendiente del gráfico de $f$ en esa dirección. Formalmente, es la generalización del concepto de derivada en funciones de múltiples variables.
+		
+	El gradiente de la función $f$ descripta anteriormente, es denotado como $\nabla f$ donde $\nabla$(el símbolo nabla) denota el operador diferencial. El gradiente de $f$ es definido como el único campo vectorial cuyo producto punto con cualquier vector $v$ en cada punto $x$ es la derivada direccional de $f$ a lo largo de $v$. Es decir,
+		 \begin{align*}
+		 	(\nabla f(x))\cdot v = D_v f(x)
+		 \end{align*}
+		 
+	En un sistema de coordenadas rectangular, el gradiente es el campo vectorial cuyos componentes son las derivadas parciales de $f$:
+		 
+		 \begin{align*}
+		 	\nabla f(x) = \frac{\partial f}{\partial x_1}\mathbf{e}_1 + \cdots + \frac{\partial f}{\partial x_n }\mathbf{e}_n
+		 \end{align*}
+	donde los $\mathbf{e}_i$ son vectores unitarios ortogonales que apuntan en la dirección de coordenadas.
+
+	En el procesamiento de imágenes, un gradiente es un cambio direccional en la intensidad o color de la imagen. El vector gradiente se forma combinando la derivada parcial de la imagen en las direcciones $x$ e $y$. Se puede expresar del a siguiente forma:
+		\begin{align}
+			\nabla I = \left( \frac{\partial I}{\partial x} , \frac{\partial I}{\partial y} \right()
+		\end{align}	
+		
+	Cuando determinamos la derivada parcial de $I$ respecto de $x$, determinamos la rapidez con que la imagen cambia de intensidad a medida que $x$ cambia. Para funciones continuas, $I(x,y)$, podemos expresarlo de la siguiente manera:
+	\begin{align}
+		\frac{\partial I(x,y)}{\partial x} = \lim_{\nabla x->0} \frac{I(x + \nablax, y) - I(x,y)}{\nabla x}	
+	\end{align}
+	
+	 Los gradientes de una imagen pueden ser usados para extraer información sobre la misma, por ejemplo, realizar detección de bordes de un objeto, segmentar una imagen, reconocer objetos, etc.
