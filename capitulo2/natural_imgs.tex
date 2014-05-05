@@ -27,12 +27,12 @@
 
 	En el procesamiento de imágenes, un gradiente es un cambio direccional en la intensidad o color de la imagen. El vector gradiente se forma combinando la derivada parcial de la imagen en las direcciones $x$ e $y$. Se puede expresar del a siguiente forma:
 		\begin{align}
-			\nabla I = \left( \frac{\partial I}{\partial x} , \frac{\partial I}{\partial y} \right()
+			\nabla I = \left( \frac{\partial I}{\partial x} , \frac{\partial I}{\partial y} \right)
 		\end{align}	
 		
 	Cuando determinamos la derivada parcial de $I$ respecto de $x$, determinamos la rapidez con que la imagen cambia de intensidad a medida que $x$ cambia. Para funciones continuas, $I(x,y)$, podemos expresarlo de la siguiente manera:
 	\begin{align}
-		\frac{\partial I(x,y)}{\partial x} = \lim_{\nabla x->0} \frac{I(x + \nablax, y) - I(x,y)}{\nabla x}	
+		\frac{\partial I(x,y)}{\partial x} = \lim_{\nabla x\rightarrow 0} \frac{I(x + \nabla x, y) - I(x,y)}{\nabla x}	
 	\end{align}
 	
-	 Los gradientes de una imagen pueden ser usados para extraer información sobre la misma, por ejemplo, realizar detección de bordes de un objeto, segmentar una imagen, reconocer objetos, etc.
+	 El calculo de los gradientes de una imagen es útil ya que sirve, por ejemplo, para realizar detección de bordes de un objeto. En este caso, después de que los gradientes han sido computados, los píxeles con alto valor de gradiente son elegido como posibles bordes. Los píxeles con el valor de gradiente más alto en la dirección del gradiente se convierten en píxeles de borde. Los gradientes, también pueden ser usados en aplicaciones que realizan reconocimiento de objetos o correspondencia de texturas \textbf{agregar referencias}.
