@@ -1,4 +1,5 @@
-\subsubsection{Random Ferns}
+\subsubsection{Random Ferns} 
+\label{subsection:ferns}
 	
 		Random Ferns es un clasificador propuesto por Ozuysal et. al.~\cite{Ozuysal}. Al igual que Random Forest, es un clasificador multi-clase, compuesto de un determinado número de entidades o clasificadores y es una alternativa más rápida y simple que este último. En oposición a Random Forest, Ferns es una estrutura no jerárquica donde cada entidad que constituye el clasificador es básicamente un conjunto de prueba binario. En Random Forest el conjunto de prueba de cada árbol es la colección de diferentes pruebas que se distribuyen a lo largo de los nodos que forman el árbol. Debido a la estructura plana de cada entidad en un clasificador Ferns, el conjunto de prueba es una sencilla lista ordenada de las posiciones de los features o características a ser evaluados.
 		
@@ -37,4 +38,4 @@
 		\begin{align*}
 			p_{k,c_i} = \frac{N_{k,c_i} + N_r}{N_{c_i} + K \times N_r},
 		\end{align*}
-		donde $N_r$ representa un término de regularización, el cual se comporta como (as a uniform Dirichlet prior --> preguntar a  jorge) sobre los valores de las características. Si una muestra con un valor específico de fern no se encuentra durante el entrenamiento, este esquema, aún le va a asignar un valor distinto de cero a la probabilidad correspondiente.
+		donde $N_r$ representa un término de regularización. Si una muestra con un valor específico de fern no se encuentra durante el entrenamiento, este esquema, aún le va a asignar un valor distinto de cero a la probabilidad correspondiente.
