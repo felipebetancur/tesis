@@ -12,19 +12,24 @@
 
 	\textit{Random Forest} o \textit{bosque aleatorio} es un método de aprendizaje conjunto o\textit{ ensemble learning} para la clasificación o regresión. Es un clasificador que consiste en una colección de clasificadores con estructura de árbol $\{h(x,\Theta_k), k = 1,\dots\}$, donde $\{\Theta_k\}$ son vectores aleatorios independientes e identicamente distribuidos ($\Theta_k$ representa los parámetros para la construcción del $k$-esimo árbol) y $h(x,\Theta_k)$ es un clasificador donde $x$ es un vector de entrada. Luego, dada una entrada $x$, cada árbol emite un único voto para la elección de la clase más popular para $x$ \cite{Breiman01}.
 
-	El algoritmo de entrenamiento para random forest aplica la técnica general de \textit{bootstrap aggregating}(agregación bootstrap) o \textit{bagging}(embolsado). Esta técnica fue desarrollada también por Breiman en 1996 ~\cite{LBreiman96} y es un método para generar múltiples versiones de un predictor y usar estos para obtener un predictor agregado. Para tener una idea más clara del concepto, consideremos el siguiente ejemplo basado en el trabajo de Breiman. Supongamos que tenemos $L = \{ (x_n,y_n), n = 1,\dots, N (N \in \mathbb{N}) \}$ el cual es un conjunto de aprendizaje donde $x_n$ son valores de entrada e $y_n$ son etiquetas de clase o valores numéricos. Supongamos también que tenemos una forma de generar un predictor de la forma $\varphi(x,L)$ a partir de $L$ tal que $ \varphi(x,L) = y $. Por último, supongamos que nos dan un conjunto de predictores $\{ L_k \}$ donde cada uno consiste en $N$ observaciones independiente bajo la misma distribución de $L$. El objetivo de Breiman en su trabajo, es que usando $\{ L_k \}$ se obtenga un predictor mejor que el establecido anteriormente $\varphi(x,L)$. La única restricción, es que se nos obliga a trabajar solamente con el conjunto de predictores $\{ \varphi(x, L_k)\} $. 
-	
-	Para resolver este problema, Breiman estableció el siguiente criterio. Si la respuesta $y$ era un valor numérico luego, se reemplaza a $\varphi(x,L)$ por el promedio del conjunto de predicotres $ \{ \varphi(x, L_k)\} $ sobre $k$. Es decir, $\varphi_A(x) = E_L\varphi(x,L)$ donde $E_L$ denota la expectativa (\textbf{ver como traducir mejor ``expectation''}) sobre $L$, y el subíndice $A$ en $\varphi_A$ denota la agregación. En cambio, si $ \varphi(x,L)$ predecía una etiqueta de clase $j \in \{ 1,\dots, J \} $, luego un método para agregar todos los predictores era a través del voto. Es decir, para el autor $N_j = \{ k;\varphi(x, L_k) = j \}$ y se toma a $\varphi_A(x) = argmax N_j$.
-	
+	El algoritmo de entrenamiento para random forest aplica la técnica general de \textit{bootstrap aggregating}(agregación bootstrap) o \textit{bagging}(embolsado). Esta técnica fue desarrollada también por Breiman en 1996 ~\cite{LBreiman96} y es un método para generar múltiples versiones de un predictor y usar estos para obtener un predictor agregado. Para tener una idea más clara del concepto, consideremos el siguiente ejemplo basado en el trabajo de Breiman. Supongamos que tenemos $L = \{ (x_n,y_n), n = 1,\dots, N (N \in \mathbb{N}) \}$ el cual es un conjunto de aprendizaje donde $x_n$ son valores de entrada e $y_n$ son etiquetas de clase o valores numéricos. Supongamos también que tenemos una forma de generar un predictor de la forma $\varphi(x,L)$ a partir de $L$ tal que $ \varphi(x,L) = y $. Por último, supongamos que nos dan un conjunto de predictores $\{ L_k \}$ donde cada uno consiste en $N$ observaciones independiente bajo la misma distribución de $L$. El objetivo de Breiman en su trabajo, es que usando $\{ L_k \}$ se obtenga un predictor mejor que el establecido anteriormente $\varphi(x,L)$. La única restricción, es que se nos obliga a trabajar solamente con el conjunto de predictores $\{ \varphi(x, L_k)\} $.
+
+	Para resolver este problema, Breiman estableció el siguiente
+        criterio. Si la respuesta $y$ era un valor numérico luego, se reemplaza
+        a $\varphi(x,L)$ por el promedio del conjunto de predicotres $ \{
+        \varphi(x, L_k)\} $ sobre $k$. Es decir, $\varphi_A(x) =
+        E_L\varphi(x,L)$ donde $E_L$ denota la expectativa (\textbf{ver como
+          traducir mejor ``expectation''} \JS{``esperanza'' o ``expectación''}) sobre $L$, y el subíndice $A$ en $\varphi_A$ denota la agregación. En cambio, si $ \varphi(x,L)$ predecía una etiqueta de clase $j \in \{ 1,\dots, J \} $, luego un método para agregar todos los predictores era a través del voto. Es decir, para el autor $N_j = \{ k;\varphi(x, L_k) = j \}$ y se toma a $\varphi_A(x) = argmax N_j$.
+
 	El problema principal, es que generalmente se tiene sólo un conjunto de aprendizaje $L$. Para esto, Breiman considera que se puede imitar el procedimiento anterior tomando repetidas muestras bootstrap $\{ L^{B} \}$ a partir de $L$, y formar $\{ \varphi(x, L^{B}) \}$. Si $y$ es numérica luego, toma $\varphi_B$ como
 	\begin{align*}
 		\varphi_B(x) = av_B\varphi(x,L^{B}).
 	\end{align*}
-	
+
 	Si $y$ es una etiqueta de clase, luego el conjunto  $\{ \varphi(x, L^{B}) \}$ vota para formar $\varphi_B(x)$. El autor a este procedimiento lo llama  \textit{bootstrap aggregating} o \textit{bagging}.
-	
+
 	Cabe aclarar, que cada $L_i \in \{ L^{B} \}$ consta de $N$ muestras obtenidas al azar, pero con reemplazo, de $L$. Cada $(x_n, y_n)$ puede aparecer repetido una cierta cantidad de veces o no en $L_i$.
-	
+
 	Se puede aplicar \textit{bagging} para generar un algoritmo para árboles de decisión o regresión. Dado un conjunto de aprendizaje $L$ como el explicado anteriormente, la técnica de bagging selecciona repetidamente muestras de bootstrap del conjunto de aprendizaje $L$ y ajusta los árboles a estas muestras:
 
 	Para $b=1$ hasta $B$:
@@ -32,15 +37,15 @@
 		\item Se realiza un muestreo, con reemplazo, de $n$ ejemplos de entrenamiento a partir de $L$; llamemos a esta muestra $L_b$.
 		\item Entrena un árbol de decisión o regresión $f_b$ a partir de $L_b$.
 	\end{itemize}
-	
+
 	Después del entrenamiento, las predicciones para ejemplos no vistos $x'$ se pueden realizar promediando las predicciones de todos los árboles de regresión en $x'$:
 	$$\bar{f} = \frac{1}{B}\sum_{b=1}^B\bar{f_b}(x')$$
 	o tomar el voto mayoritario en caso de árboles de decisión.
-	
+
 	En el algoritmo de arriba, B es un parámetro libre que indica la cantidad de árboles predictores que se van a emplear. Típicamente, algunos cientos o miles de árboles son usados, dependiendo del tamaño y naturaleza del conjunto de entrenamiento.
-			
-	El procedimiento anterior describe el algoritmo original de \textit{bagging} para árboles. Desafortunadamente, volver a correr el mismo algoritmo de aprendizaje en diferentes subconjuntos de los datos puede resultar en predictores altamente correlacionados, lo cual limita la reducción de varianza. La técnica conocida como \textit{random forest}, construye árboles basados en un subconjunto de variables de entrada elegidas al azar. 
-		
+
+	El procedimiento anterior describe el algoritmo original de \textit{bagging} para árboles. Desafortunadamente, volver a correr el mismo algoritmo de aprendizaje en diferentes subconjuntos de los datos puede resultar en predictores altamente correlacionados, lo cual limita la reducción de varianza. La técnica conocida como \textit{random forest}, construye árboles basados en un subconjunto de variables de entrada elegidas al azar.
+
 	Cada árbol es construido siguiendo el siguiente algoritmo:
 	\begin{itemize}
 		\item Si el número de muestras en el conjunto de entrenamiento es $N$, muestrear $N$ casos aleatoriamente - pero con reemplazo, a partir de los datos originales. Esta muestra va a ser el conjunto de entrenamiento para la construcción del árbol.

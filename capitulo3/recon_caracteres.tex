@@ -5,9 +5,14 @@
 			\begin{itemize}
 				\item Introducción a Random Ferns: explicar el algoritmo y porqué lo usaron.
 				\item HOG: hacer una ligera mensión de su uso. Los detalles van a estar en la sección correspondiente en el capítulo 2.
-				\item non-maximal suppression (NMS)
+				\item non-maximal suppression (NMS) \JS{esto
+                                    está asociado a esquemas de detección del tipo
+                                    ``sliding window''}
 			\end{itemize}
-		\item Datasets usados
+		\item Datasets usados \JS{no pondría nada sobre datasets acá,
+                    sino mas bien una discusión sobre la necesidad de usar
+                    datasets grandes para cubrir la variabilidad de apariencias
+                  que aparecen en img reales}
 			\begin{itemize}
 				\item Aca puede ir una explicación del uso de datos sintéticos.			
 			\end{itemize}			 
@@ -20,5 +25,6 @@
 	Random ferns fue explicado con anterioridad en la sección \ref{subsection:ferns}. Para la obtención de las características, los autores hacen uso de los descriptores HOG  los cuales binarizan (ver \ref{subsection:hog}) aplicando umbrales aleatorios con el objetivo de obtener vectores de características que puedan ser fácilmente almacenados y accesibles a través de una tabla. Como última etapa en el reconocimiento de caracteres, realizan \textit{non-maximal suppression} sobre cada carácter usando la siguiente heurística: iteran sobre todas las ventanas en la imagen en orden descendiente de su puntaje, si la ubicación no fue suprimida, suprimen todos sus vecinos.
 	
 	Uno de los problemas al entrenar un clasificador de caracteres, es el de encontrar un dataset de entrenamiento lo suficientemente grande para obtener buenos resultados. Una forma de solventar este problema, es generar un dataset con imágenes sintéticas, ya que, además de la  obvia ventaja de tener una cantidad ilimitada de datos, permite tener control sobre las dimensiones de cada imagen. Este enfoque fue aprovechado por Wang et al., que sintetizaron alrededor de 1000 imágenes por carácter usando 40 fuentes. A cada imagen, le agregaban una cierta cantidad de ruido gaussiano y le aplicaban transformaciones afines aleatorias. Con esto, obtenían imágenes de caracteres que intentaban asemejarse a las reales.
+
 	
-	
+
