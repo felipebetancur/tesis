@@ -12,3 +12,13 @@
 				\item Aca puede ir una explicación del uso de datos sintéticos.			
 			\end{itemize}			 
 	\end{itemize}
+	
+	\RC{Abajo, borrador}
+	
+	El reconocimiento de caracteres, es la primera etapa en el pipeline de procesamiento que desarrollaron Wang et al. Para esto, realizaron una detección a múltiple escala usando un algoritmo de clasificación de ventana deslizante. Dado que la cantidad de clases a detectar eran muchas (62 clases), ellos decidieron usar \textit{random ferns} como su clasificador. Esto es debido a que es un clasificador multi-clase y es eficiente.
+	
+	Random ferns fue explicado con anterioridad en la sección \ref{subsection:ferns}. Para la obtención de las características, los autores hacen uso de los descriptores HOG  los cuales binarizan (ver \ref{subsection:hog}) aplicando umbrales aleatorios con el objetivo de obtener vectores de características que puedan ser fácilmente almacenados y accesibles a través de una tabla. Como última etapa en el reconocimiento de caracteres, realizan \textit{non-maximal suppression} sobre cada carácter usando la siguiente heurística: iteran sobre todas las ventanas en la imagen en orden descendiente de su puntaje, si la ubicación no fue suprimida, suprimen todos sus vecinos.
+	
+	Uno de los problemas al entrenar un clasificador de caracteres, es el de encontrar un dataset de entrenamiento lo suficientemente grande para obtener buenos resultados. Una forma de solventar este problema, es generar un dataset con imágenes sintéticas, ya que, además de la  obvia ventaja de tener una cantidad ilimitada de datos, permite tener control sobre las dimensiones de cada imagen. Este enfoque fue aprovechado por Wang et al., que sintetizaron alrededor de 1000 imágenes por carácter usando 40 fuentes. A cada imagen, le agregaban una cierta cantidad de ruido gaussiano y le aplicaban transformaciones afines aleatorias. Con esto, obtenían imágenes de caracteres que intentaban asemejarse a las reales.
+	
+	

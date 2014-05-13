@@ -11,3 +11,23 @@
 		\end{itemize}
 		\item Implementación
 	\end{itemize}
+	
+	Para detectar palabras en una imagen, uno de los métodos que usan Wang et al., son las \textit{estructuras pictóricas} (\textit{pictorial structures}, de su traducción al inglés). Este enfoque toma las ubicaciones y puntajes de los caracteres detectados como entrada y encuentra la configuración óptima de una palabra específica. Formalmente, dada una palabra $w=(c_1,\dots , c_n)$ de $n$ caracteres de un lexicó, sea $L_i$ el conjunto de ubicaciones detectadas para el $i$-esimo carácter de $w$, y $u(l_i, c_i)$ sea puntuación de una detección particular en la ubicación $l_i \in L_i$ (obtenida a través del clasificador Random Ferns). La idea de este método, como ya se dijo, es obtener una configuración óptica $L^{*}=(l_1^{*}, \dots, l_n{*})$ optimizando la siguiente función:
+	\begin{align}
+		L^{*} = \underset{\forall i, l_i\in L_i}{argmin}\left( \sum_{i=1}^n -u(l_i, c_i) + \sum_{i=1}^{n-1} d(l_i,l_{i+1}) \right)
+	\end{align}		
+	
+	donde $d(l_i, l_j)$ es el costo asociado de incorporar disposición espacial y similitud de escala entre dos caracteres vecinos. Usando programación dinámica se puede optimizar la ecuación anterior. Sea $D(l_i)$ el costo de colocación óptima de los caracteres $i+1$ a $n$ con la ubicación del $i$-esimo carácter fijado en $l_i$:
+	\begin{align}
+		D(l_i) = -u(l_i,c_i) + \underset{l_{i+1}\in L_{i+1}}{min} d(l_i,l_{i+1}) + D(l_{i+1})
+	\end{align}
+	Dada la naturaleza recursiva de $D(\cdot)$ se puede encontrar la configuración óptima pre-computando $D(l_n) = -u(l_n,c_n)$ para cada $l_n \in L_n$ y posteriormente trabajando para atrás hacia la primera letra.
+	
+	Una forma de extender dicha configuración para obtener las configuraciones de múltiples palabras, consiste en el uso de un algoritmo desarrollado por los autores denominado \textit{PLEX}. Consideremos el siguiente ejemplo, extraido del trabajo de Wang et al., el cual refleja muy bien el procedimiento. Supongamos que tenemos dos palabras en nuestro lexicón $\{$``ICCV'', ``ECCV'' $\}$. El valor de $D(l_2)$ es el mismo pues ambas palabras comparte el mismo sufijo ``CCV'', y por lo tanto puede ser computado una sola vez y usado para ambas palabras. Con esta idea en mente, se construye un árbol a partir de un lexicón donde cada letra de cada palabra del lexicón conforma un nodo y, empezando desde la última letra de la palabra, cada letra subsiguiente se encuentra en nivel inferior del árbol hasta alcanzar la primera letra (representada por un nodo coloreado o marcado como el inicio de la palabra). Con este enfoque, aquellas palabras que compartan un mismo sufijo, van a compartir el mismo recorrido en el árbol hasta que se separan. Cabe aclarar que el nodo raiz se lo considera ``vacio'' por lo cual la última letra de cada palabra representa el primer nodo descendiente de la raiz. En el peor de los casos, cuando dos palabras en un lexicón no comparte un sufijo común, este método es equivalete a realizar la configuración de cada palabra por separado.
+	
+	Unos de los problemas que presenta \textit{PLEX}, es que los puntajes no son compatibles para palabras de diferente longitud. El problema más imporante sin embargo, es que la función objetivo de las estructuras pictóricas captura solamente relaciones de a pares e ignora las características globales de la configuración.
+	
+	Dado esto, la última etapa del pipeline es realizar \textit{non-maximal suppression} sobre todas las palabras detectadas, Esto con el objetivo de incorporar algo de información global en esta última parte. Para eso, se vuelve a puntuar cada palabra retornada por \textit{PLEX} utilizando un clasificador \textit{Support Vector Machine} (\textit{SVM} por sus siglas en inglés).
+
+	\RC{Falta experimentos}	
+	
