@@ -1,18 +1,8 @@
-\subsection{Introducción}
+\subsubsection{Introducción}
 
-\begin{itemize}
-		\item El problema que ellos detectaron en el reconocimiento de caracteres
-		\item Cual fue su enfoque para solucionarlo
-		\item Implementación a grandes rasgos
-		\item Aportes
-\end{itemize}
-
-	\RC{Abajo, borrador}
-
-	En el trabajo que realizaron Wang et al. en \cite{wang}, en el cual esta basado la presente tesis, los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, el texto adquirido en entornos naturales (también referido como texto de escena) se ha vuelto más frecuente. Todo esto debido al aumento de dispositvos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
+	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, el texto adquirido en entornos naturales (también referido como texto de escena) se ha vuelto más frecuente. Todo esto debido al aumento de dispositvos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
 	
-	Los autores detallan que cuando salio el primer dataset público denominado ICDAR, que resaltaba el problema de detectar y reconcer texto de escena, los organizadores de dicho dataset habían identificado cuatro sub-problemas.
-	
+	Con la salida del primer dataset público denominado \textit{ICDAR}, el cual resaltaba el problema de detectar y reconocer texto de escena, los organizadores del mismo, identificaron cuatro subproblemas.
 	\begin{itemize}
 		\item La clasificación de caracteres recortados.
 		\item Detección de texto en la imagen completa.
@@ -20,9 +10,9 @@
 		\item El reconocimiento de palabras en la imagen completa.
 	\end{itemize}
 	
-	En su trabajo, se encargaron del problema de reconocimiento de texto pero teniendo para resolverlo una lista de palabras (i.e., un lexicón) para detectar y leer.	
-	
-	Para esto, ellos construyen y evaluan dos sistemas. El primero consiste en un pipeline de dos etapas que consiste en la detección de texto seguido de un destacado motor de OCR. El segundo, es un sistema arraigado en el reconocimiento de objetos genéricos, el cual es una extensión de un trabajo que realizaron anteriormente \cite{WB10}.
+	Dada esta problemática, los autores se enfocaron en el problema del reconocimiento de texto. Para poder encarar esto, incorporaron una lista de palabras (i.e., un lexicón) para detectar y leer.
+		
+	Para esto, ellos construyen y evaluan dos sistemas. El primero consiste en un pipeline de dos etapas que consiste en la detección de texto seguido del reconocimiento a partir de un destacado motor de OCR. El segundo, es un sistema arraigado en el reconocimiento de objetos genéricos, el cual es una extensión de un trabajo que realizaron anteriormente \cite{WB10}.
 	
 	Sus contribuciones son las siguiente:
 		\begin{itemize}

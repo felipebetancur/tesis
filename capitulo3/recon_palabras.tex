@@ -1,4 +1,4 @@
-\subsection{Reconocimiento de palabras}
+\subsubsection{Reconocimiento de palabras}
 	\begin{itemize}
 		\item Introducción a Pictorial Structures (Teoría)
 		\item Uso de PS + Lexicón
@@ -9,10 +9,9 @@
 		\begin{itemize}
 			\item Problemas con PLEX
 		\end{itemize}
-		\item Implementación
 	\end{itemize}
 	
-	Para detectar palabras en una imagen, uno de los métodos que usan Wang et al., son las \textit{estructuras pictóricas} (\textit{pictorial structures}, de su traducción al inglés). Este enfoque toma las ubicaciones y puntajes de los caracteres detectados como entrada y encuentra la configuración óptima de una palabra específica. Formalmente, dada una palabra $w=(c_1,\dots , c_n)$ de $n$ caracteres de un lexicó, sea $L_i$ el conjunto de ubicaciones detectadas para el $i$-esimo carácter de $w$, y $u(l_i, c_i)$ sea puntuación de una detección particular en la ubicación $l_i \in L_i$ (obtenida a través del clasificador Random Ferns). La idea de este método, como ya se dijo, es obtener una configuración óptica $L^{*}=(l_1^{*}, \dots, l_n{*})$ optimizando la siguiente función:
+	Para detectar palabras en una imagen, uno de los métodos que usan Wang et al., son las \textit{estructuras pictóricas} (\textit{pictorial structures}, de su traducción al inglés). Este enfoque toma las ubicaciones y puntajes de los caracteres detectados como entrada y encuentra la configuración óptima de una palabra específica. Formalmente, dada una palabra $w=(c_1,\dots , c_n)$ de $n$ caracteres de un lexicón, sea $L_i$ el conjunto de ubicaciones detectadas para el $i$-esimo carácter de $w$, y $u(l_i, c_i)$ sea puntuación de una detección particular en la ubicación $l_i \in L_i$ (obtenida a través del clasificador Random Ferns). La idea de este método, como ya se dijo, es obtener una configuración óptima $L^{*}=(l_1^{*}, \dots, l_n{*})$ optimizando la siguiente función:
 	\begin{align}
 		L^{*} = \underset{\forall i, l_i\in L_i}{argmin}\left( \sum_{i=1}^n -u(l_i, c_i) + \sum_{i=1}^{n-1} d(l_i,l_{i+1}) \right)
 	\end{align}		
@@ -28,6 +27,4 @@
 	Unos de los problemas que presenta \textit{PLEX}, es que los puntajes no son compatibles para palabras de diferente longitud. El problema más imporante sin embargo, es que la función objetivo de las estructuras pictóricas captura solamente relaciones de a pares e ignora las características globales de la configuración.
 	
 	Dado esto, la última etapa del pipeline es realizar \textit{non-maximal suppression} sobre todas las palabras detectadas, Esto con el objetivo de incorporar algo de información global en esta última parte. Para eso, se vuelve a puntuar cada palabra retornada por \textit{PLEX} utilizando un clasificador \textit{Support Vector Machine} (\textit{SVM} por sus siglas en inglés).
-
-	\RC{Falta experimentos}	
 	
