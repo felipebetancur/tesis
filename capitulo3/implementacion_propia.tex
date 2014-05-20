@@ -8,6 +8,9 @@
 		\paragraph{Pipeline de procesamiento} ~\\
 	
 			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que abarca desde la construcción del dataset hasta la obtención de los resultados de clasificación. El pipeline se puede apreciar en la siguiente imagen.
+			
+	Construcción Dataset $\Rightarrow$(Extracción de Características $\Rightarrow$  Entrenamiento del Clasificador) $\Rightarrow$  Evaluación del clasificador			
+			
 			\begin{figure}[htbp]
 				\centering
 				\fbox{ \includegraphics[scale=0.5]{img/OCR_pipeline_1.jpg} }
@@ -21,7 +24,7 @@
 		
 			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia de una real. Dichas transformaciones, toman a la imagen y le aplican de manera aleatoria cambios en la rotación, el tamaño, la inclinación, le aplican suavizado gaussiano (blur) y ruido, entre otras transformaciones. Un punto a destacar en este proceso, es que las fuentes de letras están en una escala de grises y se mantienen de esta forma. Esto es debido a que, durante el entrenamiento, solo es posible obtener las características de las imágenes sí y sólo sí estas están en escala de grises (requerimiento del algoritmo HOG). Otro tipo de transformación que vale la pena destacar, es la de anexar dos caracteres a los costados de la imagen a transformar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de imágenes donde la misma forma parte de una palabra como cabría esperarse. Es por eso que en la mayoría de los datasets, cada caracter está acompañado de pedazos de otros caracteres.
 		
-			La creación de estos datasets son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset CHAR-74K, a las cuales no se les modifico en absoluto. Esto es debido a que los experimentos de evaluación del clasificador que se realizen tienen que poder ser comparados con los de Wang et al. en iguales condiciones.		
+			La creación de estos datasets son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K}, a las cuales no se les modifico en absoluto. Esto es debido a que los experimentos de evaluación del clasificador que se realizen tienen que poder ser comparados con los de Wang et al. en iguales condiciones.		
 		
 		
 		\paragraph{Entrenamiento del clasificador}  ~\\
@@ -36,7 +39,7 @@
 		
 		\paragraph{Evaluación del clasificador} ~\\
 	
-			Para la evaluación del clasificador, se toma como conjunto de test el descripto en la sección de creación del dataset. A cada imágen del conjunto de test, se le extrae el descriptor HOG, se lo binariza y con el vector resultante se calcula la probabilidad de que dicho vector perteneza a cada una de las clases involucradas. El calculo para cada clase es el mismo y consiste en dividir el vector de prueba en $M$ grupos y por cada grupo obtener el valor en la tabla correspondiente. Por cada clase entonces tendríamos $M$ valores. Finalmente se realiza la suma de los logaritmos de cada valor y el resultado es la probabilidad de que ese vector pertenzca a la clase evaluada. Como es claro, al final se le asigna al vector la clase que haya obtenido el mayor valor.
+			Para la evaluación del clasificador, se toma como conjunto de test el descripto en la sección de creación del dataset. A cada imágen del conjunto de test, se le extrae el descriptor HOG, se lo binariza y con el vector resultante se calcula la probabilidad de que dicho vector perteneza a cada una de las clases involucradas. El calculo para cada clase es el mismo y consiste en dividir el vector de prueba en $M$ grupos y por cada grupo obtener el valor en la tabla correspondiente. Por cada clase entonces tendríamos $M$ valores. Finalmente se realiza la suma de los logaritmos de cada valor y el resultado es la probabilidad de que ese vector pertenzca a la clase evaluada. Como es claro, al final se le asigna a la imagen evaluada la clase que haya obtenido la mayor probabilidad.
 			
 	\subsubsection{Reconocimiento de palabras}
 	
