@@ -1,14 +1,33 @@
-\subsection{Diseño \JS{de experimentos}}
+\subsection{Diseño de los experimentos}
+
 	\begin{itemize}
 		\item Aca debería ir una descripción de los parámetros a usar en los experimentos con una explicación de lo que se espera obtener.
 		\begin{itemize}
 			\item Explicar para qué sirve cada parámetro
 			\item Explicar los valores que se van a usar para cada parámetro
 		\end{itemize}
-		\item Explicar que datasets se van a crear para los experiementos
-		\begin{itemize}
-			\item Imagenes Reales (CHAR74K, 15img por clase)
-			\item Imágenes sintéticas (50/100/500/1000/2000/3000/7000/10000 img por clase)
-			\item Imágenes reales + sintéticas ((15+15)/(15+30)/(15+45)/(15+60)/(15+100)... imgs por clase). Cuando pongo ($x+y$), $x$ representa la cantidad de img reales e $y$ la cantidad de sintéticas. Quiero ver hasta que punto aumenta la performance de clasificación mezclando en diferentes proporciones sintétitcas + reales.
-		\end{itemize}
 	\end{itemize}
+
+	Dada la gran cantidad de parámetros que hay en el sistema, la cantidad de experimentos para encontrar la mejor configuración es extensa.
+	
+	El primer parámetro a considerar es el tipo de dataset a evaluar, como se procederá a explicar en la próxima sección, tenemos un total de 20 datasets diferentes. Esto con el objetivo de evaluar la performance del clasificador en diferentes ámbitos. Los parámetros utilizados durante la creación de las imágenes sintéticas son, como se explicó en el capítulo anterior, escala, rotación, blur, ruido gaussiano e inclinación. Dado que hay un abanico bastante grande valores para asignarles a estas transformaciones, se decidió por asignarle a cada una un rango de valores los cuales si bien modificaban la imagen, no la hacían ilegible. Los rangos propuesto están en una lista a continuación:
+	\begin{itemize}
+		\item Inclinación: $(-0.20, 0.20)$
+		\item Suavizado gaussiano (blur): $(0, 2)$
+		\item Escala: $(0.8, 1.25)$
+		\item Rotación: $(-0.1, 0.1)$
+		\item Ruido gaussiano: $(1, 30)$
+	\end{itemize}
+	
+	Cabe aclarar que estos valores fueron usados en funciones obtenidas de librerías de procesamiento de imágenes para python, por lo cual los mismos pueden variar en otros entornos.
+	
+	Posteriormente tenemos los parámetros propios que utiliza HOG para extraer las características de cada imagen. HOG hace uso de dos parámetros, la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Como se explicó en el capítulo anterior \ref{subsection:hog}, dada una imagen, esta se dividía en regiones llamadas celdas. Dentro de cada una se realiza el calculo de las orientaciones y posteriormente dado un bloque de celdas se extraía un histograma de orientaciones de todas las celdas involucradas. Dada la gran cantidad de combinaciones entre ambos parámetros, se decidió por utilizar los valores $8 y 9$ para la cantidad de orientaciones y $4 y 9$ para la cantidad de celdas por bloques. La elección de estos números se debe a que ...\RC{buscar ese paper que hacia una evaluación completa !} 
+	
+	Existe un tercer parámetro pero no es propio del algoritmo de HOG, sino que es del trabajo en sí y es la longitud de los vectores de características. HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la perdida o ganancia de información sobre la imagen al realizar esto y ver si hay algun impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente. Básicamente, elegimos tantas columnas al azar (con repetición) del descriptor original como dimensiones querramos obtener al final. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. Las dimensiones con las que se trabajan son las siguiente: $240/480/1080/2040/4080$. La elección de estas dimensiones está directamente relacionada con el siguiente parámetro que es la cantidad de \textit{grupos} por vector, por lo cual estas dimensiones tienen que ser divisibles por cada uno de los grupos a evaluar.
+	
+	En la etapa de entrenamiento, hay 2 parámetros: la cantidad de \textit{grupos} en la que se divide cada vector y \textit{alpha} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. Se trabajaron con los siguientes valores $1/2/4/8/10/12$ los cuales denotan la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos esta dado por la división entre la dimensión total del vector y la dimensión del grupo.
+	
+	El parámetro \textit{alpha} es necesario ya que las tablas no se pueden inicializar con el valor $0$. Esto es debido ya que, como se explico en la sección \ref{subsection:ferns}, al momento de evaluar una imagen de prueba, puede darse el caso de que se acceda a una posición de la tabla que nunca fue entrenada por lo cual la probabilidad se hace 0 y es un inconveniente para los cálculos posteriores. Se evaluaron varios valores de \textit{alpha} entre los cuales se encuentran: $0.01/0.1/1$. Los valores por encima de 1 no son convenientes para inicializar las tablas pues afectan a los resultados al momento de normalizarlas.
+	
+	
+	
