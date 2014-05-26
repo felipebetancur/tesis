@@ -1,5 +1,7 @@
+\newpage
 \subsection{Resultados}
 \label{subsection:resultados}
+	tablas, gráficos, análisis y recomendaciones
 	\begin{itemize}
 		\item Aca debería explicar como fueron procesados los
                   resultados y que tipo de resultados se van a mostrar (ej. los
@@ -15,3 +17,122 @@
 		\item Idem con dataset sintéticos + reales.
 
 	\end{itemize}
+	
+	Primero van a ir los resultados de Wang extraidos del paper y expuestos en una tabla. Se tiene que explicar que el resultado obtenido por Wang es el baseline para los experimentos realizados. Un vez que presente los mejores resultados obtenidos vuelvo a generar la tabla de comparacion.
+	
+	\begin{table}
+		\centering
+	    \begin{tabular}{ | l | l | l | p{5cm} |}
+    			\hline
+    				\textbf{Implementación} & \textbf{Score} \\ \hline
+    				Wang NATIVE+FERNS & 0.54\% \\ \hline
+    				Wang SINT+FERNS & 0.47\% \\
+    			\hline
+    		\end{tabular}	
+    		\caption{Resultados obtenidos por Wang et al. en \cite{wang}}
+	\end{table}
+
+	Resultados de haber entrenado y evaluado al clasificador con imagenes reales. Básicamente busco mostrar que llegamos a resultados similares con Wang. Despues de mostrar los resultados, se puede agregar una tabla chiquita comparativa de los resultados.
+	
+			\begin{figure}[htbp!]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/reales/media_8or3cpb_Alpha0,01.png}
+				\caption[Reales con umbral media]{Resultado de haber usado la media para el calculo del umbral. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-media-8or9cpbAlph0.01}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/reales/median_8or2cpb_Alpha0,01.png}
+				\caption[Reales con umbral mediana]{Resultado de haber usado la mediana para el calculo del umbral. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 4}.}
+				\label{fig: Reales-mediana-8or4cpbAlph0.01}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/reales/expon_8or3cpb_Alpha0,01.png}
+				\caption[Reales con umbral exponencial]{Resultado de haber usado la distribución exponencial para el calculo del umbral. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-expon-8or9cpbAlph0.01}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/reales/bootstrap_8or3cpb_Alpha0,1.png}
+				\caption[Reales con umbral boostrap]{Resultado de haber usado bootstrap para el calculo del umbral. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-bootstrap-8or9cpbAlph0.1}
+			\end{figure}
+			
+		Después de presentar estos gráficos aclaro que los siguientes experimentos se realizaron utilizando la mejor configuración observada (8 orientaciones, 9 grupos por bloque). Comparación final con los resultados de Wang.
+	\begin{table}
+		\centering
+		\begin{tabular}{ | l | l | l | p{5cm} |}
+    			\hline
+    				\textbf{NATIVE + FERNS} & \textbf{Score} \\ \hline
+    				Wang et al. & 0.54\% \\ \hline
+    				Media & 0.53\% \\ \hline
+    				Mediana & 0.47\%\\ \hline
+    				Exponencial & 0.53\% \\ \hline
+    				Bootstrap & 0.51\%\\ 
+    			\hline
+    		\end{tabular}
+    		\caption{Tabla comparativa entre el resultado obtenido por Wang para imágenes naturales y los obtenidos en el presente trabajo, utilizando los cuatro umbrales propuestos.}
+    	\end{table}
+    	
+    	Teniendo en cuenta el resultado de Wang para las imágenes sintéticas, paso a mostrar 
+los resultados de haber ido incrementando la proporcion de muestras sintéticas al momento de entrenar al clasificador.
+
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_media_8or3cpb_Alpha1_4080.png}
+				\caption[Sintéticas media bajo resultado]{}
+				\label{fig: Sinteticas-media-bajo}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_media_8or3cpb_Alpha0,01_240.png}
+				\caption[Sintéticas media mejor resultado]{}
+				\label{fig: Sinteticas-media-mejor}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_median_8or3cpb_Alpha0,1_2040.png}
+				\caption[Sintéticas mediana mejor resultado]{}
+				\label{fig: Sinteticas-median-mejor}
+			\end{figure}
+	
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_median_8or3cpb_Alpha0,01_240.png}
+				\caption[Sintéticas mediana peor resultado]{}
+				\label{fig: Sinteticas-median-bajo}
+			\end{figure}
+				
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_expon_8or3cpb_Alpha1_4080.png}
+				\caption[Sintéticas exponencial mejor resultado]{}
+				\label{fig: Sinteticas-expon-mejor}
+			\end{figure}
+	
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_expon_8or3cpb_Alpha0,01_240.png}
+				\caption[Sintéticas exponencial peor resultado]{}
+				\label{fig: Sinteticas-expon-bajo}
+			\end{figure}
+			
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_bootstrap_8or3cpb_Alpha0,1_4080.png}
+				\caption[Sintéticas bootstrap mejor resultado]{}
+				\label{fig: Sinteticas-bootstrap-mejor}
+			\end{figure}
+	
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_bootstrap_8or3cpb_Alpha0,01_240.png}
+				\caption[Sintéticas bootstrap peor resultado]{}
+				\label{fig: Sinteticas-bootstrap-bajo}
+			\end{figure}

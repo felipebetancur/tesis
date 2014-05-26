@@ -3,10 +3,8 @@
 
 Desde el punto de vista de las ciencias de la computación y las matemáticas, un
 árbol es un grafo conexo simple y sin ciclos, y sus propiedades son básicas de
-la teoría de grafos. Formalmente, sea $G=(V,E)$ un grafo, donde $V$ es un
-conjunto de vértices o nodos y $E=\{ (v_i, v_j), v_j,v_i \in V \}$ es un
-conjunto de pares donde cada par representa una arista o rama que conecta a dos
-nodos.
+la teoría de grafos. Formalmente, un grado es una estructura de la forma $G=(V,E)$, donde $V$ es un conjunto de vértices o nodos y $E=\{ (v_i, v_j), v_j,v_i \in V \}$ es un
+conjunto de pares donde cada par representa una arista o rama que conecta a dos nodos.
 
 %	Además, definimos un \textit{camino} o \textit{path} entre los nodos $v_i, v_j \in V, i \neq j$ en $G$ (lo denotamos $P_{v_i, v_j}^G$), como el conjunto $\{ v_i, v_{i+1}, \dots, v_{j-1}, v_j \}$ de nodos talque  $(v_k, v_{k+1}) \in E, k = i, \dots, (j-1)$. Luego, decimos que $G$ es conexo si $\forall v_i, v_j \in V, i \neq j, \exists P_{v_i, v_j}^G$ y no tiene ciclos si $\forall v_i, v_j \in V, i \neq j, \exists ! P_{v_i, v_j}^G $.
 
@@ -33,11 +31,11 @@ nodos.
 	Posteriormente, se elige aquel atributo que tenga menor entropía (mayor ganancia de información) y se lo utiliza para partir el conjunto $S$. Construir un árbol de decisión se basa en encontrar atributos que retornen la mayor ganancia de información con lo cual se obtienen ramas más homogeneas.
 	
 	\RC{Desarrollar mas la parte de abajo}
-	\paragraph{Poda} ~\\
+	\paragraph{Poda}
 	
 		La \textit{poda} (\textit{pruning}, de su traducción al inglés) es una técnica que reduce el tamaño de los árboles de decisión eliminando secciones del mismo que provean poca capacidad para clasificar instancias. El objetivo es tanto la reducción de la complejidad del clasificador como así también mejorar la performance a través de la reducción de la sobreestimación.
 	
-	\paragraph{Sobreajuste} ~\\
+	\paragraph{Sobreajuste}
 	
 		El \textit{sobreajuste} (\textit{overfitting}, de su traducción al inglés) se origina cuando un modelo se vuelve excesivamente complejo, por ejemplo, al tener demasiados parámetros relativos al número de observaciones. Un modelo que ha sido sobreajustado, tendrá generalmente una baja tasa de predicción.
 

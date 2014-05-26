@@ -7,13 +7,7 @@
 
 		\paragraph{Pipeline de procesamiento} ~\\
 
-			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que abarca desde la construcción del dataset hasta la obtención de los resultados de clasificación. El pipeline se puede apreciar en la siguiente imagen.
-
-	Construcción Dataset $\Rightarrow$(Extracción de Características $\Rightarrow$  Entrenamiento del Clasificador) $\Rightarrow$  Evaluación del clasificador
-
-        \JS{por ahí se puede distinguir dos instancias del sistema: a tiempo de
-        entrenamiento y a tiempo de test o de ejecución}
-
+			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la siguiente imagen:
 
 			\begin{figure}[htbp]
 				\centering
@@ -24,13 +18,15 @@
 
 		\paragraph{Generación de datos sintéticos} ~\\
 
-                \JS{el dataset es uno solo. Lo que se hace generando muestas
-                  sintéticas es agregar vistas de los caracteres que no están
-                  reflejadas en el dataset original pero que son plausibles de
-                  ser observadas en la realidad}
-			Si bien el título hace referencia a un solo dataset , en el trabajo se hacen uso de múltiples datasets que evaluan diferentes puntos de vista del problema de reconocimiento. Lo que se intenta explicar aquí, es la creación general de los datasets, es decir, como se obtienen las imágenes sintéticas que conforman el dataset para que logren asemejarse a las imágenes reales.
-
-			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia de una real. Dichas transformaciones, toman a la imagen y le aplican de manera aleatoria cambios en la rotación, el tamaño, la inclinación, le aplican suavizado gaussiano (blur) y ruido, entre otras transformaciones. Un punto a destacar en este proceso, es que las fuentes de letras están en una escala de grises y se mantienen de esta forma. Esto es debido a que, durante el entrenamiento, solo es posible obtener las características de las imágenes sí y sólo sí estas están en escala de grises (requerimiento del algoritmo HOG). Otro tipo de transformación que vale la pena destacar, es la de anexar dos caracteres a los costados de la imagen a transformar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de imágenes donde la misma forma parte de una palabra como cabría esperarse. Es por eso que en la mayoría de los datasets, cada caracter está acompañado de pedazos de otros caracteres.
+			La datos sintéticos que se generan y utilizan en este trabajo son extraidos del dataset \textit{Chars74K} el cual está compuesto, entre otras cosas, por 62992 imágenes de caracteres sintéticos extraidos de fuentes de computadora. Cada una de las clases involucradas en la clasificación tienen un poco más de 1000 de estas imágenes (son 62 clases en total). El objetivo detrás de la generación de estos datos sintéticos es agregar vistas de los caracteres que no están reflejadas en el dataset original pero que son plausibles de ser observadas en la realidad.
+			
+			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Dichas transformaciones son:
+			
+			\paragraph{Rotación.}
+			
+				La rotación es una transformación afín que consta en rotar el ángulo de la imágen en el sentido anti-horario. El parámetro usado para el mismo son los radianes y se calcula de la siguiente manera
+			
+			la rotación, el tamaño, la inclinación, le aplican suavizado gaussiano (blur) y ruido, entre otras. Un punto a destacar en este proceso, es que las fuentes de letras están en una escala de grises y se mantienen de esta forma. Esto es debido a que, durante el entrenamiento, solo es posible obtener las características de las imágenes sí y sólo sí estas están en escala de grises (requerimiento del algoritmo HOG). Otro tipo de transformación que vale la pena destacar, es la de anexar dos caracteres a los costados de la imagen a transformar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de entornos donde la misma forma parte de una palabra. Es por eso que en la mayoría de los conjuntos generados, cada caracter está acompañado de pedazos de otros caracteres.
 
 			La creación de estos datasets son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K}, a las cuales no se les modifico en absoluto. Esto es debido a que los experimentos de evaluación del clasificador que se realizen tienen que poder ser comparados con los de Wang et al. en iguales condiciones.
 

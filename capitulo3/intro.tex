@@ -2,12 +2,11 @@
 
 	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, el texto adquirido en entornos naturales (también referido como texto de escena) se ha vuelto más frecuente. Todo esto debido al aumento de dispositvos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
 	
-	Con la salida del primer dataset público denominado \textit{ICDAR}, el cual resaltaba el problema de detectar y reconocer texto de escena, los organizadores del mismo, identificaron cuatro subproblemas.
+	Con la salida del primer dataset público denominado \textit{ICDAR} en 2003, los autores del mismo lo establecieron como punto común de referencia. Esto fue con el objetivo de ver cual era el estado del arte de los algoritmos de reconocimiento de texto en imágenes naturales. Ellos observaron, que habían imágenes con texto que los motores de OCR del momento no podían procesar. Decidieron entonces dividir el problema general que era reconocer palabras en imágenes naturales en tres subproblemas:
 	\begin{itemize}
 		\item La clasificación de caracteres recortados.
 		\item Detección de texto en la imagen completa.
 		\item El reconocimiento de palabras recortadas.
-		\item El reconocimiento de palabras en la imagen completa.
 	\end{itemize}
 	
 	Dada esta problemática, los autores se enfocaron en el problema del reconocimiento de texto. Para poder encarar esto, incorporaron una lista de palabras (i.e., un lexicón) para detectar y leer.
