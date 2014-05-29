@@ -32,6 +32,8 @@
     		\caption{Resultados obtenidos por Wang et al. en \cite{wang}}
 	\end{table}
 
+	\subsubsection{Imágenes Reales}
+	
 	Resultados de haber entrenado y evaluado al clasificador con imagenes reales. Básicamente busco mostrar que llegamos a resultados similares con Wang. Despues de mostrar los resultados, se puede agregar una tabla chiquita comparativa de los resultados.
 	
 			\begin{figure}[htbp!]
@@ -62,6 +64,8 @@
 				\label{fig: Reales-bootstrap-8or9cpbAlph0.1}
 			\end{figure}
 			
+			\FL{Incluir gráfica que superpone las mejores curvas de los 4 métodos?}
+			
 		Después de presentar estos gráficos aclaro que los siguientes experimentos se realizaron utilizando la mejor configuración observada (8 orientaciones, 9 grupos por bloque). Comparación final con los resultados de Wang.
 	\begin{table}
 		\centering
@@ -79,6 +83,8 @@
     	\end{table}
     	
     	\newpage
+    	\subsubsection{Imágenes Sintéticas}
+    	
     	Teniendo en cuenta el resultado de Wang para las imágenes sintéticas, paso a mostrar 
 los resultados de haber ido incrementando la proporcion de muestras sintéticas al momento de entrenar al clasificador. Los siguientes gráficos representan la relación ``\textit{cantidad de imágenes sintéticas por clase}-\textit{precisión}''. Por cada método utilizado en la binarización se extrajeron dos imágenes. La primera representa la configuración de parámetros que devolvió el mejor resultado y la segunda el peor.
 
@@ -155,6 +161,8 @@ los resultados de haber ido incrementando la proporcion de muestras sintéticas 
     	\end{table}
 			
 \newpage
+    	\subsubsection{Imágenes Reales y Sintéticas}
+    	
 	Por último se van a mostrar los resultados correspondientes de haber entrenado al clasificador con conjuntos de entrenamiento mixtos. Se procederá a mostrar los gráficos con las mejores y peores configuraciones y sus resultados. También se mostrarán las matrices de correlación para todos estos casos. Teniendo en cuenta los resultados anteriores, se van a mostrar los resultados de haber utilizado solamente la distribución exponencial como umbral ya que fue la que obtuvo los mejores resultados. En los gráficos  se van a mostrar también los baselines de Wang et al. para las imágenes reales y las sintéticas.
 	
 			\begin{figure}[htbp]
@@ -175,3 +183,8 @@ los resultados de haber ido incrementando la proporcion de muestras sintéticas 
 				\caption[Matriz de correlación ``case insensitive'' para mixtas expon]{Matriz de correlación del gráfico \ref{fig: Mixtas-expon-mejor} para el mejor resultado no teniendo en cuenta los caracteres en mayúscula.}
 				\label{fig: MatrizIns-Mixtas-expon}
 			\end{figure}
+	
+    	\subsubsection{Comparativa}
+
+    	\FL{Incluir gráfica que superpone las mejores curvas de cada sección anterior y Wang.}
+    	
