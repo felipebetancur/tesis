@@ -10,11 +10,9 @@
 
 	Dada la gran cantidad de parámetros que hay en el sistema, la cantidad de experimentos para encontrar la mejor configuración es extensa.
 
-	\JS{dividir los distintos grupos de parámetros en párrafos}
-
         \paragraph{Generación de datos sintéticos}
 
-	El primer parámetro a considerar es el tipo de dataset a evaluar, como se procederá a explicar en la próxima sección, tenemos un total de 20 datasets diferentes. Esto con el objetivo de evaluar la performance del clasificador en diferentes ámbitos. Los parámetros utilizados durante la creación de las imágenes sintéticas son, como se explicó en el capítulo anterior, escala, rotación, blur, ruido gaussiano e inclinación. Dado que hay un abanico bastante grande valores para asignarles a estas transformaciones, se decidió por asignarle a cada una un rango de valores los cuales si bien modificaban la imagen, no la hacían ilegible. Los rangos propuesto están en una lista a continuación:
+	El primer parámetro a considerar es el tipo de conjunto de entrenamiento a evaluar, como se procederá a explicar en la próxima sección, tenemos un total de 20 conjuntos diferentes. Esto con el objetivo de evaluar la performance del clasificador en diferentes ámbitos. Los parámetros utilizados durante la creación de las imágenes sintéticas son, como se explicó en el capítulo anterior, escala, rotación, blur, ruido gaussiano e inclinación. Dado que hay un abanico bastante grande valores para asignarles a estas transformaciones, se decidió por asignarle a cada una un rango de valores los cuales si bien modificaban la imagen, no la hacían ilegible. Los rangos propuesto están en una lista a continuación:
 	\begin{itemize}
 		\item Inclinación: $(-0.20, 0.20)$
 		\item Suavizado gaussiano (blur): $(0, 2)$
@@ -23,11 +21,15 @@
 		\item Ruido gaussiano: $(1, 30)$
 	\end{itemize}
 
-	Cabe aclarar que estos valores fueron usados en funciones obtenidas de librerías de procesamiento de imágenes para python, por lo cual los mismos pueden variar en otros entornos.
+	\paragraph{Extracción de características con HOG}
 
 	Posteriormente tenemos los parámetros propios que utiliza HOG para extraer las características de cada imagen. HOG hace uso de dos parámetros, la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Como se explicó en el capítulo anterior \ref{subsection:hog}, dada una imagen, esta se dividía en regiones llamadas celdas. Dentro de cada una se realiza el calculo de las orientaciones y posteriormente dado un bloque de celdas se extraía un histograma de orientaciones de todas las celdas involucradas. Dada la gran cantidad de combinaciones entre ambos parámetros, se decidió por utilizar los valores $8 y 9$ para la cantidad de orientaciones y $4 y 9$ para la cantidad de celdas por bloques. La elección de estos números se debe a que reducen la tasa de errores de clasificación. Un análisis similar se puede encontrar en \cite{DT05} donde los autores (quienes crearon HOG) analizan la mejor configuración para resolver el problema de detección de personas. Si bien el problema que se busca resolver en este trabajo es totalmente diferente, los parámetros que ellos usan para HOG muestran buenos resultados en este problema también.
 
-	Existe un tercer parámetro pero no es propio del algoritmo de HOG, sino que es del trabajo en sí y es la longitud de los vectores de características. HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la perdida o ganancia de información sobre la imagen al realizar esto y ver si hay algun impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente. Básicamente, elegimos tantas columnas al azar (con repetición) del descriptor original como dimensiones querramos obtener al final. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. Las dimensiones con las que se trabajan son las siguiente: $240/480/1080/2040/4080$. La elección de estas dimensiones está directamente relacionada con el siguiente parámetro que es la cantidad de \textit{grupos} por vector, por lo cual estas dimensiones tienen que ser divisibles por cada uno de los grupos a evaluar.
+	\paragraph{Binarización}
+
+	HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la perdida o ganancia de información sobre la imagen al realizar esto y ver si hay algun impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente. Básicamente, elegimos tantas columnas al azar (con repetición) del descriptor original como dimensiones querramos obtener al final. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. Las dimensiones con las que se trabajan son las siguiente: $240/480/1080/2040/4080$ (para los experimentos con imágenes sintéticas y mixtas). La elección de estas dimensiones está directamente relacionada con el siguiente parámetro que es la cantidad de \textit{grupos} por vector, por lo cual estas dimensiones tienen que ser divisibles por cada uno de los grupos a evaluar.
+
+	\paragraph{Entrenamiento}
 
 	En la etapa de entrenamiento, hay 2 parámetros: la cantidad de \textit{grupos} en la que se divide cada vector y \textit{alpha} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. Se trabajaron con los siguientes valores $1/2/4/8/10/12$ los cuales denotan la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos esta dado por la división entre la dimensión total del vector y la dimensión del grupo.
 
