@@ -4,7 +4,7 @@
 	El presente trabajo, como se dijo con anterioridad, sienta sus bases en el trabajo realizado por Wang et al. salvo que el enfoque del mismo se centra en los problemas de reconocmiento de caracteres y el reconocimiento de palabras. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver ambos problemas.
 
 	\subsubsection{Reconocimiento de caracteres}
-
+	\label{subsubsection:recon-caracteres}
 		\paragraph{Pipeline de procesamiento} ~\\
 
 			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la siguiente imagen:
@@ -20,11 +20,27 @@
 
 			La datos sintéticos que se generan y utilizan en este trabajo son extraidos del dataset \textit{Chars74K} el cual está compuesto, entre otras cosas, por 62992 imágenes de caracteres sintéticos extraidos de fuentes de computadora. Cada una de las clases involucradas en la clasificación tienen un poco más de 1000 de estas imágenes (son 62 clases en total). El objetivo detrás de la generación de estos datos sintéticos es agregar vistas de los caracteres que no están reflejadas en el dataset original pero que son plausibles de ser observadas en la realidad.
 			
-			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Dichas transformaciones son:
+			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Una transformación afin representa en esencia una relación entre dos imágenes. La misma se aplica entre dos espacios afines (son estructuras geométricas que generalizan las propiedades afines del espacio Euclideo) y consiste en una transformación lineal seguida de una traslación. Formalmente, es una función entre espacio afines . Si $X$ e $Y$ son espacios afines, luego cada transformación afín $f:X \rightarrow Y$ es de la forma $x\mapsto Mx + b$, donde $M$ es una transformación lineal en $X$ y $b$ es un vector en $Y$. Se usan las multiplicaciones entre matrices para representar las transformaciones lineales y la suma de vectores para representar las traslaciones. Mediante matrices ampliadas, sin embargo, es posible representar ambos tipos de transformaciones.	La matriz $M$ presentada anteriormente es una matriz $2\times 2$ y permite realizar transformaciones en imágenes de 2 dimensiones. En este trabajo, para generar los datos sintéticos se hacen uso de las siguientes transformaciones:
 			
 			\paragraph{Rotación}
 			
-				La rotación es una transformación afín que consta en rotar el ángulo de la imágen en el sentido anti-horario. El parámetro usado para el mismo son los radianes y las diferentes variaciones se pueden apreciar en la figura X
+				La rotación es una transformación afín que consta en rotar el ángulo de la imágen en el sentido anti-horario. El parámetro usado para el mismo son los radianes y las diferentes variaciones se pueden apreciar en la figura \ref{fig: Transformacion Afin - Rotacion}. Teniendo en cuenta la definición formal de una transformación afín anterior, la rotación formalmente se puede representar de la siguiente manera:
+
+			\begin{equation*}
+					M =  
+					\begin{bmatrix}
+						cos(\theta) & -sin(\theta) \\
+						sin(\theta) & cos(\theta)  \\
+					\end{bmatrix}
+					b =
+					\begin{bmatrix}
+						0 \\
+						0 \\
+					\end{bmatrix}	
+			\end{equation*}
+
+	donde se puede observar el parámetros $\theta$ que representa el grado de inclinación y el vector $b$ es nulo por lo cual no hay traslación alguna.
+
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: sintetica original}]{
@@ -45,8 +61,15 @@
 			
 		\paragraph{Escala}
 			
-			Rellenar con info sobre esta transformación
-			
+			La escala es una transformación que busca modificar el tamaño del objeto al cual se la aplica haciendola más chica o más grande lo que era originalmente. Formalmente, se puede representar por la siguiente configuración de la matriz $M$:
+			\begin{equation}
+				M = 
+				\begin{bmatrix}
+					a & 0 \\
+					0 & d \\
+				\end{bmatrix}
+			\end{equation}
+		donde $a$ y $d$ representan los cambios en los ejes $x$ e $y$ de la imagen respectivamente. Se puede apreciar la aplicación de esta transformación en la figura \ref{fig: Transformacion Afin - Escala}.
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: escala original}]{
@@ -58,14 +81,21 @@
 			\subfloat[\label{fig: Imagen escala 1.2}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/scale1,2.png} }
 			}
-			\caption[Cambio de escala de un caracter]{Cambio de escala de un caracter. (a) Imagen original. (b)  (c) .}
+			\caption[Cambio de escala de un caracter]{Cambio de escala de un caracter. (a) Imagen original. (b) Imagen ampliada $1.2$ veces su tamaño  (c) Imagen reducida a $0.8$ veces su tamaño .}
 			\label{fig: Transformacion Afin - Escala}
 		\end{figure}	
 			
 		\paragraph{Inclinación}
 		
-			Rellenar con info sobre esta transformación
-			
+			La inclinación es una transformación donde la imagen se ``estira'' horizontalmente. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +n*y, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquiera si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
+			\begin{equation}
+				M = 
+				\begin{bmatrix}
+					1 & b \\
+					0 & 1 \\
+				\end{bmatrix}
+			\end{equation}
+		donde $b$ representa a $n$. Se puede observar en la figura \ref{fig: Transformacion Afin - Inclinacion} los diferentes efectos de aplicar diferentes valores de $b$ en la aplicación de la inclinación en una imagen.
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: Imagen inclinacion 1}]{
@@ -94,10 +124,32 @@
 			\caption[Inclinación de un caracter]{Cambio de inclinación de un caracter.}
 			\label{fig: Transformacion Afin - Inclinacion}
 		\end{figure}	
-
+		
+		\paragraph{Traslación}		
+			
+			La traslación es el último tipo de transformación afín que usamos en este trabajo y a diferencia del resto de las transformaciones, esta no hace uso de $M$, sino de $b$ que es el vector de desplazamiento. Formalmente:
+			\begin{equation*}
+				M =  
+					\begin{bmatrix}
+						1 & 0 \\
+						0 & 1  \\
+					\end{bmatrix}
+					b =
+					\begin{bmatrix}
+						b_1 \\
+						b_2 \\
+					\end{bmatrix}	
+			\end{equation*}
+		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. Particularmente no usamos esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen.
+		
+		
 		\paragraph{Suavizado Gaussiano}
 		
-			Rellenar con info sobre esta transformación
+			Es una técnica que consta de la difuminación de una imagen a partir de la aplicación de una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dados das las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente
+			\begin{align*}
+				G(x,y) = \frac{1}{2\pi\sigma^2}\epsilon^{-\frac{x^2+y^2}{2\sigma^2}}
+			\end{align*}
+			donde $\sigma$ es la desviación estandard de la distribución gaussiana. En la figura \ref{fig: Suavizado Gaussiano}, se puede observar como distintos valores para $\sigma$ a medida que aumenta va distorcionando la imagen un poco más.
 			
 		\begin{figure}[htbp]
 			\centering
@@ -110,14 +162,14 @@
 			\subfloat[\label{fig: Imagen con blur 2}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/blur2.png} }
 			}
-			\caption[Suavizado Gaussiano de un caracter]{Aplicación de blur o suavizado gaussiano a un caracter. (a) Imagen original. (b) sigma=1  (c) sigma=2 .}
+			\caption[Suavizado Gaussiano de un caracter]{Aplicación de blur o suavizado gaussiano a un caracter. (a) Imagen original. (b) Imagen suavizada con un valor de $\sigma = 1$  (c) Imagen aún más suavizada con un valor de $\sigma = 2$ .}
 			\label{fig: Suavizado Gaussiano}
 		\end{figure}				
 			
 			
 		\paragraph{Ruido Gaussiano}			
 			
-			Rellenar con info sobre esta transformación
+			El ruido en una imagen es una variación en la información sobre el color o la iluminación en la misma. Puede ser producido por un sensor, la circuitería de una escaner o una cámara digital. Condiciones de poca iluminación o interferencia electromagnética durante la transmisión de las imágenes son factores para que aparezca este tipo de distorsiones. El ruido gaussiano en las imágenes es un tipo de ruido que se caracteríza por tener una distribución gaussiana. La figura \ref{fig: Ruido Gaussiano} presenta 2 ejemplos de imágenes de caracteres con ruido gaussiano. A medida que el parámetro $\sigma$  aumenta, el ruido en la imagen se hace más notorio.
 			
 		\begin{figure}[htbp]
 			\centering
@@ -138,7 +190,7 @@
 			
 		\paragraph{Anexar caracteres}
 					
-			Otro tipo de transformación que vale la pena destacar, es la de anexar dos caracteres a los costados de la imagen a transformar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de entornos donde la misma forma parte de una palabra. Es por eso que en la mayoría de los conjuntos generados, cada caracter está acompañado de pedazos de otros caracteres.
+			Otro tipo de modificación que vale la pena destacar, es la de anexar caracteres a los costados de la imagen a alterar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de entornos donde la misma forma parte de una palabra. Es por eso que en la mayoría de los conjuntos generados, cada caracter está acompañado de pedazos de otros caracteres.
 			
 		\begin{figure}[htbp]
 			\centering

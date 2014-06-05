@@ -12,38 +12,57 @@
 
         \paragraph{Generación de datos sintéticos}
 
-	El primer parámetro a considerar es el tipo de conjunto de entrenamiento a evaluar, como se procederá a explicar en la próxima sección, tenemos un total de 20 conjuntos diferentes. Esto con el objetivo de evaluar la performance del clasificador en diferentes ámbitos. Los parámetros utilizados durante la creación de las imágenes sintéticas son, como se explicó en el capítulo anterior, escala, rotación, blur, ruido gaussiano e inclinación. Dado que hay un abanico bastante grande valores para asignarles a estas transformaciones, se decidió por asignarle a cada una un rango de valores los cuales si bien modificaban la imagen, no la hacían ilegible. Los rangos propuesto están en una lista a continuación:
+	El primer parámetro a considerar es el tipo de conjunto de entrenamiento a evaluar, como se procederá a explicar en la próxima sección, tenemos un total de 20 conjuntos diferentes. Esto con el objetivo de evaluar la performance del clasificador en diferentes ámbitos. Los parámetros utilizados durante la creación de las imágenes sintéticas son, como se explicó en el capítulo anterior, escala, rotación, blur, ruido gaussiano e inclinación. Dado que hay un abanico bastante grande valores para asignarles a estas transformaciones, se decidió por asignarle a cada una un rango de valores los cuales si bien modificaban la imagen, no la hacían ilegible. Dado que los autores en \cite{wang} no especifican el rango de valores para las transformaciones afines que utilizan, se procedió a establecer el siguiente conjunto de rangos para todas las tranformaciones utilizadas:
+	
 	\begin{itemize}
-		\item Inclinación: $(-0.20, 0.20)$
-		\item Suavizado gaussiano (blur): $(0, 2)$
-		\item Escala: $(0.8, 1.25)$
-		\item Rotación: $(-0.1, 0.1)$
-		\item Ruido gaussiano: $(1, 30)$
+		\item Inclinación: factor de inclinación $n \in [-0.20 ; 0.20]$
+		\item Suavizado gaussiano (blur): $\sigma \in [0 ; 2]$
+		\item Escala: es igual en ambos ejes $x=y \in [0.8; 1.25]$
+		\item Rotación: en radianes $\theta \in (-0.1; 0.1)$
+		\item Ruido gaussiano: $\sigma \in [1; 30]$
 	\end{itemize}
-
+	
+	El hecho de no contar con una replica exacta del conjunto de datos sintéticos usados por Wang et al., los conjuntos generados con estos valores claramente van a ser distintos a los originales y por ende la comparación de resultados  en \ref{subsection:resultados} va a estar influida por la forma en que se generaron los conjuntos.
+	
 	\paragraph{Extracción de características con HOG}
 
-	Posteriormente tenemos los parámetros propios que utiliza HOG para extraer las características de cada imagen. HOG hace uso de dos parámetros, la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Como se explicó en el capítulo anterior \ref{subsection:hog}, dada una imagen, esta se dividía en regiones llamadas celdas. Dentro de cada una se realiza el calculo de las orientaciones y posteriormente dado un bloque de celdas se extraía un histograma de orientaciones de todas las celdas involucradas. Dada la gran cantidad de combinaciones entre ambos parámetros, se decidió por utilizar los valores $8$ y $9$ para la cantidad de orientaciones y $4$ y $9$ para la cantidad de celdas por bloques. La elección de estos números se debe a que reducen la tasa de errores de clasificación. Un análisis similar se puede encontrar en \cite{DT05} donde los autores (quienes crearon HOG) analizan la mejor configuración para resolver el problema de detección de personas. Si bien el problema que se busca resolver en este trabajo es totalmente diferente, los parámetros que ellos usan para HOG muestran buenos resultados en este problema también.
-
+	Posteriormente tenemos los parámetros propios que utiliza HOG para extraer las características de cada imagen. HOG hace uso de dos parámetros, la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Como se explicó en el capítulo anterior \ref{subsection:hog}, dada una imagen, esta se dividía en regiones llamadas celdas. Dentro de cada una se realiza el calculo de las orientaciones y posteriormente dado un bloque de celdas se extraía un histograma de orientaciones de todas las celdas involucradas. Dada la gran cantidad de combinaciones entre ambos parámetros, se decidió por utilizar los siguientes valores:
+	
 	\begin{itemize}
-		\item Bla: $\{8, 9\}$
-		\item ble: $\{4, 9\}$
+		\item Orientaciones: $\{8; 9\}$
+		\item Celdas por bloque: $\{4; 9\}$
 	\end{itemize}
+	
+	La elección de estos números se debe a que reducen la tasa de errores de clasificación. Un análisis similar se puede encontrar en \cite{DT05} donde los autores (quienes crearon HOG) analizan la mejor configuración para resolver el problema de detección de personas. Si bien el problema que se busca resolver en este trabajo es totalmente diferente, los parámetros que ellos usan para HOG muestran buenos resultados en este problema también.
 
 	\paragraph{Binarización}
 
-	HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la perdida o ganancia de información sobre la imagen al realizar esto y ver si hay algun impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente. Básicamente, elegimos tantas columnas al azar (con repetición) del descriptor original como dimensiones querramos obtener al final. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. Las dimensiones con las que se trabajan son las siguiente: $240/480/1080/2040/4080$ (para los experimentos con imágenes sintéticas y mixtas). La elección de estas dimensiones está directamente relacionada con el siguiente parámetro que es la cantidad de \textit{grupos} por vector, por lo cual estas dimensiones tienen que ser divisibles por cada uno de los grupos a evaluar.
+	HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la perdida o ganancia de información sobre la imagen al realizar esto y ver si hay algun impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. Las dimensiones con las que se trabajan es otro parámetro (para los experimentos con imágenes sintéticas y mixtas). Los valores con los que trabajamos son los siguientes:
 
 	\begin{itemize}
-		\item Bla: $\{ ... \}$
+		\item Dimensión del vector final: $\{ 240; 480; 1080; 2040;  4080 \}$
 	\end{itemize}
+	
+	La elección de estas dimensiones está directamente relacionada con el siguiente parámetro que es la cantidad de \textit{grupos} por vector, por lo cual estas dimensiones tienen que ser divisibles por cada uno de los grupos a evaluar
+	
+	Como último parámetro a destacar en la binarización, y lo consideramos como uno de los más importantes, es el método aplicado al momento de generar el umbral de binarización. Como se podrá ver en la subsección de Resultados del capítulo 4, es muy grande el impacto obtenido en la precisión final del clasificador debido a este parámetro. La elección de qué método utilizar fue libre con el objetivo de evaluar cual era el que otorgaba mejores resultados. Se trabajaron con los siguientes métodos:
 
+	\begin{itemize}
+		\item Media
+		\item Mediana
+		\item Bootstrap
+		\item Exponencial
+	\end{itemize}
+	
+	Al igual pasó con los parámetros para generar los datos sintéticos, en el \cite{wang} no se aclara que método se utilizó para la binarización de los vectores, con lo cual todos los resultados obtenidos en los experimentos realizados con imágenes reales y sintéticas van a ser distintos de los originales por más de que, en el caso de las imágenes reales, se usen los mismos conjuntos de entrenamiento y prueba. \RC{Discutir esto, IMPORTANTE.}
+		
 	\paragraph{Entrenamiento}
 
-	En la etapa de entrenamiento, hay 2 parámetros: la cantidad de \textit{grupos} en la que se divide cada vector y \textit{alpha} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. Se trabajaron con los siguientes valores $1/2/4/8/10/12$ los cuales denotan la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos esta dado por la división entre la dimensión total del vector y la dimensión del grupo.
+	En la etapa de entrenamiento, hay 2 parámetros: la cantidad de bits por \textit{grupo} que determina finalmente la cantidad de grupos en la que se divide cada vector y \textit{alpha} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. La cantidad bits denotan la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos esta dado por la división entre la dimensión total del vector y la dimensión del grupo.
 
-	El parámetro \textit{alpha} es necesario ya que las tablas no se pueden inicializar con el valor $0$. Esto es debido ya que, como se explico en la sección \ref{subsection:ferns}, al momento de evaluar una imagen de prueba, puede darse el caso de que se acceda a una posición de la tabla que nunca fue entrenada por lo cual la probabilidad se hace 0 y es un inconveniente para los cálculos posteriores. Se evaluaron varios valores de \textit{alpha} entre los cuales se encuentran: $0.01/0.1/1$. Los valores por encima de 1 no son convenientes para inicializar las tablas pues afectan a los resultados al momento de normalizarlas.
+	El parámetro \textit{alpha} es necesario ya que las tablas no se pueden inicializar con el valor $0$. Esto es debido ya que, como se explico en la sección \ref{subsection:ferns}, al momento de evaluar una imagen de prueba, puede darse el caso de que se acceda a una posición de la tabla que nunca fue entrenada por lo cual la probabilidad se hace 0 y es un inconveniente para los cálculos posteriores. Los valores por encima de 1 no son convenientes para inicializar las tablas pues afectan a los resultados al momento de normalizarlas.
 
 	\begin{itemize}
-		\item Bla: $\{ ... \}$
+		\item Dimensión del grupo: $\{ 1; 2; 4; 8; 10; 12 \}$
+		\item Alpha: $\{ 0.01; 0.1; 1 \}$
 	\end{itemize}
