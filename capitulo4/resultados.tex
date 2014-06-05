@@ -1,5 +1,21 @@
 \newpage
 \subsection{Resultados}
+
+\JS{
+Sobre img. reales:
+\begin{itemize}
+\item discutir(=elegir) valor de alpha
+\item evaluar binarización y elegir una de referencia. 5 Gráficas en la misma escala: las cuatro primeras evaluando los distintos esquemas de binarización para las distintas configuraciones de DPG (dimensiones por grupo); la quinta, comparando los distintos esquemas de binarización para una cantidad de PG fija => elegir un valor de DPG para el resto de los experimentos (LA MISMA DIMENSIONALIDAD PARA TODAS LAS CONFIGURACIONES)
+\item idem evaluando el número de grupos
+\end{itemize}
+
+Sobre img. sintéticas:
+\begin{itemize}
+\item discutir entrenamiento del sistema usando solo sintéticas
+\end{itemize}
+}
+
+
 \label{subsection:resultados}
 	tablas, gráficos, análisis y recomendaciones
 	\begin{itemize}
@@ -200,6 +216,7 @@
     	
 	Por último se van a mostrar los resultados correspondientes de haber entrenado al clasificador con conjuntos de entrenamiento mixtos. Se procederá a mostrar los gráficos con las mejores y peores configuraciones y sus resultados. También se mostrarán las matrices de correlación para todos estos casos. Teniendo en cuenta los resultados anteriores, se van a mostrar los resultados de haber utilizado solamente la distribución exponencial como umbral ya que fue la que obtuvo los mejores resultados. En los gráficos  se van a mostrar también los baselines de Wang et al. para las imágenes reales y las sintéticas.
 	
+	\JS{usar escala logarítmica para el eje X (set logscale x). Que el eje X represente la proporción de sintéticas / reales y que parta de 0 (=baseline), con pasos 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100}
 			\begin{figure}[htbp]
 				\centering
 				\includegraphics[scale=0.6]{img/resultados/mixtas/best_expon_8or3cpb_Alpha0,1_4080.png}

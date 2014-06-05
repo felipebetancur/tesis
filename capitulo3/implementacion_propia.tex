@@ -85,17 +85,17 @@
 			\label{fig: Transformacion Afin - Escala}
 		\end{figure}	
 			
-		\paragraph{Inclinación}
+		\paragraph{Inclinación}\JS{Transvección}
 		
-			La inclinación es una transformación donde la imagen se ``estira'' horizontalmente. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +n*y, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquiera si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
+			La inclinación es una transformación donde la imagen se ``estira'' horizontalmente \JS{otra forma de decirlo es que rota un solo eje}. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquiera si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
 			\begin{equation}
 				M = 
 				\begin{bmatrix}
-					1 & b \\
+					1 & n \\
 					0 & 1 \\
-				\end{bmatrix}
+				\end{bmatrix}.
 			\end{equation}
-		donde $b$ representa a $n$. Se puede observar en la figura \ref{fig: Transformacion Afin - Inclinacion} los diferentes efectos de aplicar diferentes valores de $b$ en la aplicación de la inclinación en una imagen.
+		Se puede observar en la figura \ref{fig: Transformacion Afin - Inclinacion} los diferentes efectos de aplicar diferentes valores de $n$ en la aplicación de la inclinación en una imagen.
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: Imagen inclinacion 1}]{
@@ -123,6 +123,7 @@
 			}
 			\caption[Inclinación de un caracter]{Cambio de inclinación de un caracter.}
 			\label{fig: Transformacion Afin - Inclinacion}
+			\JS{5 figuras y en una sola línea}
 		\end{figure}	
 		
 		\paragraph{Traslación}		
