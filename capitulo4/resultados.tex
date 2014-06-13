@@ -1,19 +1,19 @@
 \newpage
 \subsection{Resultados}
 
-\JS{
-Sobre img. reales:
+\JS{====================}
+ Sobre img. reales:
 \begin{itemize}
-\item discutir(=elegir) valor de alpha
-\item evaluar binarización y elegir una de referencia. 5 Gráficas en la misma escala: las cuatro primeras evaluando los distintos esquemas de binarización para las distintas configuraciones de DPG (dimensiones por grupo); la quinta, comparando los distintos esquemas de binarización para una cantidad de PG fija => elegir un valor de DPG para el resto de los experimentos (LA MISMA DIMENSIONALIDAD PARA TODAS LAS CONFIGURACIONES)
-\item idem evaluando el número de grupos
+	\item discutir(=elegir) valor de alpha
+	\item evaluar binarización y elegir una de referencia. 5 Gráficas en la misma escala: las cuatro primeras evaluando los distintos esquemas de binarización para las distintas configuraciones de DPG (dimensiones por grupo); la quinta, comparando los distintos esquemas de binarización para una cantidad de PG fija => elegir un valor de DPG para el resto de los experimentos (LA MISMA DIMENSIONALIDAD PARA TODAS LAS CONFIGURACIONES)
+	\item idem evaluando el número de grupos
 \end{itemize}
 
 Sobre img. sintéticas:
 \begin{itemize}
-\item discutir entrenamiento del sistema usando solo sintéticas
+	\item discutir entrenamiento del sistema usando solo sintéticas
 \end{itemize}
-}
+\JS{====================}
 
 
 \label{subsection:resultados}
@@ -63,52 +63,52 @@ Sobre img. sintéticas:
 		
 			\begin{figure}[htbp!]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/reales/media_8or3cpb_Alpha0,01.png}
-				\caption[Reales con umbral media]{Resultado de haber usado la media para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
-				\label{fig: Reales-media-8or9cpbAlph0.01}
+				\includegraphics[scale=0.6]{img/resultados/reales/mean.png}
+				\caption[Reales con umbral media]{Resultado de haber usado la media para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 4}, \textit{dim del vector: 1080}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-media}
 			\end{figure}
 			
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/reales/median_8or2cpb_Alpha0,01.png}
-				\caption[Reales con umbral mediana]{Resultado de haber usado la mediana para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 4}.}
-				\label{fig: Reales-mediana-8or4cpbAlph0.01}
+				\includegraphics[scale=0.6]{img/resultados/reales/median.png}
+				\caption[Reales con umbral mediana]{Resultado de haber usado la mediana para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 4}, \textit{dim del vector: 4080}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-mediana}
 			\end{figure}
 			
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/reales/expon_8or3cpb_Alpha0,01.png}
-				\caption[Reales con umbral exponencial]{Resultado de haber usado la distribución exponencial para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.01}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
-				\label{fig: Reales-expon-8or9cpbAlph0.01}
+				\includegraphics[scale=0.6]{img/resultados/reales/expon.png}
+				\caption[Reales con umbral exponencial]{Resultado de haber usado la distribución exponencial para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 2}, \textit{dim del vector: 2040}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-expon}
 			\end{figure}
 			
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/reales/bootstrap_8or3cpb_Alpha0,1.png}
-				\caption[Reales con umbral boostrap]{Resultado de haber usado bootstrap para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 4}, \textit{dim del vector: 4096}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
-				\label{fig: Reales-bootstrap-8or9cpbAlph0.1}
+				\includegraphics[scale=0.6]{img/resultados/reales/bootstrap.png}
+				\caption[Reales con umbral boostrap]{Resultado de haber usado bootstrap para la binarización de las características. La mejor clasificación se logra con los siguientes parámetros: \textit{alpha:0.1}, \textit{bits por grupo: 4}, \textit{dim del vector: 4080}, \textit{orientaciones: 8}, \textit{celdas por bloque: 9}.}
+				\label{fig: Reales-bootstrap}
 			\end{figure}
 			
 			\begin{figure}[htbp]
 				\centering
 				\includegraphics[scale=0.6]{img/resultados/reales/comparativa_metodos.png}
-				\caption[Reales - Comparación entre métodos]{Este gráfico muestra las mejores curvas de los gráficos \ref{fig: Reales-media-8or9cpbAlph0.01}~\ref{fig: Reales-mediana-8or4cpbAlph0.01}~\ref{fig: Reales-expon-8or9cpbAlph0.01} y \ref{fig: Reales-bootstrap-8or9cpbAlph0.1}.}
+				\caption[Reales - Comparación entre métodos]{Este gráfico muestra las mejores curvas de los gráficos \ref{fig: Reales-media}~\ref{fig: Reales-mediana}~\ref{fig: Reales-expon} y \ref{fig: Reales-bootstrap}.}
 				\label{fig: Reales-Comparativa metodos}
 			\end{figure}
 
 \newpage
 
-		Se puede analizar en los cuatro experimentos realizados sobre imágenes reales, el mejor resultado se obtiene cuando se utilizan $4$ bits por grupo y la longitud de los vectores es de $4096$. También se puede observar que de los valores evaluados para alpha, el valor $0,01$ es el que se destaco por presentar los mejores resultados. Asi también, en la mayoría de los casos y más aún en el gráfico donde se utiliza el método exponencial, la mejor configuración para la cantidad de orientaciónes y celdas por bloque es $8$ y $9$ respectivamente. De los cuatro métodos propuestos para la binarización, el método exponencial y la media arrojan resultados muy similares como se puede observar en \ref{fig: Reales-Comparativa metodos}. La comparación final se puede observar en la tabla \ref{table: reales-comparativa}
+		Se puede analizar en los cuatro experimentos realizados sobre imágenes reales, el mejor resultado se obtiene cuando se utilizan $4$ bits por grupo y la longitud de los vectores es de $4080$. También se puede observar que de los valores evaluados para alpha, el valor $0,1$ es el que se destaco por presentar los mejores resultados. Asi también, en la mayoría de los casos y más aún en el gráfico donde se utiliza el método exponencial, la mejor configuración para la cantidad de orientaciónes y celdas por bloque es $8$ y $9$ respectivamente. De los cuatro métodos propuestos para la binarización, el método exponencial y la media arrojan resultados muy similares como se puede observar en \ref{fig: Reales-Comparativa metodos}. La comparación final se puede observar en la tabla \ref{table: reales-comparativa}
 	\begin{table}
 		\centering
 		\begin{tabular}{ | l | l | l | p{5cm} |}
     			\hline
     				\textbf{NATIVE + FERNS} & \textbf{Score} \\ \hline
     				Wang et al. & 0.54\% \\ \hline
-    				Media & 0.53\% \\ \hline
-    				Mediana & 0.47\%\\ \hline
-    				Exponencial & 0.53\% \\ \hline
-    				Bootstrap & 0.51\%\\ 
+    				Media & 0.52\% \\ \hline
+    				Mediana & 0.45\%\\ \hline
+    				Exponencial & 0.50\% \\ \hline
+    				Bootstrap & 0.53\%\\ 
     			\hline
     		\end{tabular}
     		\caption[Resultados imagenes naturales vs Wang]{Tabla comparativa entre el resultado obtenido por Wang para imágenes naturales y los obtenidos en el presente trabajo, utilizando los cuatro umbrales propuestos.}

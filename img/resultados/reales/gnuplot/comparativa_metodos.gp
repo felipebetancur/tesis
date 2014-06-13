@@ -7,6 +7,7 @@ set key box right bottom
 set title 'Comparación de Métodos'
 set xlabel 'Dimension'
 set ylabel 'Accuracy'
+set yrange [0.3:0.55]
 plot './comparativa_metodos.txt' using 1:2 with linespoints title 'media', \
 '' using 1:3 with linespoints title 'mediana', \
 '' using 1:4 with linespoints title 'bootstrap', \
