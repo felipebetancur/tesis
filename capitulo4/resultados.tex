@@ -4,7 +4,7 @@
 \JS{====================}
  Sobre img. reales:
 \begin{itemize}
-	\item discutir(=elegir) valor de alpha
+	\item discutir(=elegir) valor de alpha \RC{Elegimos 0.1}
 	\item evaluar binarización y elegir una de referencia. 5 Gráficas en la misma escala: las cuatro primeras evaluando los distintos esquemas de binarización para las distintas configuraciones de DPG (dimensiones por grupo); la quinta, comparando los distintos esquemas de binarización para una cantidad de PG fija => elegir un valor de DPG para el resto de los experimentos (LA MISMA DIMENSIONALIDAD PARA TODAS LAS CONFIGURACIONES)
 	\item idem evaluando el número de grupos
 \end{itemize}
@@ -59,7 +59,7 @@ Sobre img. sintéticas:
 
 	\subsubsection{Imágenes Reales}
 	
-	En esta parte se van a mostrar cinco gráficos. Los primeros 4 corresponden a los métodos utilizados en la binarización con lo cual se busca ver cual de los 4 arroja mejores resultados. En cada uno estos gráficos hay un \textit{baseline} que corresponde al resultado obtenido por Wang et al. en su trabajo al entrenar y evaluar su clasificador con imagenes reales. El valor del baseline es de $0.54$. Además, los primeros cuatro resultados reflejan la diferencia en performance al considerar grupos de diferente dimensión $\in \{ 1, 2, 4, 8\}$. Con esto buscamos establecer para cada caso que dimensión arroja los mejores resultados. El quinto gráfico \ref{fig: Reales-Comparativa metodos} reune los mejores resultados de clasificación de los cuatro primeros, para establecer una comparación más precisa. La tabla \ref{table: reales-comparativa} se muestra un resumen de los mejores valores.
+	En esta parte se van a mostrar cinco gráficos. Los primeros 4 corresponden a los métodos utilizados en la binarización con lo cual se busca ver cual de los 4 arroja mejores resultados. En cada uno estos gráficos hay un \textit{baseline} que corresponde al resultado obtenido por Wang et al. en su trabajo al entrenar y evaluar su clasificador con imagenes reales. El valor del baseline es de $0.54$. Además, los primeros cuatro resultados reflejan la diferencia en performance al considerar grupos de diferente dimensión $\in \{ 1, 2, 4, 8, 10, 12\}$. Con esto buscamos establecer para cada caso que dimensión arroja los mejores resultados. El quinto gráfico \ref{fig: Reales-Comparativa metodos} reune los mejores resultados de clasificación de los cuatro primeros, para establecer una comparación más precisa. La tabla \ref{table: reales-comparativa} se muestra un resumen de los mejores valores.
 		
 			\begin{figure}[htbp!]
 				\centering

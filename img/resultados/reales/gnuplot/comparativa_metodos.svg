@@ -203,11 +203,11 @@
 	<g transform="translate(562.4,405.7)" style="stroke:none; fill:black; font-family:Verdana; font-size:10.00pt; text-anchor:end">
 		<text>exponencial</text>
 	</g>
-	<path  d='M569.4,402.0 L604.9,402.0 M96.9,232.3 L126.3,167.4 L199.8,100.8 L317.5,82.5 L567.4,90.9  h0.01'/>	<use xlink:href='#gpPt3' transform='translate(96.9,232.3) scale(3.75)'/>
-	<use xlink:href='#gpPt3' transform='translate(126.3,167.4) scale(3.75)'/>
-	<use xlink:href='#gpPt3' transform='translate(199.8,100.8) scale(3.75)'/>
-	<use xlink:href='#gpPt3' transform='translate(317.5,82.5) scale(3.75)'/>
-	<use xlink:href='#gpPt3' transform='translate(567.4,90.9) scale(3.75)'/>
+	<path  d='M569.4,402.0 L604.9,402.0 M96.9,283.9 L126.3,185.7 L199.8,112.5 L317.5,107.5 L567.4,95.9  h0.01'/>	<use xlink:href='#gpPt3' transform='translate(96.9,283.9) scale(3.75)'/>
+	<use xlink:href='#gpPt3' transform='translate(126.3,185.7) scale(3.75)'/>
+	<use xlink:href='#gpPt3' transform='translate(199.8,112.5) scale(3.75)'/>
+	<use xlink:href='#gpPt3' transform='translate(317.5,107.5) scale(3.75)'/>
+	<use xlink:href='#gpPt3' transform='translate(567.4,95.9) scale(3.75)'/>
 	<use xlink:href='#gpPt3' transform='translate(587.1,402.0) scale(3.75)'/>
 </g>
 	</g>
