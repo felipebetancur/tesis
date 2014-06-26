@@ -6,14 +6,14 @@
 	
 	El segundo tipo es el compuesto por imágenes sintéticas, cuyo proceso de creación fue explicado en detalle en la sección \ref{impl_propia}. El grupo de fuentes que se uso para crear los caracteres sintéticos fue extraido del dataset \textit{Chars74K} y consiste en 1000 fuentes por clase con 4 variaciones (combinaciones de itálica, negrita y normal). De este conjunto se crearon 10 divisiones diferentes con el objetivo de observar el impacto que tenía la cantidad de caracteres sintéticos al momento de clasificar imágenes naturales de caracteres segmentados. La cantidad de muestras por clase en cada conjunto de entrenamiento es el siguiente:
 	\begin{itemize}
-		\item Muestras por clase : $\{ 50,100,250,500,1000,2000,3000,5000,7000,10000\}$
+		\item Muestras por clase : $\{ 50,100,250,500,1000,2000\}$
 	\end{itemize}
 
 	 Los resultados son muy interesantes y se van a mostrar en la sección de resultados \ref{subsection:resultados}.
 	
 	El tercer tipo está compuesta por una combinación de los dos primeros conjuntos. El objetivo al momento de crear este, fue ver el impacto en la clasificación si se entranaba al clasificador con una mezcla de ambos grupos, el sintético y el real. Dada la escasa cantidad de imágenes naturales para el entrenamiento (15 en total por cada clase) se decidió por crear 9 conjuntos de entrenamiento donde en cada uno se incorporan diferentes proporciones de imágenes sintéticas a las 15 reales que ya están. La proporción de cada conjunto de entrenamiento está de la siguiente manera: 
 	
-	$$(15-x) x \in \{ 15,30,45,60,100,500,1000,2000,3000 \}$$
+	$$(15-x) x \in \{0,3,8,15,30,75,150,300,750,1500 \}$$
 	
-	El segundo elemento de cada tupla hace referencia a la proporción de caracteres sintéticos. Es fácil observar que a medida que aumentamos la proporción, la cantidad de caracteres naturales se va volviendo cada vez más despreciable. Los resultados son muy interesantes y se procederán a analizar en la última sección del presente capítulo.
+	El segundo elemento de cada tupla hace referencia a la proporción de caracteres sintéticos. Es fácil observar que a medida que aumentamos la proporción, la cantidad de caracteres naturales se va volviendo cada vez más despreciable. El hecho de no considerar imágenes sintéticas inicialmente $(15-0)$ tiene como finalidad el observar el cambio que se produce desde el inicio cuando no hay caracteres sintéticos en el entrenamiento. Los resultados son muy interesantes y se procederán a analizar en la última sección del presente capítulo.
 	

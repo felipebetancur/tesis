@@ -85,9 +85,9 @@
 			\label{fig: Transformacion Afin - Escala}
 		\end{figure}	
 			
-		\paragraph{Inclinación}\JS{Transvección}
+		\paragraph{Transvección}
 		
-			La inclinación es una transformación donde la imagen se ``estira'' horizontalmente \JS{otra forma de decirlo es que rota un solo eje}. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquiera si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
+			La transvección es una transformación donde la imagen se rota en un solo eje. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquiera si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
 			\begin{equation}
 				M = 
 				\begin{bmatrix}
@@ -95,35 +95,26 @@
 					0 & 1 \\
 				\end{bmatrix}.
 			\end{equation}
-		Se puede observar en la figura \ref{fig: Transformacion Afin - Inclinacion} los diferentes efectos de aplicar diferentes valores de $n$ en la aplicación de la inclinación en una imagen.
+		Se puede observar en la figura \ref{fig: Transformacion Afin - Transveccion} los diferentes efectos de aplicar diferentes valores de $n$ en la aplicación de la transvección en una imagen.
 		\begin{figure}[htbp]
 			\centering
-			\subfloat[\label{fig: Imagen inclinacion 1}]{
-				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear1.png} }
-			}
-			\subfloat[\label{fig: Imagen inclinacion 0.5}]{
+			\subfloat[\label{fig: Imagen transveccion 0.5}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear0,5.png} }
 			}
-			\subfloat[\label{fig: Imagen inclinacion 0.2}]{
+			\subfloat[\label{fig: Imagen transveccion 0.2}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear0,20.png} }
 			}
-			\\
-			\subfloat[\label{fig: Imagen inclinacion original}]{
+			\subfloat[\label{fig: Imagen original}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/original.png} }
 			}
-			\\
-			\subfloat[\label{fig: Imagen inclinacion -0.2}]{
+			\subfloat[\label{fig: Imagen transveccion -0.2}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear-0,20.png} }
 			}
-			\subfloat[\label{fig: Imagen inclinacion -0.5}]{
+			\subfloat[\label{fig: Imagen transveccion -0.5}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear-0,5.png} }
 			}
-			\subfloat[\label{fig: Imagen inclinacion -1}]{
-				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear-1.png} }
-			}
-			\caption[Inclinación de un caracter]{Cambio de inclinación de un caracter.}
-			\label{fig: Transformacion Afin - Inclinacion}
-			\JS{5 figuras y en una sola línea}
+			\caption[Transvección de un caracter]{Cambio de transvección de un carácter.}
+			\label{fig: Transformacion Afin - Transveccion}
 		\end{figure}	
 		
 		\paragraph{Traslación}		
