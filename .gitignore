@@ -1,0 +1,9 @@
+#TEX FILES TO IGNORE
+*.log
+*.lof
+*.lot
+*.aux
+*.out
+*.synctex.gz
+*.toc
+*.pdf
