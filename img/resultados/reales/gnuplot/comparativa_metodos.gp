@@ -24,4 +24,4 @@ plot './comparativa_metodos.txt' using 1:2 with linespoints ls 1 title 'media', 
 '' using 1:4:8 with yerrorbars  ls 4 notitle, \
 '' using 1:5 with linespoints ls 8 title 'expon', \
 '' using 1:5:9 with yerrorbars  ls 8 notitle, \
-#'' using 1:8 with lines ls 100 title 'baseline', \
+'' using 10:11 with lines ls 100 title 'NATIVE baseline', \

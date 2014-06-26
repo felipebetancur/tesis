@@ -19,7 +19,7 @@
 
 	\end{itemize}
 	
-	Existen ciertas condiciones por las cuales no se pueden reproducir de manera exacta los resultados obtenidos por Wang et al. en \cite{wang}. La más importante es que el lenguaje usado para implementar el clasificador en el presente trabajo es Python, mientras que los autores usan matlab por lo cual pueden haber ciertas cosas que modifiquen los resultados. Otra de las razones es que en su trabajo no explican el método que utilizan para binarizar los vectores, por lo cual en este trabajo se proponen $4$ métodos alternativos. La última razón tiene que ver con la aparente diferencia en la implementación de la función hog. La implementación en \cite{wang} es la de Piotr Dollar el cual está basado en \cite{DT05}. En este trabajo se usa una implementación obtenida de la libreria scikit-image la cual está basada tambien en \cite{DT05}. Sin embargo, si bien ambas funciones se basan en el mismo trabajo realizado por Dalal \& Triggs, existen ciertas diferencias.
+	Existen ciertas condiciones por las cuales no se pueden reproducir de manera exacta los resultados obtenidos por Wang et al. en \cite{wang}. La más importante es que el lenguaje usado para implementar el clasificador en el presente trabajo es Python, mientras que los autores usan matlab por lo cual pueden haber ciertas cosas que modifiquen los resultados. Otra de las razones es que en su trabajo no explican de manera clara y concisa el método que utilizan para binarizar los vectores, por lo cual en este trabajo se proponen $4$ métodos alternativos. La última razón tiene que ver con la aparente diferencia en la implementación de la función hog. La implementación en \cite{wang} es la de Piotr Dollar el cual está basado en \cite{DT05}. En este trabajo se usa una implementación obtenida de la libreria scikit-image la cual está basada tambien en \cite{DT05}. Sin embargo, si bien ambas funciones se basan en el mismo trabajo realizado por Dalal \& Triggs, existen ciertas diferencias.
 	
 	Ante esta situación se decide por establecer como baseline el resultado obtenido por la configuración más cercana a la usada por los autores en \cite{wang}. Los parámetros usados fueron: $8$ orientaciones y $6$ celdas por bloque para la función HOG; el valor de la longitud de los vectores de características fue establecido en $1536$ y usaron grupos de $6$ bits. En cuanto a la binarización de los vectores, si bien no hay un método concreto, basádo en el código provisto por los autores se pudo deducir que generaban números aleatorios entre $0$ y $1$ para armar el umbral. Para intentar acercarnos lo más posible a esa implementación, se decidió por usar el método bootstrap para afrontar el problema ya que es la función que más se apega a lo que hicieron. Por último, el valor de alpha surge de lo explicado en \ref{subsection:ferns} y es un valor que no está explicitado ni en el paper ni en el código de manera clara. La siguiente tabla muestra los valores luego de calcular la media sobre $5$ experimentos corridos sobre imágenes reales y sintéticas con los parámetros explicados anteriormente. Estos valores van a ser nuestros baselines a superar durante los siguientes experimentos.
 	
@@ -29,7 +29,7 @@
     			\hline
     				\textbf{Implementación} & \textbf{Score} \\ \hline
     				NATIVE+FERNS & 0.42\% \\ \hline
-    				SINT+FERNS & 0.47\% \\
+    				SINT+FERNS & 0.34\% \\
     			\hline
     		\end{tabular}	
     		\caption[Resultados reales y sintéticas para baseline]{Resultados obtenidos al acercarnos a la implementación de Wang et al.}

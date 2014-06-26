@@ -28,4 +28,4 @@ plot './expon.txt' using 1:2 with linespoints ls 1 title '1', \
 '' using 1:6:13 with yerrorbars  ls 10 notitle, \
 '' using 1:7 with linespoints ls 12 title '12', \
 '' using 1:7:14 with yerrorbars  ls 12 notitle, \
-'' using 1:8 with lines ls 100 title 'baseline', \
+'' using 15:16 with lines ls 100 title 'NATIVE baseline', \
