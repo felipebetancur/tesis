@@ -19,30 +19,18 @@
 
 	\end{itemize}
 	
-	Existen ciertas condiciones por las cuales no se pueden reproducir de manera exacta los resultados obtenidos por Wang et al. en \cite{wang}. La más importante es que el lenguaje usado para implementar el clasificador en el presente trabajo es Python, mientras que los autores usan matlab por lo cual pueden haber ciertas cosas que modifiquen los resultados. Otra de las razones es que en su trabajo no explican de manera clara y concisa el método que utilizan para binarizar los vectores, por lo cual en este trabajo se proponen $4$ métodos alternativos. La última razón tiene que ver con la aparente diferencia en la implementación de la función hog. La implementación en \cite{wang} es la de Piotr Dollar el cual está basado en \cite{DT05}. En este trabajo se usa una implementación obtenida de la libreria scikit-image la cual está basada tambien en \cite{DT05}. Sin embargo, si bien ambas funciones se basan en el mismo trabajo realizado por Dalal \& Triggs, existen ciertas diferencias.
+		
+	Esta subsección está dividida en cuatro partes. La primera etapa, está dedicada a mostrar los resultados obtenidos de haber realizado experimentos basándonos en los parámetros obtenidos del trabajo de Wang et al. sobre nuestra implementación del mismo. Estos valores van a conformar los baselines para los siguientes experimentos. 
 	
-	Ante esta situación se decide por establecer como baseline el resultado obtenido por la configuración más cercana a la usada por los autores en \cite{wang}. Los parámetros usados fueron: $8$ orientaciones y $6$ celdas por bloque para la función HOG; el valor de la longitud de los vectores de características fue establecido en $1536$ y usaron grupos de $6$ bits. En cuanto a la binarización de los vectores, si bien no hay un método concreto, basádo en el código provisto por los autores se pudo deducir que generaban números aleatorios entre $0$ y $1$ para armar el umbral. Para intentar acercarnos lo más posible a esa implementación, se decidió por usar el método bootstrap para afrontar el problema ya que es la función que más se apega a lo que hicieron. Por último, el valor de alpha surge de lo explicado en \ref{subsection:ferns} y es un valor que no está explicitado ni en el paper ni en el código de manera clara. La siguiente tabla muestra los valores luego de calcular la media sobre $5$ experimentos corridos sobre imágenes reales y sintéticas con los parámetros explicados anteriormente. Estos valores van a ser nuestros baselines a superar durante los siguientes experimentos.
+	La segunda, corresponde a los resultados obtenidos de haber entrenado y evaluado el clasificador Random Ferns con imágenes de caracteres en escenas naturales. Los gráficos mostrados en esta parte reflejan la relación entre la dimensión de los grupos y la precisión del clasificador.
 	
-	\begin{table}
-		\centering
-	    \begin{tabular}{ | l | l | l | p{5cm} |}
-    			\hline
-    				\textbf{Implementación} & \textbf{Score} \\ \hline
-    				NATIVE+FERNS & 0.42\% \\ \hline
-    				SINT+FERNS & 0.34\% \\
-    			\hline
-    		\end{tabular}	
-    		\caption[Resultados reales y sintéticas para baseline]{Resultados obtenidos al acercarnos a la implementación de Wang et al.}
-    		\label{table: Baseline}
-	\end{table}
-	 
-	Esta subsección está dividida en tres partes. La primera corresponde a los resultados obtenidos de haber entrenado y evaluado el clasificador Random Ferns con imágenes de caracteres en escenas naturales. Los gráficos mostrados en esta parte reflejan la relación entre la dimensión de los grupos y la precisión del clasificador. En las dos subsecciones siguientes la relación pasará a ser entre la precisión del clasificador en relación a la cantidad de imágenes sintéticas por clase.
+	La tercera etapa contiene los resultados de haber reemplazado las imágenes reales del conjunto de entrenamiento por un conjunto de imágenes sintéticas (ver \ref{subsubsection:recon-caracteres}). El objetivo es demostrar como influye en la performance de clasificación al entrenar al clasificador con imágenes sintéticas.
 	
-	La segunda etapa contiene los resultados de haber reemplazado el conjunto de prueba de imágenes reales por un conjunto de imágenes sintéticas (ver \ref{subsubsection:recon-caracteres}). El objetivo es demostrar como influye en la performance de clasificación el entrenar al clasificador con imágenes sintéticas.
+	En la última parte, se procederán a mostrar los resultados de haber modificado al conjunto de entrenamiento de la segunda parte agregándole en diferentes proporciones imágenes sintéticas. Se compara este último enfoque con los anteriores para ver el impacto que produce en la performance dicho cambio.
 	
-	En la última parte, se procederán a mostrar los resultados de haber modificado al conjunto de entrenamiento de la primera parte agregándole en diferentes proporciones imágenes sintéticas. Se compara este último enfoque con los anteriores para ver el impacto que produce en la performance dicho cambio.
+	\subsubsection{Resultados de la implementación propia}
 	
-	A continuación, se puede observar en la tabla \ref{table: Wang paper} los resultados obtenidos por los autores del paper ``End-to-end scene text recognition'' tanto para sus experimentos con imágenes reales como con imágenes sintéticas. En la misma, \textit{NATIVE+FERNS} hace referencia a entrenar al clasificador Random Fern con imágenes nativas o reales. De la misma forma, \textit{SINT+FERNS} hace alusión a entrenar el mismo clasificador con imágenes sintéticas. Estos resultados si bien no constituyen un baseline válido ya que los experimentos son diferentes, están para reflejar la diferencia entre ambas implementaciones.
+	Basados en el paper de Wang et al., se propuso realizar una reimplementación del trabajo realizado por los autores. Teniendo en cuenta los siguientes parámetros conocidos: cantidad de grupos = $256$ y bits por grupo = $6$ (con lo cual obtenemos vectores de características de longitud $1536$), se obtuvieron los resultados que se pueden apreciar en la tabla \ref{table: Baseline-Table}. En la misma, expresamos con ``NATIVE+FERNS'' los resultados obtenidos al haber entrenando y evaluando al clasificador Random Ferns con imágenes reales. De la misma manera, ``SYNTH+FERNS'' refiere a los experimentos donde se usaron $1000$ imágenes sintéticas durante el entrenamiento.
 	
 	\begin{table}
 		\centering
@@ -50,12 +38,21 @@
     			\hline
     				\textbf{Implementación} & \textbf{Score} \\ \hline
     				Wang NATIVE+FERNS & 0.54\% \\ \hline
-    				Wang SINT+FERNS & 0.47\% \\
+    				Impl. propia NATIVE+FERNS & 0.50\% \\ \hline
+    				Wang SYNTH+FERNS & 0.47\% \\ \hline
+    				Impl. propia SYNTH+FERNS & 0.43\% \\
+    				
     			\hline
     		\end{tabular}	
-    		\caption[Resultados reales y sintéticas de Wang]{Resultados obtenidos por Wang et al. en \cite{wang}}
-    		\label{table: Wang paper}
+    		\caption[Resultados reales y sintéticas para baseline]{Resultados obtenidos en la reimplementación del trabajo de Wang et al.}
+    		\label{table: Baseline-Table}
 	\end{table}
+	
+	Como se puede ver en base a los resultados expuestos en la tabla \ref{table: Baseline-Table}, hay diferencias significativas entre los resultados de ambas implementaciones que se deben a varios factores. Existen ciertos parámetros que no están especificados en el trabajo de Wang et al. como es el caso del método de binarización utilizado. Habiendo leido la implementación de los autores, se propuso como método de binarización, la generación de variables aleatorias uniformes. Este enfoque resultó ser el más adecuado debido a que es el que más se asemeja a lo que hicieron los autores en \cite{wang}.	Otro parámetro no especificado fue el valor de \textit{alpha} para la inicialización de las tablas el cual influye en la performance si no se elige bien. Asi mismo, la implementación de HOG que usan los autores es la desarrollada por Piotr Dollár la cual es una variación del método original propuesto por Dalal \& Triggs en \cite{DT05}. En la reimplementación se utiliza la función HOG extraida de una librería de python llamada scikit-images, la cual está basada en \cite{DT05} pero difiere de la usada por los autores. Una de las diferencias entre ambas funciones está en que la desarrollada por Piotr Dollar acepta imágenes a color y la que se usa en este trabajo sólo acepta imágenes en escala de grises.
+	
+	Ante esta situación se decide por establecer como baselines los resultado obtenidos por la configuración más cercana a la usada en \cite{wang}. Teniendo en cuenta los parámetros conocidos, se establecen además los siguientes: $8$ orientaciones y $9$ celdas por bloque para la función HOG; la generación de variables aleatorias uniformes entre dos puntos \textit{a} y \textit{b} como método para la binarización. Por último, el valor de alpha se estableció en $0.01$ pués es el valor que más impacto produjo en estos experimentos.
+	
+	En la siguiente sección, donde se experimentan con imágenes reales, se va a tomar como baseline el valor $0.50$. De la misma manera, en los experimentos con imágenes sintéticas, el baseline pasará a ser $0.43$. Por último, en la sección sobre los experimentos con conjuntos de entrenamiento mixtos se van a mostrar ambos baselines.
 
 	\subsubsection{Imágenes Reales}
 	
@@ -82,26 +79,27 @@
 				\label{fig: Resultados-Reales}
 			\end{figure}
 			
-	Teniendo en cuenta los resultados en \ref{fig: Resultados-Reales}, a simple vista se puede observar que los resultados obtenidos usando la media como método para binarizar los vectores son los mejores, llegando a un $54\%$ de precisión. En el caso opuesto, el usar la mediana arrojó los peores resultados ya que en el mejor de los casos se supera el $47\%$ a diferencia de bootstrap que llega a $51\%$ . El uso de la distribución exponencial en los casos donde la longitud de los grupos es baja ($1$, $2$ bits por grupo) supera a la media en performance pero se mantiene por debajo a medida que aumentamos este valor (casos $\{ 4, 8, 10, 12\}$ bits por grupo). Los valores que podemos encontrar en \ref{fig: Reales-expon} se acercan a los del a media llegando a un máximo en la precisión de $53\%$. En cuanto al uso de bootstrap, se puede apreciar que los resultados se mantienen por debajo de los obtenidos con la distribución exponencial y la media con puntajes que rondan entre $45\%$ y $52\%$.
+	Teniendo en cuenta los resultados en \ref{fig: Resultados-Reales}, a simple vista se puede observar que los resultados obtenidos usando la media como método para binarizar los vectores son los mejores, llegando estos a un máximo cercano al $55\%$ de precisión. En el caso opuesto, el usar la mediana arrojó los peores resultados ya que en el mejor de los casos se supera el $47\%$ a diferencia de bootstrap que llega a $51\%$ . El uso de la distribución exponencial en los casos donde la longitud de los grupos es baja ($1$, $2$ bits por grupo) supera a la media en performance pero se mantiene por debajo a medida que aumentamos este valor (casos $\{ 4, 8, 10, 12\}$ bits por grupo). Los valores que podemos encontrar en \ref{fig: Reales-expon} se acercan a los del a media llegando a un máximo en la precisión de $53\%$. En cuanto al uso de bootstrap, se puede apreciar que los resultados se mantienen por debajo de los obtenidos con la distribución exponencial y la media con puntajes que rondan entre $45\%$ y $52\%$.
 	
-	En cuanto a las dimensiones evaluadas $\{ 240, 480, 1080, 2040, 4080 \}$ es claro que a medida que aumentamos la longitud de los vectores aumenta la performance. Se puede ver que, cuando se usan vectores de longitud reducida (en este caso $240$), se marca una diferencia importante en la precisión entre los experimentos realizados con grupos de dimensionalidad baja $\{ 1, 2, 4 \}$ y alta $\{8, 10, 12\}$. Es decir, dejando fija la dimensión de los vectores en $240$, mientras más chico es el tamaño de los grupos mejor es el resultado (se puede observar en cualquiera de los gráficos en \ref{fig: Resultados-Reales}). En el otro extremo, si usamos grupos de $12$ bits la precisión baja bastante. La misma relación se mantiene a medida que aumentamos el tamaño de los vectores de características hasta cierto punto. Por ejemplo, en \ref{fig: Resultados-Reales} y específicamente en \ref{fig: Reales-media} es claro que a partir del uso de $1080$ como tamaño de vector en adelante, el uso de grupos de longitud mayor arroja mejores resultados. Lo mismo sucede en las otras figuras en diferentes puntos. En cuanto al uso del valor $4080$ como longitud del vector se puede notar como disminuye la brecha entre los valores de los resultados. \RC{Dar una razón por la cual esto pasa}.
+	En cuanto a las dimensiones evaluadas $\{ 240, 480, 1080, 2040, 4080 \}$ es claro que a medida que aumentamos la longitud de los vectores aumenta la performance. Se puede ver que, cuando se usan vectores de longitud reducida (en este caso $240$), se marca una diferencia importante en la precisión entre los experimentos realizados con grupos de dimensionalidad baja $\{ 1, 2, 4 \}$ y alta $\{8, 10, 12\}$. Es decir, dejando fija la dimensión de los vectores en $240$, mientras más chico es el tamaño de los grupos mejor es el resultado (se puede observar en cualquiera de los gráficos en \ref{fig: Resultados-Reales}). En el otro extremo, si usamos grupos de $12$ bits la precisión baja bastante. La misma relación se mantiene a medida que aumentamos el tamaño de los vectores de características hasta cierto punto. Por ejemplo, en \ref{fig: Resultados-Reales} y específicamente en \ref{fig: Reales-media} es claro que a partir del uso de $1080$ como tamaño de vector en adelante, el uso de grupos de longitud mayor arroja mejores resultados. Lo mismo sucede en las otras figuras en diferentes puntos. En cuanto al uso del valor $4080$, se puede ver que no hay un aumento considerable en la performance que lo diferencie del uso de $2040$. Con esto en mente, es conveniente hacer uso de este último valor ya que otorga resultados similares a los calculados con $4080$ usando vectores mucho más chicos incrementando la eficiencia en el cómputo.
 	
-	Otro parámetro a analizar aquí es \textit{alpha} $\in \{ 0.0001, 0.001, 0.01, 0.1, 1\}$. Los mejores resultados de cada método se dieron cuando el valor de \textit{alpha} se estableció en $0.01$ y son los que se muestran en la figura \ref{fig: Resultados-Reales}. Valores por encima $0.01$ o muy cercanos a 0 no llegaron en los experimentos a igualar la precisión obtenida con el valor de \textit{alpha} elegido. Por cuestiones de espacio se decidió mostrar en esta sección los resultados que se obtuvieron con el mejor valor de \textit{alpha}. El resto de los gráficos se pueden encontrar en el apéndice ``B'' con el resto de los resultados de los experimentos. \RC{Hacer apéndice B y explicar como influye alpha en los resultados}.
+	El problema con los vectores binarizados de dimensión reducida, es que almacenan menos información sobre la imagen a comparación de los vectores cuya longitud es mayor. Tal es el caso como se puede observar en \ref{fig: Resultados-Reales}. 
 	
-	Al igual que con el parámetro \textit{alpha}, hay $2$ parámetros que se dejaron fijos y son los relacionados con la función de HOG: la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Se decidió por usar $8$ y $9$ respectivamente ya que dichos valores devuelven los mejores resultados. Las razones por las cuales estos constituyen la mejor configuración escapa al análisis de este trabajo.
+	Otro parámetro a analizar aquí es \textit{alpha} $\in \{ 0.0001, 0.001, 0.01, 0.1, 1\}$. Los mejores resultados de cada método se dieron cuando el valor de \textit{alpha} se estableció en $0.01$ y son los que se muestran en la figura \ref{fig: Resultados-Reales}. Valores por encima $0.01$ o muy cercanos a 0 no llegaron en los experimentos a igualar la precisión obtenida con el valor de \textit{alpha} elegido. Por cuestiones de espacio se decidió mostrar en esta sección los resultados que se obtuvieron con el mejor valor de \textit{alpha}. El resto de los gráficos se pueden encontrar en el apéndice ``B'' con el resto de los resultados de los experimentos. A medida que incrementamos el valor de \textit{alpha}, 
 	
+	Al igual que con el parámetro \textit{alpha}, hay $2$ parámetros que se dejaron fijos y son los relacionados con la función de HOG: la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. Se decidió por usar $8$ y $9$ respectivamente ya que dichos valores devuelven los mejores resultados. 
 	
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/reales/comparativa_metodos.png}
+				\centerline{
+					\includegraphics[scale=0.7]{img/resultados/reales/comparativa_metodos.png}
+				}
 				\caption[Reales comparativa]{El gráfico muestra las mejores curvas de los gráficos presentados en la figura \ref{fig: Resultados-Reales} con la mejor configuración}
 				\label{fig: Reales-Comparativa metodos}
 			\end{figure}
 	
 	Del análisis realizado surge que la mejor configuración está dada por \textit{alpha = $0.01$}, \textit{orientaciones = $8$}, \textit{celdas por bloque = $9$}, \textit{bits por grupo = $4$} y \textit{dimensión del vector = 4080}. Se puede observar en \ref{fig: Reales-Comparativa metodos} las mejores curvas para cada método utilizando la mejor configuración (a excepción de la longitud del vector con el objetivo de ver la curva de crecimiento). Queda claro que la media se puede establecer como el mejor método para la binarización por lo cual en los próximos experimentos se procederá a trabajar con el mismo. De la misma manera la mediana termina siendo el peor método. De este último caso se puede ver que incluso para la mejor configuración tiene a ``aplanarse'' a medida que aumentamos la dimensión del vector característica
 		
-\newpage
-
 	\begin{table}
 		\centering
 		\begin{tabular}{ | l | l | l | p{5cm} |}
@@ -122,68 +120,27 @@
     	\subsubsection{Imágenes Sintéticas}
     	
     En esta etapa se procederán mostrar los resultados obtenidos de los experimentos con las imágenes sintéticas. Además, los gráficos van a representar la relación entre la cantidad de imágenes sintéticas por clase (dado por \textit{IPC} en las siguientes figuras) y la precisión de clasificación dada por los $6$ valores a evaluar que son las dimensiones de los grupos. Teniendo en cuenta los resultados anteriores con las imágenes reales, se decidió por trabajar $8$ orientaciones, $9$ celdas por bloque, alpha de $0.01$ y usando la media como método de binarización ya que son los parámetros que dieron los mejores resultados.
-    
-    Las figuras que se presentan a continuación están organizadas de la siguiente manera. Se van a presentar de manera continua el mejor y el peor resultado para cada experimento utilizando uno de los métodos de binarización. De la misma manera que se hizo para las imágenes reales, se va a incluir un gráfico con las mejores curvas de entre todos los gráficos presentados para que sea más fácil visualizar los mejores resultados.
-
-
+  
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_media_8or3cpb_Alpha1_4080.png}
-				\caption[Sintéticas media mejor resultado]{El gráfico muestra la configuración que devolvió los mejores resultados al utilizar la media en la binarización. Parámetros del mejor resultado: \textit{alpha:1}, \textit{IPC:3000}, \textit{dim grupo: 10}, \textit{dim vector: 4080}}
-				\label{fig: Sinteticas-media-mejor}
-			\end{figure}
-			
-			\begin{figure}[htbp]
-				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_media_8or3cpb_Alpha0,01_240.png}
-				\caption[Sintéticas media bajo resultado]{El gráfico muestra la configuración que devolvió los peores resultados al utilizar la media en la binarización. Parámetros del peor resultado: \textit{alpha:0.01}, \textit{IPC:50}, \textit{dim grupo: 12}, \textit{dim vector: 240}}
-				\label{fig: Sinteticas-media-peor}
-			\end{figure}
-			
-			\begin{figure}[htbp]
-				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/best_expon_8or3cpb_Alpha1_4080.png}
-				\caption[Sintéticas exponencial mejor resultado]{El gráfico muestra la configuración que devolvió los mejores resultados al utilizar la distribución exponencial en la binarización. Parámetros del mejor resultado: \textit{alpha:1}, \textit{IPC:3000}, \textit{dim grupo: 10}, \textit{dim vector: 4080}}
-				\label{fig: Sinteticas-expon-mejor}
-			\end{figure}
-	
-			\begin{figure}[htbp]
-				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/worst_expon_8or3cpb_Alpha0,01_240.png}
-				\caption[Sintéticas exponencial peor resultado]{El gráfico muestra la configuración que devolvió los peores resultados al utilizar la distribución exponencial en la binarización. Parámetros del peor resultado: \textit{alpha:0.01}, \textit{IPC:50}, \textit{dim grupo: 12}, \textit{dim vector: 240}}
-				\label{fig: Sinteticas-expon-peor}
-			\end{figure}
-			
-			
-			\begin{figure}[htbp]
-				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/comparativa_metodos.png}
-				\caption[Sintéticas comparativa métodos]{El gráfico muestra las mejores curvas de los gráficos de cada método. \ref{fig: Sinteticas-media-mejor}~\ref{fig: Sinteticas-median-mejor}~\ref{fig: Sinteticas-expon-mejor} y \ref{fig: Sinteticas-bootstrap-mejor}}
-				\label{fig: Sinteticas-comparativa metodos}
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/mean_4080.png}
+				\caption[Sintéticas media 4080]{El gráfico muestra los resultados obtenidos de haber utilizado la mejor configuración analizada y haciendo uso de vectores binarizados de longitud $4080$}
+				\label{fig: Sinteticas-media-4080}
 			\end{figure}
 
-\newpage
-
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics[scale=0.6]{img/resultados/sinteticas/mean_2040.png}
+				\caption[Sintéticas media 2040]{EEl gráfico muestra los resultados obtenidos de haber utilizado la mejor configuración analizada y haciendo uso de vectores binarizados de longitud $2040$}
+				\label{fig: Sinteticas-media-2040}
+			\end{figure}
+			
 	Hacer texto con las siguientes ideas
 	\begin{itemize}
 		\item En los experimentos con imágenes sintéticas en general a más cantidad de imágenes por clase mayor es la performance de clasificación. Sin embargo llega un punto en que se deja de aumentar la perfomances y en varios casos disminuye despues de cierto punto.
 		\item Es claro que para este tipo de experimentos es mejor tener grupos de dimensiones mayores a los propuestos para las imágenes reales. Analizar que los casos donde los grupos tienen 12 bits la performance decae a comparación de los casos donde los mismo tienen 10 bits.
 		\item Defenitivamente la mediana y bootstrap no son buenos métodos para binarizar.
 	\end{itemize}
-
-	\begin{table}
-		\centering
-		\begin{tabular}{ | l | l | l | p{5cm} |}
-    			\hline
-    				\textbf{SINT(1000) + FERNS} & \textbf{Score} \\ \hline
-    				Media & 0.51\% \\ \hline
-    				Mediana & 0.4\%\\ \hline
-    				Exponencial & 0.5\% \\ \hline
-    				Bootstrap & 0.49\%\\ 
-    			\hline
-    		\end{tabular}
-    		\caption[Resultados imágenes sintéticas vs Wang]{Tabla comparativa entre el resultado obtenido por Wang para imágenes sintéticas y los obtenidos en el presente trabajo, utilizando los mejores resultados entre los cuatro umbrales propuestos. Se consideran para poder realizar la comparación los resultados cuando se evalua al clasificador con 1000 imágenes sintéticas.}
-    	\end{table}
 			
 \newpage
     	\subsubsection{Imágenes Reales y Sintéticas}
