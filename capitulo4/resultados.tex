@@ -78,7 +78,7 @@
 			\begin{figure}[htbp]
 				\centering
 				\centerline{
-					\includegraphics[scale=0.7]{img/resultados/reales/comparativa_metodos.png}
+					\includegraphics[scale=0.6]{img/resultados/reales/comparativa_metodos.png}
 				}
 				\caption[Reales comparativa]{El gráfico muestra las mejores curvas de los gráficos presentados en la figura \ref{fig: Resultados-Reales} con la mejor configuración}
 				\label{fig: Reales-Comparativa metodos}
@@ -111,16 +111,16 @@
   
 			\begin{figure}[htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/sinteticas/mean_2040.png}
+				\centerline{
+					\includegraphics[scale=0.6]{img/resultados/sinteticas/mean_2040.png}
+				}
 				\caption[Sintéticas media 2040]{El gráfico muestra los resultados obtenidos de haber utilizado la mejor configuración analizada y haciendo uso de vectores binarizados de longitud $2040$}
 				\label{fig: Sinteticas-media-2040}
 			\end{figure}
 	
-	En cuanto a los experimentos con imágenes sintéticas, basándonos en los resultados plasmados en la figura \ref{fig: Sinteticas-media-2040}, es interesante observar que a medida que agregamos más imágenes sintéticas por clase sigue aumentando la performance del clasificador en todos los casos. Inicialmente, el crecimiento es más pronunciado hasta llegar a un punto (a partir de las 1000 IPC) en donde el mismo no es tan notable y en algunos casos tiende a ``aplanarse''. En base a esto, no tiene sentido trabajar con más de $1000$ imágenes por clase, pues computacionalmente es más costoso y no se obtiene una precisión que justifique su uso. En el mejor de los casos, al usar grupos de $12$ bits, la diferencia en performance entre usar $1000$ ó $2000$ imágenes por clase es de aproximadamente $0.0045$ o $1$ desviación standard.
+	En cuanto a los experimentos con imágenes sintéticas, basándonos en los resultados plasmados en la figura \ref{fig: Sinteticas-media-2040}, es interesante observar que a medida que agregamos más imágenes sintéticas por clase sigue aumentando la performance del clasificador en todos los casos. Inicialmente, el crecimiento es más pronunciado hasta llegar a un punto (a partir de las 1000 IPC) en donde el mismo no es tan notable y en algunos casos tiende a ``aplanarse''. En base a esto, no tiene sentido trabajar con más de $1000$ imágenes por clase, pues computacionalmente es más costoso y no se obtiene una precisión que justifique su uso. En el mejor de los casos, al usar grupos de $12$ bits, la diferencia en performance entre usar $1000$ ó $2000$ imágenes por clase es de aproximadamente $0.0045$ o $1$ desviación standard. El hecho de que se hayan necesitado $2000$ muestras por clase para alcanzar una performance del $49\%$ también refleja que las imágenes sintéticas no aportan la misma cantidad de información que las reales.
 	
-	A diferencia de lo observado en los experimentos con imágenes reales, en este caso el mejor resultado se obtuvo cuando se trabajó con grupos de $10$ y $12$ bits. Esto se debe a que en estos experimentos manipulamos una gran cantidad de imágenes sintéticas. Si observamos detenidamente el caso donde se experimentan con $15$ imágenes por clase, se puede ver como los grupos de $4$ y $8$ bits son los que dan los mejores resultados tal y como pudimos observar con anterioridad en los experimentos con imágenes reales. Con esto, podemos decir que a medida que incrementamos el conjunto de entrenamiento lo suficiente, los grupos de mayor dimensionalidad ($10$ y $12$ bits) adquieren mayor relevancia. El hecho de que se hayan necesitado $2000$ muestras por clase para alcanzar una performance del $49\%$ también refleja que las imágenes sintéticas no aportan la misma cantidad de información que las reales. \RC{ver bien esta última oración}
-	
-	Por último, en cuanto a la comparación con el baseline obtenido en \ref{subsubsection: baseline-propio}, los resultados en la mayoría de los casos son superiores incluso habiendo entrenado al clasificador con menos imágenes por clase.
+	Por último, en cuanto a la comparación con el baseline obtenido en \ref{subsubsection: baseline-propio}, los resultados en la mayoría de los casos son superiores incluso habiendo entrenado al clasificador con menos imágenes por clase ($\leq 1000$).
 			
 \newpage
     	\subsubsection{Imágenes Reales y Sintéticas}
@@ -131,7 +131,9 @@
 	
 			\begin{figure}[!htbp]
 				\centering
-				\includegraphics[scale=0.6]{img/resultados/mixtas/best_mean_2040.png}
+				\centerline{
+					\includegraphics[scale=0.6]{img/resultados/mixtas/best_mean_2040.png}
+				}
 				\caption[Mixtas media mejor resultado]{El gráfico muestra la configuración que devolvió los mejores resultados.}
 				\label{fig: Mixtas-media-mejor}
 			\end{figure}
