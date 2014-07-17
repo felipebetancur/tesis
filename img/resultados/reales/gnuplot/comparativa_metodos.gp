@@ -1,10 +1,9 @@
-set terminal svg size 640,480 fname 'Verdana' fsize 10
+set terminal svg size 640,480 fname 'Verdana' fsize 14
 set object 1 rect from screen 0, 0, 0 to screen 1, 1, 0 behind
 set object 1 rect fc  rgb 'white' fillstyle solid 1.0
 set output './comparativa_metodos.svg'
 set grid
 set key box right bottom
-set title '8or3cpb_Alpha0.01'
 set yrange [:0.56] 
 set xlabel 'Dimensión'
 set ylabel 'Precisión'
@@ -14,7 +13,7 @@ set style line 4  lc rgb 'green' lt 1 lw 1.2
 set style line 8  lc rgb 'dark-violet' lt 1 lw 1.2
 set style line 10  lc rgb 'orange' lt 1 lw 1.2
 set style line 12  lc rgb 'cyan' lt 1 lw 1.2
-set style line 100  lc rgb 'black' lt 1 lw 1.2
+set style line 100 lc rgb 'black' pt 3   # star
 
 plot './comparativa_metodos.txt' using 1:2 with linespoints ls 1 title 'media', \
 '' using 1:2:6 with yerrorbars  ls 1 notitle, \
@@ -24,4 +23,4 @@ plot './comparativa_metodos.txt' using 1:2 with linespoints ls 1 title 'media', 
 '' using 1:4:8 with yerrorbars  ls 4 notitle, \
 '' using 1:5 with linespoints ls 8 title 'expon', \
 '' using 1:5:9 with yerrorbars  ls 8 notitle, \
-'' using 10:11 with lines ls 100 title 'NATIVE baseline', \
+"<echo '1536 0.50'" with points ls 100 title 'baseline', \
