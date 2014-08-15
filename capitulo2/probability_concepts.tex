@@ -1,6 +1,6 @@
 \subsubsection{Conceptos de probabilidad y notación}
 	\RC{Reformular todo}
-	A continuación se introducirán algunos conceptos de probabilidad, que serán de utilidad en el desarrollo de las secciones posteriores.
+	A continuación se introducirán algunos conceptos de probabilidad que serán de utilidad en el desarrollo de las secciones posteriores.
 
 	\paragraph*{Variables aleatorias discretas} ~\\
 
@@ -20,12 +20,12 @@
 	
 		Se define la probabilidad del evento conjunto A y B como sigue:
 		\begin{align}
-			p(A,B) = p(A \land B) = p(A|B)p(B)
+			p(A,B) = p(A \land B)
 		\end{align}
 
 		A esta ecuación se la llama \textit{regla del producto}. Dada la distribución conjunta en dos eventos p(A,B), se define la ``distribución marginal'' de la variable aleatoria $A$ de la siguiente manera:
 		\begin{align}
-			p(A)=\sum_{b}p(A|B=b)p(B=b)
+			p(A)=\sum_{b}p(A,B=b)
 		\end{align}
 		donde se asumen todos los estados posibles de B. Se puede definir p(B) de forma similar. A esta ecuación se la denomina regla de la suma o la regla de la probabilidad total.
 		
@@ -46,14 +46,14 @@
 
 	\paragraph*{Independencia e independencia condicional} ~\\
 	
-		Se dice que $X$ e $Y$ son \textit{incondicionalmente independientes} o \textit{marginalmente independientes}, denotado como $X \bot Y$	, si se puede representar la unión como el producto de dos marginales, es decir,
+		Se dice que $X$ e $Y$ son independientes denotado como $X \bot Y$	, si se puede representar la unión como el producto de dos marginales, es decir,
 	\begin{align}
 		X \bot Y \Longleftrightarrow p(X,Y) = p(X)p(Y)
 	\end{align}			
 			
 		En general, se dice que un conjunto de variables es mutuamente independiente si la unión puede ser escrita como producto de marginales.
 		
-		Desafortunadamente, la independencia incondicional es rara, porque la mayoría de las variables pueden influir en la mayoría de las otras variables. Sin embargo, usualmente esta influencia se da a través de otras variables en vez de ser directa. Por lo tanto se dice que $X$ e $Y$ son \textit{condicionalmente independientes} dada $Z$ si y solo si la unión condicional puede ser escrita como producto de marginales condicionales:
+		Desafortunadamente, la independencia es rara, porque la mayoría de las variables pueden influir en la mayoría de las otras variables. Sin embargo, usualmente esta influencia se da a través de otras variables en vez de ser directa. Por lo tanto se dice que $X$ e $Y$ son \textit{condicionalmente independientes} dada $Z$ si y solo si la unión condicional puede ser escrita como producto de marginales condicionales:
 		\begin{align}
 			X \bot Y|Z \Longleftrightarrow p(X,Y|Z) = p(X|Z)p(Y|Z)
 		\end{align}
