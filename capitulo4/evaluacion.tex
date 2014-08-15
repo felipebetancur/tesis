@@ -1,4 +1,11 @@
 \subsection{Métricas y Protocolo de Evaluación}
+\label{subsection:evaluacion}
 
 
-	El dataset utilizado para los experimentos es \textit{Chars74k-15} que es una variación del dataset \textit{Chars74k}. El mismo, consta de un conjunto de entrenamiento y uno de prueba con 15 imágenes por clase cada uno (de 62 clases en total). En \textit{Chars74k} las imágenes reales de los caracteres están divididas en 2 grupos: las imágenes buenas y las malas. La diferencia radica, básicamente, en la calidad de la imagen provista. Las imágenes son de diferentes tamaño pero en el presente trabajo se las procesa para que tengan las mismas dimensiones. Tanto el conjunto de prueba como el de entranamiento tienen una mezcla de imágenes buenas y mala y ambos conjuntos son disjuntos.  Lo que se busca calcular sobre el conjunto de evaluación, es el grado de precisión del clasificador al haber entrenado al mismo con el conjunto de entrenamiento descripto.
+	El dataset utilizado para los experimentos es \textit{Chars74k} creado por T. E. Campos et al. en \cite{dCBV09}. El mismo consta de imágenes de caracteres: de escenas naturales, sintéticos provenientes de fuentes de computadora y manuscritos.
+	
+	Para los experiementos con imágenes reales, se utiliza un variación del dataset llamado \textit{Chars74k-15}. Este último consta de un conjunto de entrenamiento y uno de prueba con 15 imágenes por clase cada uno (de 62 clases en total). Las imágenes reales de los caracteres están divididas en 2 grupos: buenas y malas. La diferencia radica, básicamente, en la calidad de la imagen provista. Las imágenes son de diferentes tamaño pero en el presente trabajo se las procesa para que tengan las mismas dimensiones. Tanto el conjunto de prueba como el de entranamiento tienen una mezcla de imágenes buenas y mala y ambos conjuntos son disjuntos. Cabe aclarar que el conjunto de evaluación descripto, se mantiene fijo durante todos los experimentos que se realizan en este trabajo.
+	
+	Para las pruebas con imágenes sintéticas, se utilizan los caracteres de fuentes de computadora provistos por el dataset a los cuales se los altera como se explica en la sección \ref{subsection:impl_propia}.
+	
+	Lo que se busca calcular sobre el conjunto de evaluación, es el grado de precisión del clasificador al haber entrenado al mismo con los conjuntos de entrenamiento explicados.

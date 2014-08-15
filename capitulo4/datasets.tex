@@ -1,19 +1,17 @@
-\subsection{Datasets}
+\subsection{Conjuntos de Entrenamiento}
 
-	En esta sección se va a discutir sobre los diferentes tipos de conjuntos de entrenamientos usados en los experimentos. El proceso de creación de la mayoría de ellos está explicado en la sección \ref{subsection:impl_propia}.
+	En esta sección se va a discutir los diferentes conjuntos de entrenamientos usados en los experimentos. En las evaluaciones se trabaja básicamente con 3 conjuntos.
 	
-	En los experimentos se trabajan básicamente con 3 tipos de conjuntos. El primero es el compuesto por puras imágenes de caracteres segmentados de escenas naturales, denominado \textit{Chars74K} el cual fue creado por T. E. Campos et al. en \cite{dCBV09}. En el trabajo se usa una versión más restringida \textit{Chars74K-15} el cual provee un conjunto de entrenamiento y otro de prueba con aproximadamente 15 imágenes cada uno. Durante todos los experimentos, si bien el conjunto de entrenamiento varía, el conjunto de prueba es el mismo y consta de 15 imágenes por clase extraidos del dataset mencionado.
+	El primero, es el compuesto sólo por imágenes de caracteres segmentados de escenas naturales.
 	
-	El segundo tipo es el compuesto por imágenes sintéticas, cuyo proceso de creación fue explicado en detalle en la sección \ref{impl_propia}. El grupo de fuentes que se uso para crear los caracteres sintéticos fue extraido del dataset \textit{Chars74K} y consiste en 1000 fuentes por clase con 4 variaciones (combinaciones de itálica, negrita y normal). De este conjunto se crearon 10 divisiones diferentes con el objetivo de observar el impacto que tenía la cantidad de caracteres sintéticos al momento de clasificar imágenes naturales de caracteres segmentados. La cantidad de muestras por clase en cada conjunto de entrenamiento es el siguiente:
+	El segundo conjunto es el armado con imágenes sintéticas, cuyo proceso de creación fue explicado en detalle en la sección \ref{subsection:impl_propia}. El grupo de imágenes de fuentes que se usa para crear los caracteres sintéticos fue extraído del dataset mencionado anteriormente en \ref{subsection:evaluacion} y consiste en 1000 imágenes por clase. De este conjunto se crearon 6 variaciones diferentes, con el objetivo de observar el impacto que tiene la cantidad de caracteres sintéticos al momento de clasificar imágenes de caracteres naturales. La cantidad de muestras por clase (variaciones) en cada conjunto de entrenamiento es el siguiente:
 	\begin{itemize}
-		\item Muestras por clase : $\{ 50,100,250,500,1000,2000\}$
+		\item Muestras por clase : $ mpc \in \{ 50,100,250,500,1000,2000\}$
 	\end{itemize}
 
-	 Los resultados son muy interesantes y se van a mostrar en la sección de resultados \ref{subsection:resultados}.
+	El tercer tipo está compuesto por una combinación de los dos primeros conjuntos. Se creó con la finalidad de observar el impacto en la clasificación de integrar en diferentes proporciones imágenes sintéticas y reales al conjunto de entrenamiento. Dada la escasa cantidad de imágenes naturales para el entrenamiento (15 en total por cada clase) se busca complementar esto integrando datos sintéticos. Por consiguiente se decide crear 9 conjuntos de entrenamiento donde en cada uno se incorporan diferentes proporciones de imágenes sintéticas a las 15 reales que existentes. La proporción de cada conjunto de entrenamiento es de la siguiente manera: 
 	
-	El tercer tipo está compuesta por una combinación de los dos primeros conjuntos. El objetivo al momento de crear este, fue ver el impacto en la clasificación si se entranaba al clasificador con una mezcla de ambos grupos, el sintético y el real. Dada la escasa cantidad de imágenes naturales para el entrenamiento (15 en total por cada clase) se decidió por crear 9 conjuntos de entrenamiento donde en cada uno se incorporan diferentes proporciones de imágenes sintéticas a las 15 reales que ya están. La proporción de cada conjunto de entrenamiento está de la siguiente manera: 
+	$$(15, x) x \in \{0,3,8,15,30,75,150,300,750,1500 \}$$
 	
-	$$(15-x) x \in \{0,3,8,15,30,75,150,300,750,1500 \}$$
-	
-	El segundo elemento de cada tupla hace referencia a la proporción de caracteres sintéticos. Es fácil observar que a medida que aumentamos la proporción, la cantidad de caracteres naturales se va volviendo cada vez más despreciable. El hecho de no considerar imágenes sintéticas inicialmente $(15-0)$ tiene como finalidad el observar el cambio que se produce desde el inicio cuando no hay caracteres sintéticos en el entrenamiento. Los resultados son muy interesantes y se procederán a analizar en la última sección del presente capítulo.
+	El primer elemento de la tupla $(15, x)$ corresponde a la cantidad de imágenes reales, cuyo valor es fijo. El segundo elemento de la tupla hace referencia a la proporción de caracteres sintéticos. Es fácil observar que a medida que aumentamos la proporción, la cantidad de caracteres naturales se va volviendo cada vez más despreciable. El hecho de no considerar imágenes sintéticas inicialmente $(15,0)$ tiene como finalidad el observar el cambio que se produce desde el inicio cuando no hay caracteres sintéticos en el entrenamiento. Los resultados se analizan en la última sección del presente capítulo.
 	
