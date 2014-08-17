@@ -1,7 +1,7 @@
 \subsection{Arquitectura del sistema}
 \label{subsection:impl_propia}
 
-	El presente trabajo, como se dijo con anterioridad, sienta sus bases en el trabajo realizado por Wang et al. salvo que el enfoque del mismo se centra en los problemas de reconocmiento de caracteres y el reconocimiento de palabras. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver ambos problemas.
+	El enfoque del presente trabajo se centra en los problemas de reconocmiento de caracteres y el reconocimiento de palabras. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver ambos problemas.
 
 	\subsubsection{Reconocimiento de caracteres}
 	\label{subsubsection:recon-caracteres}
@@ -113,7 +113,7 @@
 			\subfloat[\label{fig: Imagen transveccion -0.5}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/shear-0,5.png} }
 			}
-			\caption[Transvección de un caracter]{Cambio de transvección de un carácter.}
+			\caption[Transvección de un caracter]{Transvección de un carácter.}
 			\label{fig: Transformacion Afin - Transveccion}
 		\end{figure}	
 		
@@ -134,10 +134,10 @@
 			\end{equation*}
 		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. Particularmente no usamos esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen.
 		
-		
+		\paragraph{Otras transformaciones:} ~\\
 		\paragraph{Suavizado Gaussiano}
 		
-			Es una técnica que consta de la difuminación de una imagen a partir de la aplicación de una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dados das las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente
+			Es una técnica que consta de la difuminación de una imagen a partir de la convolución con una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dados das las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente
 			\begin{align*}
 				G(x,y) = \frac{1}{2\pi\sigma^2}\epsilon^{-\frac{x^2+y^2}{2\sigma^2}}
 			\end{align*}
@@ -199,7 +199,7 @@
 			\label{fig: Imagen anexos}
 		\end{figure}
 
-			La creación de estos datos sintéticos son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K-15}, a las cuales no se les modifico en absoluto. Esto es debido a que los experimentos de evaluación del clasificador que se realizen tienen que poder ser comparados con los de Wang et al. en iguales condiciones.
+			La creación de estos datos sintéticos son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K-15}, a las cuales no se les modifico en absoluto.
 
 
 		\paragraph{Entrenamiento del clasificador}  ~\\

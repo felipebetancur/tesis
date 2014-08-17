@@ -139,7 +139,7 @@
 \newpage
     	\subsubsection{Imágenes Reales y Sintéticas}
 
-	Por último se van a mostrar los resultados correspondientes de haber entrenado al clasificador con conjuntos de entrenamiento mixtos. Se procederá a mostrar el gráfico con la mejor configuración. También se mostrarán las matrices de correlación para este caso. Teniendo en cuenta el análsis anterior, se van a mostrar el resultado de haber utilizado solamente la media como umbral ya que fue la que retornó los mejores valores.
+	Por último se van a mostrar los resultados correspondientes de haber entrenado al clasificador con conjuntos de entrenamiento mixtos. Se procederá a mostrar el gráfico con la mejor configuración. También se mostrarán las matrices de confusión para este caso. Teniendo en cuenta el análsis anterior, se van a mostrar el resultado de haber utilizado solamente la media como umbral ya que fue la que retornó los mejores valores.
 
 	El gráfico a continuación presenta el eje \textit{x} en escala logarítmica para poder apreciar mejor las variaciones que se dan al experimentar con valores cercanos entre sí.
 
@@ -160,7 +160,7 @@
 
 	Uno de los análisis más interesantes del trabajo, pasa por los errores de clasificacion que se han observado. En las figuras \ref{fig: Mixtas-Matrix-media-mejor} y \ref{fig: MatrizIns-Mixtas-media-mejor}, se pueden ver dos matrices de confusión. La primer corresponde al mejor resultado obtenido en la figura \ref{fig: Mixtas-media-mejor} y la segunda es una versión de la primera donde no diferenciamos caracteres mayúsculas de minúsculas.
 
-	En la región central, dada por la diagonal de la matriz, se encuentran las muestras que fueron bien clasificadas durante la evaluación del clasificador. Existen zonas dentro de la diagonal que corresponden a clases que obtuvieron una tasa de acierto inferior al $30\%$ (los cuadrados en escala de azul dentro de la imagen). En estas clases son más comunes los siguientes errores de clasificación:
+	En la región central, dada por la diagonal de la matriz, se encuentran las muestras que fueron bien clasificadas durante la evaluación del clasificador. Existen zonas dentro de la diagonal que corresponden a clases que obtuvieron una tasa de acierto inferior al $30\%$ (los cuadrados en escala de azul dentro de la imagen). En estas clases son más comunes los siguientes errores:
 
 	\begin{itemize}
 		\item No poder distinguir mayúsculas de minúsculas para los caracteres involucrados. En la figura \ref{fig: Error-CaseSensitive} se puede observar un ejemplo donde, incluso para las personas, es difícil notar la diferencia.
