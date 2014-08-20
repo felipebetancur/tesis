@@ -19,7 +19,9 @@
 \newcommand{\FL}[1]{\textcolor{Green}{\bf FL: #1}}
 \newcommand{\JS}[1]{\textcolor{YellowOrange}{\bf JS: #1}}
 \newcommand{\oldnew}[2]{\textcolor{BrickRed}{\bf #2} \textcolor{Gray}{OLD: #1}}
-
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
 \begin{document}
 
 	%\input{titulo_abstract/titulo.tex}
