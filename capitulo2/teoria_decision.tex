@@ -13,7 +13,7 @@
 
 	Ahora podemos interpretar $p(C_k)$ como la probabilidad a priori para la clase $C_k$, y $p(C_k|x)$ como la correspondiente probabilidad a posteriori. Por ejemplo, $p(C_1)$ representa la probabilidad de pertenecer a la clase $C_1$, antes de observar la muestra $x$
 	
-	Se pueden distinguir dos etapas en el problema de clasificación, la \textit{etapa de inferencia} en el cual se usan los datos para entrenar el modelo para $p(C_k|x)$, y la subsecuente \textit{etapa de decisión} en la cual se usan las probabilidades a posteriori para poder realizar asignaciones óptimas de las clases. Una alternativa, es la de resolver ambos problemas en conjunto y simplemente entrenar una función que mapee las entradas $x$ directamente con las decisiones. Dicha función es llamada \textit{función discriminante}.
+	Se pueden distinguir dos etapas en el problema de clasificación, la \textit{etapa de inferencia} en el cual se usan los datos para entrenar el modelo para $p(C_k|x)$, y la subsecuente \textit{etapa de decisión} en la cual se usan las probabilidades a posteriori para poder asignar las clases de manera optima. Una alternativa, es la de resolver ambos problemas en conjunto y simplemente entrenar una función que mapee las entradas $x$ directamente con las decisiones. Dicha función es llamada \textit{función discriminante}.
 	
 	De hecho, se pueden identificar tres enfoques diferentes al momento de resolver problemas de decisión. En orden decreciente de complejidad, estos son:
 		\begin{enumerate}
