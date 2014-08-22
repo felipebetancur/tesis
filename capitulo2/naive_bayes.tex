@@ -4,7 +4,7 @@
 
 	El modelo para un clasificador es:
 		$$p(C \vert F_1,\dots,F_n)$$
-	sobre una variable dependiente C, con un pequeño número de resultados (o clases). Esta variable está condicionada por varias variables independientes desde $F_1$ a $F_n$. El problema es que si el número $n$ de variables independientes es grande (o cuando éstas pueden tomar muchos valores), entonces basar este modelo en tablas de probabilidad se vuelve imposible. Por lo tanto el modelo se reformula para hacerlo más manejable:
+	sobre una variable dependiente C, con un pequeño número de resultados (o clases). Esta variable está condicionada por varias variables independientes desde $F_1$ a $F_n$. El problema es que si el número $n$ de variables independientes es grande (o cuando éstas pueden tomar muchos valores), entonces basar este modelo en tablas de probabilidad se vuelve imposible ya que, por ejemplo, si hubiesen $8$ variables independientes con $3$ valores posibles cada una entonces habrían $6561$ valores posibles distribuidos en múltiples tablas lo cual lo hace poco manipulable. Por lo tanto el modelo se reformula para hacerlo más manejable:
 Usando el teorema de Bayes se escribe:
 		\begin{align*}
 		p(C \vert F_1,\dots,F_n) = \frac{p(C) \ p(F_1,\dots,F_n\vert C)}{p(F_1,\dots,F_n)}.
