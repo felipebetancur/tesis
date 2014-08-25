@@ -23,7 +23,7 @@
 		\begin{align}
 			p_{k,c_i} = P(F_m = k | C = c_i)
 		\end{align}
-		donde se simplifica la notación considerando que $F_m$ es igual a $k$ si el número en base $2$ formado por los features binarios de $F_m$ tomados en secuencia es igual a $k$. Con esta convención, ferns puede tomar $K=2^S$ valores, y para cada uno, es necesario estimar $p_{k,c_i}, k=1,2,\dots,K$ bajo la restricción
+		donde se simplifica la notación considerando que $F_m$ es igual a $k$ si el número en base $2$ formado por los features binarios de $F_m$ tomados en secuencia es igual a $k$. Con esta convención, cada ``fern'' puede tomar $K=2^S$ valores, y para cada uno, es necesario estimar $p_{k,c_i}, k=1,2,\dots,K$ bajo la restricción
 		\begin{align*}
 			\sum_{k=1}^Kp_{k,c_i} = 1
 		\end{align*}		
@@ -35,8 +35,8 @@
 		donde $N_{k,c_i}$ es el número de muestras de entrenamiento de la clase $c_i$ y $N_{c_i}$ es el número total de muestras para la clase $c_i$. Estos parámetros por lo tanto, pueden ser estimados para cada fern independientemente.
 		
 		En la práctica sin embargo, este simple esquema da pobres resultados porque si ninguna muestra de entrenamiento para la clase $c_i$ evalua a $k$, lo cual puede pasar con facilidad cuando el número de muestras no es infinitamente largo, ambos $N_{k,c_i}$ y $p_{k,c_i}$ serán cero. Dado que se multiplica $p_{k,c_j}$ por todos los ferns, esto implica que, si el fern evalua a $k$, la correspondiente muestra nunca va a ser asociada a la clase $c_i$, sin importar la respuestas de los otros ferns. Para superar este problema, se considera $p_{k,c_i}$ de la siguiente manera
-		\begin{align*}
+		\begin{align}
 			\label{eq:Laplace-Smoothing}
 			p_{k,c_i} = \frac{N_{k,c_i} + N_r}{N_{c_i} + K \times N_r},
-		\end{align*}
-		donde $N_r$ representa un término de regularización. Si una muestra con un valor específico de fern no se encuentra durante el entrenamiento, este esquema, aún le va a asignar un valor distinto de cero a la probabilidad correspondiente.
+		\end{align}
+		donde $N_r$ representa un término de regularización. La ecuación \ref{eq:Laplace-Smoothing} usa la técnica de \textit{suavizado de Laplace} (\textit{Laplace smoothing}, por su traducción al inglés) que es usada en estadística para suavizar datos categóricos. Si una muestra con un valor específico de fern no se encuentra durante el entrenamiento, este esquema, aún le va a asignar un valor distinto de cero a la probabilidad correspondiente.
