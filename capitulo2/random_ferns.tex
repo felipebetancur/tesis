@@ -17,7 +17,7 @@
 		\begin{align}\label{eq:class2}
 			P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{k=1}^MP(F_k \vert C=c_i)
 		\end{align}
-		donde $F_k = \{ f_{\sigma(k,1)},f_{\sigma(k,2)},\dots,f_{\sigma(k,S)}, k=1,\dots,M$ representa el $k^{th}$ fern y $\sigma(k,j)$ es una función de permutación aleatoria con rango $1,\dots,N$. De ahí que se sigue un enfoque bayesiano Semi-Na\"{i}ve modelando algunas de las dependencias entre características.
+		donde $F_k = \{ f_{\sigma(k,1)},f_{\sigma(k,2)},\dots,f_{\sigma(k,S)}, k=1,\dots,M \}$ representa el $k^{th}$ fern y $\sigma(k,j)$ es una función de permutación aleatoria con rango $1,\dots,N$. De ahí que se sigue un enfoque bayesiano Semi-Na\"{i}ve modelando algunas de las dependencias entre características.
 
 		La fase de entrenamiento estima la probabilidad condicional de clase $P(F_m|C=c_i)$ para cada fern $F_m$	 y cada clase $c_i$, como está descripto en la ecuación \ref{eq:class2}. Para cada fern $F_m$ escribimos estos términos como:
 		\begin{align}
