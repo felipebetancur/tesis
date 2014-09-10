@@ -1,15 +1,4 @@
 \subsection{Reconocimiento de palabras}
-	\begin{itemize}
-		\item Introducción a Pictorial Structures (Teoría)
-		\item Uso de PS + Lexicón
-		\begin{itemize}
-			\item Algoritmo PLEX
-		\end{itemize}
-		\item Re-scoring y NMS
-		\begin{itemize}
-			\item Problemas con PLEX
-		\end{itemize}
-	\end{itemize}
 	
 	Para detectar palabras en una imagen, uno de los métodos que usan Wang et al., son las \textit{estructuras pictóricas} (\textit{pictorial structures}, de su traducción al inglés). Este enfoque toma las ubicaciones y puntajes de los caracteres detectados como entrada y encuentra la configuración óptima de una palabra específica. Formalmente, dada una palabra $w=(c_1,\dots , c_n)$ de $n$ caracteres de un lexicón, sea $L_i$ el conjunto de ubicaciones detectadas para el $i$-esimo carácter de $w$, y $u(l_i, c_i)$ sea puntuación de una detección particular en la ubicación $l_i \in L_i$ (obtenida a través del clasificador Random Ferns). La idea de este método, como ya se dijo, es obtener una configuración óptima $L^{*}=(l_1^{*}, \dots, l_n{*})$ optimizando la siguiente función:
 	\begin{align}

@@ -2,19 +2,19 @@
 
 	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, el texto adquirido en entornos naturales (también referido como texto de escena) se ha vuelto más frecuente. Todo esto debido al aumento de dispositvos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
 	
-	Con la salida del primer dataset público denominado \textit{ICDAR} en 2003, los autores del mismo lo establecieron como punto común de referencia. Esto fue con el objetivo de ver cual era el estado del arte de los algoritmos de reconocimiento de texto en imágenes naturales. Ellos observaron, que habían imágenes con texto que los motores de OCR del momento no podían procesar. Decidieron entonces dividir el problema general que era reconocer palabras en imágenes naturales en tres subproblemas:
+	Con la salida del primer dataset público denominado \textit{ICDAR} en 2003, los autores del mismo lo establecieron como punto común de referencia. Esto fue con el objetivo de ver cual era el estado del arte de los algoritmos de reconocimiento de texto en imágenes naturales. Observaron que habían imágenes con texto que los motores de OCR del momento no podían procesar, por lo tanto, decidieron dividir el problema general que era reconocer palabras en imágenes naturales en tres subproblemas:
 	\begin{itemize}
 		\item La clasificación de caracteres recortados.
-		\item Detección de texto en la imagen completa.
+		\item Detección de zonas con texto en la imagen completa.
 		\item El reconocimiento de palabras recortadas.
 	\end{itemize}
 	
-	Dada esta problemática, los autores se enfocaron en el problema del reconocimiento de texto. Para poder encarar esto, incorporaron una lista de palabras (i.e., un lexicón) para detectar y leer.
+	Dada esta problemática, Wang et al. se enfocaron en cada uno de los subproblemas. Para poder encarar esto, incorporaron una lista de palabras (i.e., un lexicón) para detectar y leer.
 		
-	Para esto, ellos construyen y evaluan dos sistemas. El primero consiste en un pipeline de dos etapas que consiste en la detección de texto seguido del reconocimiento a partir de un destacado motor de OCR. El segundo, es un sistema arraigado en el reconocimiento de objetos genéricos, el cual es una extensión de un trabajo que realizaron anteriormente \cite{WB10}.
+	Para esto, ellos construyen y evaluan dos sistemas. El primero consiste en un pipeline de dos etapas que se basa en la detección de texto seguido del reconocimiento a partir de un destacado motor de OCR. El segundo, es un sistema arraigado en el reconocimiento de objetos genéricos, el cual es una extensión de un trabajo que realizaron anteriormente \cite{WB10}.
 	
 	Sus contribuciones son las siguiente:
 		\begin{itemize}
-			\item Evaluan la performance en la detección y el reconocimiento de palabras de un enfoque de dos etapas que consiste en un detector de texto (que es estado del arte) y un destacado motor de OCR.
+			\item Evaluan la performance en la detección y el reconocimiento de palabras de un enfoque de dos etapas que consiste en un detector de texto (que es estado del arte) y un motor de OCR.
 			\item Construyen un sistema basado en su trabajo anterior \cite{WB10} y muestran que sus pipelines de reconocimiento realizan una mejor tarea a comparación al pipeline convencional de OCR.
 		\end{itemize}

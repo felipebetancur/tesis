@@ -4,8 +4,10 @@
 	El enfoque del presente trabajo se centra en los problemas de reconocmiento de caracteres y el reconocimiento de palabras. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver ambos problemas.
 
 	\subsubsection{Reconocimiento de caracteres}
-	\label{subsubsection:recon-caracteres}
-		\paragraph{Pipeline de procesamiento} ~\\
+		\label{subsubsection:recon-caracteres}
+	
+	
+	\paragraph{Pipeline de procesamiento} ~\\
 
 			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la siguiente imagen:
 
@@ -16,11 +18,16 @@
 				\label{fig: Pipeline de mi sistema}
 			\end{figure}
 
+		\paragraph{Conjunto de entrenamiento} ~\\
+		
+			La primera etapa de este pipeline de procesamiento es la obtención de un conjunto de entrenamiento que se va a utilizar para entrenar al clasificador. Es imporante tener una buena cantidad de imágenes ya que esto impacta en la performance de reconocimiento. Este trabajo hace uso del dataset \textit{Chars74k} \cite{dCBV09} del cual se generan todos los conjuntos de entrenamiento que se utilizan en los experimentos. Se destacan dos grupos de imágenes al momento de entrentar, el de  caracteres segmentados de escenas naturales y el de caracteres sintéticos. El primer grupo viene incluido en el dataset nombrado, en cambio, el segundo tiene que ser generado como se procederá a explicar a continuación.
+			
+
 		\paragraph{Generación de datos sintéticos} ~\\
 
 			La datos sintéticos que se generan y utilizan en este trabajo son extraidos del dataset \textit{Chars74K} el cual está compuesto, entre otras cosas, por 62992 imágenes de caracteres sintéticos extraidos de fuentes de computadora. Cada una de las clases involucradas en la clasificación tienen un poco más de 1000 de estas imágenes (son 62 clases en total). El objetivo detrás de la generación de estos datos sintéticos es agregar vistas de los caracteres que no están reflejadas en el dataset original pero que son plausibles de ser observadas en la realidad.
 			
-			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Una transformación afin representa en esencia una relación entre dos imágenes. La misma se aplica entre dos espacios afines (son estructuras geométricas que generalizan las propiedades afines del espacio Euclideo) y consiste en una transformación lineal seguida de una traslación. Formalmente, es una función entre espacio afines . Si $X$ e $Y$ son espacios afines, luego cada transformación afín $f:X \rightarrow Y$ es de la forma $x\mapsto Mx + b$, donde $M$ es una transformación lineal en $X$ y $b$ es un vector en $Y$. Se usan las multiplicaciones entre matrices para representar las transformaciones lineales y la suma de vectores para representar las traslaciones. Mediante matrices ampliadas, sin embargo, es posible representar ambos tipos de transformaciones.	La matriz $M$ presentada anteriormente es una matriz $2\times 2$ y permite realizar transformaciones en imágenes de 2 dimensiones. En este trabajo, para generar los datos sintéticos se hacen uso de las siguientes transformaciones:
+			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Una transformación afin consiste en una transformación lineal seguida de una traslación. Formalmente, cada transformación afín es de la forma $x\mapsto Mx + b$, donde $M$ es una transformación lineal y $b$ es un vector. Se usan las multiplicaciones entre matrices para representar las transformaciones lineales y la suma de vectores para representar las traslaciones. Mediante matrices ampliadas, sin embargo, es posible representar ambos tipos de transformaciones.	La matriz $M$ presentada anteriormente es una matriz $2\times 2$ y permite realizar transformaciones en imágenes de 2 dimensiones. En este trabajo, para generar los datos sintéticos se hacen uso de las siguientes transformaciones:
 			
 			\paragraph{Rotación}
 			
@@ -180,27 +187,33 @@
 			
 			Un punto a destacar en este proceso, es que las fuentes de letras están en una escala de grises y se mantienen de esta forma. Esto es debido a que, durante el entrenamiento, solo es posible obtener las características de las imágenes sí y sólo sí estas están en escala de grises (requerimiento del algoritmo HOG). 
 			
-		\paragraph{Anexar caracteres}
-					
-			Otro tipo de modificación que vale la pena destacar, es la de anexar caracteres a los costados de la imagen a alterar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de entornos donde la misma forma parte de una palabra. Es por eso que en la mayoría de los conjuntos generados, cada caracter está acompañado de pedazos de otros caracteres.
 			
-		\begin{figure}[htbp]
-			\centering
-			\subfloat[\label{fig: Imagen anexo 1	}]{
-				\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo1.png} }
-			}
-			\subfloat[\label{fig: Imagen anexo 2}]{
-				\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo2.png} }
-			}
-			\subfloat[\label{fig: Imagen anexo 3}]{
-				\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo3.png} }
-			}
-			\caption[Caracteres pegados]{Imágenes de caracteres con caracteres pegados a izquierda y derecha.}
-			\label{fig: Imagen anexos}
-		\end{figure}
+			%\paragraph{Anexar caracteres}
+					
+			%Otro tipo de modificación que vale la pena destacar, es la de anexar caracteres a los costados de la imagen a alterar. Esto es debido a que la mayoría de las imágenes de caracteres reales son extraidas de entornos donde la misma forma parte de una palabra. Es por eso que en la mayoría de los conjuntos generados, cada caracter está acompañado de pedazos de otros caracteres.
+			
+		%\begin{figure}[htbp]
+		%	\centering
+		%	\subfloat[\label{fig: Imagen anexo 1	}]{
+		%		\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo1.png} }
+		%	}
+		%	\subfloat[\label{fig: Imagen anexo 2}]{
+		%		\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo2.png} }
+		%	}
+		%	\subfloat[\label{fig: Imagen anexo 3}]{
+		%		\fbox{ \includegraphics[scale=1]{img/transformaciones/anexo3.png} }
+		%	}
+		%	\caption[Caracteres pegados]{Imágenes de caracteres con caracteres pegados a izquierda y derecha.}
+		%	\label{fig: Imagen anexos}
+		%\end{figure}
 
-			La creación de estos datos sintéticos son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K-15}, a las cuales no se les modifico en absoluto.
+		%	La creación de estos datos sintéticos son para el conjunto de entrenamiento del clasificador. El conjunto de test esta conformado por 15 imágenes reales por clase obtenidas del dataset \textit{Chars74K-15}, a las cuales no se les modifico en absoluto.
 
+		\paragraph{Extracción de características y binarización} ~\\
+		
+			La siguiente etapa en el pipeline es la extracción del vector de características (ver sección ''Vectores de características´´ \ref{subsection:feature}) de cada imagen del conjunto de entrenamiento y la binarización posterior de dicho descriptor (ver sección ''Binarización´´ \ref{subsection:hog}).
+			
+			Un vez que se tiene el conjunto de entrenamiento, la siguiente eta			
 
 		\paragraph{Entrenamiento del clasificador}  ~\\
 
@@ -216,6 +229,3 @@
 
 			Para la evaluación del clasificador, se toma como conjunto de test el descripto en la sección de descripción del dataset. A cada imágen del conjunto de test, se le extrae el descriptor HOG, se lo binariza y con el vector resultante se calcula la probabilidad de que dicho vector perteneza a cada una de las clases involucradas. El calculo para cada clase es el mismo y consiste en dividir el vector de prueba en $M$ grupos y por cada grupo obtener el valor en la tabla correspondiente. Por cada clase entonces tendríamos $M$ valores. Finalmente se realiza la suma de los logaritmos de cada valor y el resultado es la probabilidad de que ese vector pertenzca a la clase evaluada. Como es claro, al final se le asigna a la imagen evaluada la clase que haya obtenido la mayor probabilidad.
 
-	\subsubsection{Reconocimiento de palabras}
-
-		\RC{Todavía no he implementado nada de esto así que queda pendiente...}
