@@ -25,11 +25,13 @@
 		\item Celdas por bloque: $ cpb \in \{4; 9\}$
 	\end{itemize}
 	
-	La elección de los mismos se debe a que reducen la tasa de errores de clasificación. Un análisis similar se puede encontrar en \cite{DT05} donde los autores (quienes crearon HOG) analizan la mejor configuración para resolver el problema de detección de personas. Si bien el problema que se busca resolver en este trabajo es totalmente diferente, los parámetros que ellos usan para HOG muestran buenos resultados en este problema también.
+	Por ejemplo, si a una imagen de 48x48 píxeles en blanco y negro se le extrae el descriptor HOG utilizando como parámetros 8 orientaciones y 9 celdas por bloque se obtendría un descriptor de tamaño $1152$. Si se utilizaran 4 celdas por bloque la dimensión del descriptor resultante sería de $800$.
+	
+	 La elección de estos parámetros se debe a que reducen la tasa de errores de clasificación. Un análisis similar se puede encontrar en \cite{DT05} donde los autores (quienes crearon HOG) analizan la mejor configuración para resolver el problema de detección de personas. Si bien el problema que se busca resolver en este trabajo es totalmente diferente, los parámetros que ellos usan para HOG muestran buenos resultados en este problema también.
 
 	\paragraph{Binarización}
-
-	HOG devuelve descriptores de tamaño fijo dependiendo de la cantidad de orientaciones y celdas por bloque que le asignemos. Lo que buscamos con establecer una longitud variable, es evaluar la pérdida o ganancia de información sobre la imagen al realizar esto y ver si hay algún impacto en la performance al final. Para poder realizar este ``estiramiento'' o ``reducción'' de los vectores, nos aprovechamos del proceso de binarización explicado anteriormente en \ref{subsection:hog}. El impacto producido al realizar esto es notable y se va a detallar al final del capítulo. La dimensión del vector final es otro parámetro (para los experimentos con imágenes sintéticas y mixtas). Los valores con los que trabajamos son los siguientes:
+	
+	En la binarización, se puede establecer la dimensión del vector final. Este es otro parámetro (para los experimentos con imágenes sintéticas y mixtas) con el que se trabaja y que influye en los resultados. Los valores con los que se trabaja son los siguientes:
 
 	\begin{itemize}
 		\item Dimensión del vector final: $ d \in \{ 240; 480; 1080; 2040;  4080 \}$
@@ -49,11 +51,11 @@
 	
 	\paragraph{Entrenamiento}
 
-	En la etapa de entrenamiento hay 2 parámetros: la cantidad de \textit{bits por grupo}, que determina finalmente la cantidad de grupos en la que se divide cada vector, y \textit{alpha} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. Por ejemplo, en el peor de los casos, si consideramos vectores binarios de tamaño $4080$ y grupos de $4080$ bits (1 solo grupo), luego se necesitaría una tabla con $2^{4080}$ entradas la cual es imposible de almacenar en memoria y mucho menos analizar. La cantidad de bits denota la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos está dado por la división entre la dimensión total del vector y la dimensión del grupo.
+	En la etapa de entrenamiento hay 2 parámetros: la cantidad de \textit{bits por grupo}, que determina finalmente la cantidad de grupos en la que se divide cada vector, y \textit{$\alpha$} que es un parámetro de inicialización para las tablas. La cantidad de grupos en las que se divide un vector impacta en el tamaño de las tablas y en la clasificación posterior. Por ejemplo, en el peor de los casos, si consideramos vectores binarios de tamaño $4080$ y grupos de $4080$ bits (1 solo grupo), luego se necesitaría una tabla con $2^{4080}$ entradas la cual es imposible de almacenar en memoria y mucho menos analizar. La cantidad de bits denota la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos está dado por la división entre la dimensión total del vector y la dimensión del grupo.
 
-	El parámetro \textit{alpha} es necesario ya que las tablas no se pueden inicializar con el valor $0$. Esto es debido a que, como se explicó en la sección \ref{subsection:ferns}, al momento de evaluar una imagen de prueba, puede darse el caso de que se acceda a una posición de la tabla que nunca fue alcanzada durante el entrenamiento por lo cual la probabilidad resultante se hace 0 y es un inconveniente para los cálculos posteriores. Los valores por encima de 1 no son convenientes para inicializar las tablas pues afectan a los resultados al momento de normalizarlas.
+	El parámetro \textit{$\alpha$} es necesario ya que las tablas no se pueden inicializar con el valor $0$. Esto es debido a que, como se explicó en la sección \ref{subsection:ferns}, al momento de evaluar una imagen de prueba, puede darse el caso de que se acceda a una posición de la tabla que nunca fue alcanzada durante el entrenamiento por lo cual la probabilidad resultante se hace 0 y es un inconveniente para los cálculos posteriores. Este parámetro se obtiene de la ecuación \ref{eq:Laplace-Smoothing} (que es usada durante el entrenamiento del clasificador) y está representada por el valor $N_r$ en la misma. Valores muy grandes de $\alpha$ ($>>1$) aplicados a la ecuación \ref{eq:Laplace-Smoothing} hacen que la misma tienda a una distribución uniforme si el conjunto de entrenamiento no es muy grande lo cual afecta a la clasificación.
 
 	\begin{itemize}
-		\item bit por grupo: $ bpg \in \{ 1; 2; 4; 8; 10; 12 \}$
-		\item Alpha: $ \alpha \in \{ 0.01; 0.1; 1 \}$
+		\item bits por grupo: $ bpg \in \{ 1; 2; 4; 8; 10; 12 \}$
+		\item $\alpha$ $ \alpha \in \{ 0.01; 0.1; 1 \}$
 	\end{itemize}
