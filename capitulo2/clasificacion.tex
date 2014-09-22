@@ -1,5 +1,13 @@
 \subsection{Clasificación}
 
+		Como explica de manera sencilla Murphy K. P. en \cite{Murphy12}, el objetivo del aprendizaje supervisado es aprender un mapeo desde las entradas $x$ a las salidas $y$. En clasificación, $y_i \in \{1,\dots,C\}$ con $C$ siendo el número de clases. Si $C=2$, estamos frente al problema de \textit{clasificación binaria}; mientras que si $C>2$, la clasificación pasa a ser \textit{multiclase}. Existe otro tipo de clasificación denominada \textit{clasificación multi-etiqueta}, que difiere de la multiclase en cuanto a que las clases no son mutuamente excluyentes, es decir, una muestra puede pertenecer a dos o más categorías o clases. En este último caso, el mapeo se realiza desde la entrada $x$ a un vector $z$, más que a una salida escalar. La elección de cual usar esta directamente asociada al tipo de problema que se quiera resolver.
+		
+		Una manera de formalizar el problema es a partir de una función de aproximación. Se asume $y = f_{\theta}(x)$ para cierta función desconocida $f_{\theta}$, y el objetivo del apredizaje es estimar los parámetros $\theta$ de la función $f$ dado un conjunto de entrenamiento etiquetado. Posteriormente, se realizan predicciones usando $\hat{y} = f_{\hat{\theta}}(x)$ (usamos el símbolo \string^ para denotar estimación). El objetivo principal es realizar predicciones en entradas nuevas, es decir, que no se hayan visto durante el entrenamiento.
+		
+		Tal como expresa P. Domingos en \cite{PDomingo} el objetivo del aprendizaje automático es \textit{generalizar} más allá de los ejemplos en el conjunto de entrenamiento. Ya que, no importa cuantos datos tengamos, es muy poco probable que vayamos a ver los mismos ejemplos al momento de evaluar.
+
+	\input{capitulo2/prob_classifier.tex}
+
 	\input{capitulo2/teoria_decision.tex}
 	
 	\input{capitulo2/features.tex}

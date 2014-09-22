@@ -34,7 +34,7 @@
 		\end{align*}
 		donde $N_{k,c_i}$ es el número de muestras de entrenamiento de la clase $c_i$ y $N_{c_i}$ es el número total de muestras para la clase $c_i$. Estos parámetros por lo tanto, pueden ser estimados para cada fern independientemente.
 		
-		En la práctica sin embargo, este simple esquema da pobres resultados porque si ninguna muestra de entrenamiento para la clase $c_i$ evalua a $k$, lo cual puede pasar con facilidad cuando el número de muestras no es infinitamente largo, ambos $N_{k,c_i}$ y $p_{k,c_i}$ serán cero. Dado que se multiplica $p_{k,c_j}$ por todos los ferns, esto implica que, si el fern evalua a $k$, la correspondiente muestra nunca va a ser asociada a la clase $c_i$, sin importar la respuestas de los otros ferns. Para superar este problema, se considera $p_{k,c_i}$ de la siguiente manera
+		En la práctica sin embargo, este simple esquema da pobres resultados porque si ninguna muestra de entrenamiento para la clase $c_i$ evalua a $k$, lo cual puede pasar con facilidad cuando el número de muestras no es infinitamente grande, ambos $N_{k,c_i}$ y $p_{k,c_i}$ serán cero. Dado que se multiplica $p_{k,c_j}$ por todos los ferns, esto implica que, si el fern evalua a $k$, la correspondiente muestra nunca va a ser asociada a la clase $c_i$, sin importar la respuestas de los otros ferns. Para superar este problema, se considera $p_{k,c_i}$ de la siguiente manera
 		\begin{align}
 			\label{eq:Laplace-Smoothing}
 			p_{k,c_i} = \frac{N_{k,c_i} + N_r}{N_{c_i} + K \times N_r},

@@ -1,0 +1,61 @@
+\appendix
+\section{Conceptos de probabilidad y notación}
+
+	A continuación se introducirán algunos conceptos de probabilidad que serán de utilidad en el desarrollo de las secciones posteriores.
+
+	\paragraph*{Variables aleatorias discretas} ~\\
+
+		Dado un evento $A$, la expresión $p(A)$ denota la probabilidad de que $A$ sea verdadero. Por ejemplo, $A$ puede ser la expresión lógica ``Va a llover mañana''. Se requiere que $0 \leq p(A) \leq 1$, donde $p(A)=0$ significa que el evento no va a ocurrir, y $p(A)=1$ significa que el evento definitivamente va a suceder. Escribimos $p(\overline{A})$ para denotar la probabilidad del evento no $A$, es decir, de que el evento no ocurra; esto se define como $p(\overline{A})=1-p(A)$. Se escribirá $A=1$ para hacer referencia que el evento $A$ es verdadero, y $A=0$ cuando el evento $A$ es falso.
+		
+		Se puede extender la noción de eventos binarios definiendo una \textit{variable aleatoria discreta} $X$, la cual puede tomar cualquier valor de un conjunto finito o infinito contable \scalebox{1.4}{$\chi$}. Se denota la probabilidad de que $X=x$ por $p(X=x)$, o sólo $p(x)$ como abreviación. Ambas notaciones se van a usar indistintamente en el desarrollo del trabajo. Aquí $p: x \rightarrow \mathbb{R} $ se denomina \textit{función de probabilidad}. Esta satisface las propiedades $0 \leq p(x) \leq 1$ y $\sum_{x \in \chi}p(x)=1$.
+		
+	\paragraph*{Probabilidad de la unión de dos eventos} ~\\
+		
+		Dados dos eventos, $A$ y $B$, se define la probabilidad de A o B de la siguiente manera:
+		\begin{align}
+			p(A \lor B) &= p(A) + p(B) - p(A \land B) \\
+			&= p(A) + p(B) ~\text{si A y B son mutuamente excluyentes}
+		\end{align}
+		
+	\paragraph*{Probabilidad conjunta} ~\\
+	
+		Se define la probabilidad del evento conjunto A y B como sigue:
+		\begin{align}
+			p(A,B) = p(A \land B)
+		\end{align}
+
+		A esta ecuación se la llama \textit{regla del producto}. Dada la distribución conjunta en dos eventos p(A,B), se define la ``distribución marginal'' de la variable aleatoria $A$ de la siguiente manera:
+		\begin{align}
+			p(A)=\sum_{b}p(A,B=b)
+		\end{align}
+		donde se asumen todos los estados posibles de B. Se puede definir p(B) de forma similar. A esta ecuación se la denomina regla de la suma o regla de la probabilidad total.
+		
+	\paragraph*{Probabilidad condicional} ~\\
+	
+		Se define la probabilidad condicional del evento A, dado que el evento B es verdadero, como sigue:
+		\begin{align}
+			p(A|B) = \frac{p(A,B)}{p(B)} ~\text{si}~ p(B)>0
+		\end{align}
+		
+	\paragraph*{Regla de Bayes} ~\\
+		
+		Combinando la definición de probabilidad condicional con las reglas del producto y la suma se obtiene la \textit{regla de Bayes}, también llamada \textit{Teorema de Bayes}:
+		\begin{align}\label{eq:bayes}
+			p(X=x|Y=y) &= \frac{p(X=x,Y=y)}{p(Y=y)} \\
+			&= \frac{p(X=x)p(Y=y|X=x)}{\sum_{x'}p(X=x')p(Y=y|X=x')}
+		\end{align}
+
+	\paragraph*{Independencia e independencia condicional} ~\\
+	
+		Se dice que $X$ e $Y$ son independientes, denotado como $X \bot Y$	, si se puede representar la unión como el producto de dos marginales, es decir,
+	\begin{align}
+		X \bot Y \Longleftrightarrow p(X,Y) = p(X)p(Y)
+	\end{align}			
+			
+		En general, se dice que un conjunto de variables es mutuamente independiente si la conjunta puede ser escrita como producto de marginales.
+		
+		Desafortunadamente, la independencia es rara, porque la mayoría de las variables pueden influir en la mayoría de las otras variables. Sin embargo, usualmente esta influencia se da a través de otras variables en vez de ser directa. Por lo tanto se dice que $X$ e $Y$ son \textit{condicionalmente independientes} dada $Z$ si y solo si la conjunta condicional puede ser escrita como producto de marginales condicionales:
+		\begin{align}
+			X \bot Y|Z \Longleftrightarrow p(X,Y|Z) = p(X|Z)p(Y|Z)
+		\end{align}
+	
