@@ -12,7 +12,7 @@
 
 	Para resolver este problema, Breiman estableció el siguiente criterio. Si la respuesta $y$ era un valor numérico luego, se reemplaza a $\varphi(x,L)$ por el promedio del conjunto de predicotres $ \{ \varphi(x, L_k) \} $ sobre $k$. Es decir, $\varphi_A(x) = \mathbb{E}_L\varphi(x,L)$ donde $\mathbb{E}_L$ denota la esperanza sobre $L$, y el subíndice $A$ en $\varphi_A$ denota la agregación. En cambio, si $\varphi(x,L)$ predecía una etiqueta de clase $j \in \{ 1,\dots, J \} $, luego un método para agregar todos los predictores era a través del voto. Es decir, $N_j = \{ k;\varphi(x, L_k) = j \}$ y se toma a $\varphi_A(x) = argmax N_j$.
 
-	El problema principal, es que generalmente se tiene sólo un conjunto de aprendizaje $L$. Para esto, Breiman considera que se puede imitar el procedimiento anterior tomando repetidas muestras bootstrap $\{ L^{B} \}$ a partir de $L$, y formar $\{ \varphi(x, L^{B}) \}$. Si $y$ es numérica luego, toma $\varphi_B$ como
+	El problema principal, es que generalmente se tiene sólo un conjunto de aprendizaje $L$. Para esto, Breiman considera que se puede imitar el procedimiento anterior tomando repetidas muestras bootstrap $\{ L^{B} \}$ a partir de $L$, y formar $\{ \varphi(x, L^{B}) \}$. Formalmente dado $L$, una muestra boostrap $\{ L^{B} \}$ se genera tomando $b$ muestras de $L$ uniformemente con reemplazo. Dado que hay reemplazo, se puede dar el caso de que se repitan elementos en $\{ L^{B} \}$. Si $y$ es numérica luego, toma $\varphi_B$ como
 	\begin{align*}
 		\varphi_B(x) = av_B\varphi(x,L^{B}).
 	\end{align*}
@@ -25,13 +25,15 @@
 
 	Para $b=1$ hasta $B$:
 	\begin{itemize}
-		\item Se realiza un muestreo, con reemplazo, de $n$ ejemplos de entrenamiento a partir de $L$; llamemos a esta muestra $L_b$.
+		\item Se realiza un muestreo, con reemplazo, de $n$ ejemplos de entrenamiento a partir de $L$; llamemos a esta muestra $L_b$ (muesta bootstrap).
 		\item Entrena un árbol de decisión o regresión $f_b$ a partir de $L_b$.
 	\end{itemize}
 
-	Después del entrenamiento, las predicciones para ejemplos no vistos $x'$ se pueden realizar promediando las predicciones de todos los árboles de regresión en $x'$:
-	$$\bar{f} = \frac{1}{B}\sum_{b=1}^B\bar{f_b}(x')$$
-	o tomar el voto mayoritario en caso de árboles de decisión.
+	Después del entrenamiento, las predicciones para ejemplos no vistos $x'$ se pueden realizar a través del voto de todos los predicciones de la siguiente manera:
+	$$N_j = \{ k;\varphi(x', L_k) = j \}$$
+	y se toma a
+	$$\varphi_A(x') = argmax N_j$$
+	o tomar el promedio en caso de árboles de decisión: $\bar{f} = \frac{1}{B}\sum_{b=1}^B\bar{f_b}(x')$.
 
 	En el algoritmo de arriba, B es un parámetro libre que indica la cantidad de árboles predictores que se van a emplear. Típicamente, algunos cientos o miles de árboles son usados, dependiendo del tamaño y naturaleza del conjunto de entrenamiento.
 

@@ -9,13 +9,15 @@
 	
 	\paragraph{Pipeline de procesamiento} ~\\
 
-			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la figura X.
+			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la figura \ref{fig: Pipeline entrenamiento}.
 
 			\begin{figure}[htbp]
 				\centering
-				\fbox{ \includegraphics[scale=0.5]{img/OCR_pipeline_1.jpg} }
-				\caption[Pipeline de procesamiento]{Esto es un ejemplo de como quedaría visualmente pero no es el pipeline de este trabajo.}
-				\label{fig: Pipeline de mi sistema}
+				\centerline{
+					\includegraphics[scale=0.4]{img/pipeline_entrenamiento.jpg}
+				}
+				\caption[Pipeline de entrenamiento]{La figura representa el pipeline de entrenamiento que se sigue en el trabajo a la hora de entrenar el clasificador.}
+				\label{fig: Pipeline entrenamiento}
 			\end{figure}
 
 		\paragraph{Conjunto de entrenamiento} ~\\
