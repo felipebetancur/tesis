@@ -3,7 +3,7 @@
 
 	Histograma de Gradientes Orientados o HOG (por sus siglas en inglés), son descriptores de características utilizados en visión por computadora y en el procesamiento de imágenes con el objetivo de realizar detección de objetos. Fueron introducidos por N. Dalal y B. Triggs en~\cite{DT05} con el propósito de realizar detección de personas; sin embargo, su uso no se limita solamente a esa área, sino que pueden ser utilizados en otras áreas como la detección de caracteres tal y como hicieron Wang et al. en \cite{wang}.
 	
-	Todas las imágenes, como por ejemplo la presentada en la figura~\ref{fig: Imagen Letra original}, contienen estructuras locales cuyas apariencias y formas pueden ser descriptas por la distribución de los gradientes de intensidad como se puede observar en la figura~\ref{fig: Image HOG}.	Un descriptor HOG, es un vector compuesto por una combinación de histogramas que representan los gradientes de intesidad en distintas regiones de una imagen. La implementación de estos descriptores, se obtiene dividiendo a la imagen en regiones de tamaño fijo llamadas celdas como se puede observar en la figura~\ref{fig: Image HOG celdas} y posteriormente, por cada celda, se calcula un histograma de gradientes para los píxeles en la celda ~\ref{fig: Cell Histogram}. Finalmente, como se explico anteriormente, el descriptor se obtiene de combinar los histogramas obtenidos~\ref{fig: Vector HOG}. La robustez ante cambios en la iluminación en una imagen se puede incrementar si se normalizan los histogramas, es decir, si se calcula una medida de la intensidad en una región más grande de la imagen, denominada bloque y se utiliza dicho valor para normalizar las celdas contenidas en el bloque.
+	Todas las imágenes, como por ejemplo la presentada en la figura~\ref{fig: Imagen Letra original}, contienen estructuras locales cuyas apariencias y formas pueden ser descriptas por la distribución de los gradientes de intensidad como se puede observar en la figura~\ref{fig: Image HOG}.	Un descriptor HOG, es un vector compuesto por una combinación de histogramas que representan los gradientes de intesidad en distintas regiones de una imagen. La implementación de estos descriptores, se obtiene dividiendo a la imagen en regiones de tamaño fijo llamadas celdas como se puede observar en la figura~\ref{fig: Division por bloques en imagen} y posteriormente, por cada celda, se calcula un histograma de gradientes para los píxeles en la celda ~\ref{fig: Histograma de Celda}. Finalmente, como se explico anteriormente, el descriptor se obtiene de combinar los histogramas obtenidos como muestra la figura~\ref{fig: Vector HOG}. La robustez ante cambios en la iluminación en una imagen se puede incrementar si se normalizan los histogramas, es decir, si se calcula una medida de la intensidad en una región más grande de la imagen, denominada bloque y se utiliza dicho valor para normalizar las celdas contenidas en el bloque.
 	
 	%El descriptor HOG mantiene una cuantas ventajas con respecto a otros métodos descriptores. Dado que el descriptor HOG opera en celdas localizadas, el método mantiene la invarianza a transformaciones geométricas y fotométricas, excepto para la orientación de objetos. Dichos cambios sólo aparecerían en regiones espaciales grandes~\cite{DT05}.
 	
@@ -28,23 +28,31 @@
 			\subfloat[Imagen original\label{fig: Imagen Letra original}]{
 				\fbox{ \includegraphics[scale=0.3]{img/letter_A.jpg} }
 			}
-			\subfloat[Descriptores HOG de la imagen original\label{fig: Image HOG}]{
-				\fbox{ \includegraphics[scale=0.3]{img/letter_A_HOG.jpg} }
-			}
 			\\
-			\subfloat[División por bloques de tamaño 4x4 celdas\label{fig: Image HOG celdas}]{
-				\fbox{ \includegraphics[scale=0.3]{img/letter_A_with_cells.jpg} }
-			}
-			\subfloat[Histograma de una celda\label{fig: Cell Histogram}]{
-				\fbox{ \includegraphics[scale=1.5]{img/letter_A_histogram.jpg} }
+			\subfloat[Descriptores HOG de la imagen original\label{fig: Image HOG}]{
+				\fbox{ \includegraphics[scale=0.35]{img/letter_A_HOG.jpg} }
 			}
 			\caption{Descriptores HOG de la imagen de un caracter}
 			\label{fig: HOG features}
 		\end{figure}	
-
+		
+		\begin{figure}[htbp]
+			\centering
+			\centerline{ \includegraphics[scale=0.7]{img/letter_A_with_cells.jpg} }
+			\caption[División por bloques de una imagen]{División de una imagen en bloques de 4x4 celdas}
+			\label{fig: Division por bloques en imagen}
+		\end{figure}
+		
+		\begin{figure}[htbp]
+			\centering
+			\centerline{ \includegraphics[scale=0.5]{img/letter_A_histogram.jpg} }
+			\caption[Histograma de una celda]{Histograma de una celda de un bloque de la imagen del caracter.}
+			\label{fig: Histograma de Celda}
+		\end{figure}
+		
 		\begin{figure}[htbp]
 			\centering
 			\fbox{ \includegraphics[scale=1]{img/feature_vector.jpg} }
-			\caption[Vector HOG]{Formación del vector de características a partir de la concatenación de los histogramas. \textbf{CAMBIAR IMAGEN por algo mejor}}
+			\caption[Vector HOG]{Formación del vector de características a partir de la concatenación de los histogramas.}
 			\label{fig: Vector HOG}
 		\end{figure}
