@@ -9,12 +9,15 @@
 	
 	En el área de visión por computadora, los descriptores HOG son considerados estado del arte. Los mismos han demostrado ser útiles en la clasificación como se puede apreciar en el trabajo de Wang et al.~\cite{wang} donde se ha entrenado el clasificador Random Ferns con estos. Incluso, se puede decir que la performance obtenida con estos descriptores en dicho trabajo supera a la mayoría de los descriptores evaluados en el trabajo de De Campos et al.~\cite{dCBV09} bajo las mismas condiciones de entrenamiento. Si bien Wang et al. usan como clasificador a Random Ferns y De Campos et al. usan en su evaluación SVM, se puede apreciar en la clasificación el impacto positivo al utilizar los descriptores HOG.
 	
-	La binarización de los descriptores HOG es necesaria, ya que las características binarias son fáciles de computar, son compactas, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Uno de los beneficios de este enfoque en la clasificación, es que escala bien con la cantidad de categorías o clases. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
+	La binarización de los descriptores HOG es necesaria, ya que permite usar clasificadores rápidos y eficientes como Random Ferns el cual escala bien con la cantidad de categorias o clases. Además, dichos descriptores son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
 
 	
 	\paragraph{Binarización} ~\\
 	
-		Como se detalla en \ref{subsection:ferns}, Random Ferns utiliza descriptores binarios tanto para el entrenamiento como para la evaluación del clasificador. Su uso se debe a que, como se explicó anteriormente, este tipo de descriptores son útiles ya que son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. Cuando se entrena este clasificador, cada clase almacena en tablas el descriptor binario. En particular se almacena cada ``fern'' que surge de la división del vector de características en tablas separadas dentro de la clase. Este enfoque es posible dado que se binariza el vector de características que se obtiene en el entrenamiento. Dado que en este trabajo se utilizan descriptores HOG, los cuales no son binarios, es necesario establecer un método para su binarización. Para lograr esto, es necesario calcular un vector umbral. El umbral se calcula de la siguiente manera:
+		Como se detalla en \ref{subsection:ferns}, Random Ferns utiliza descriptores binarios tanto para el entrenamiento como para la evaluación del clasificador.
+		
+		Dado que en este trabajo se utilizan descriptores HOG, los cuales no son binarios, es necesario establecer un método para su binarización. Para lograr esto, es necesario establecer un vector umbral. El mismo, una vez  calculado, se encarga de binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación. Dicho umbral se calcula utilizando solamente el conjunto de entrenamiento y se obtiene de la siguiente manera:
+		
 		\begin{itemize}
 			\item Dado $N$ descriptores HOG de dimension $D$, se forma una matriz de tamaño $N \times D$ donde cada fila representa un vector.
 			\item Se seleccionan $X$ columnas al azar de la matriz con reemplazo.
@@ -22,6 +25,9 @@
 		\end{itemize}
 		
 		Posteriormente dicho umbral $W$ se utiliza para binarizar los vectores originales de manera sencilla: sea $v_j$ con $j \in \{1,\dots,N\}$ uno de los $N$ vectores originales y tal que $v_j = d_1,d_2,\dots,d_D$. Luego se compara cada dimensión del umbral $W$ con la $y$-esima dimensión del vector $v_j$. Si $d_y \leq z$ se asigna 0, caso contrario 1. De esta manera binarizamos el vector $v_j$ obteniendo un nuevo vector binario de dimensión $X$.
+		
+		%Cuando se entrena este clasificador, cada clase almacena en tablas el descriptor binario. En particular se almacena cada ``fern'' que surge de la división del vector de características en tablas separadas dentro de la clase. Este enfoque es posible dado que se binariza el vector de características que se obtiene en el entrenamiento.
+
 
 		\begin{figure}[htbp]
 			\centering
