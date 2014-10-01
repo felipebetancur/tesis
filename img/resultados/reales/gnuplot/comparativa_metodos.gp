@@ -1,4 +1,5 @@
 set terminal svg size 640,480 fname 'Verdana' fsize 14
+set termoption dashed
 set object 1 rect from screen 0, 0, 0 to screen 1, 1, 0 behind
 set object 1 rect fc  rgb 'white' fillstyle solid 1.0
 set output './comparativa_metodos.svg'
@@ -8,11 +9,11 @@ set yrange [:0.56]
 set xlabel 'Dimensión'
 set ylabel 'Precisión'
 set style line 1  lc rgb 'red' lt 1 lw 1.2
-set style line 2  lc rgb 'blue' lt 1 lw 1.2
-set style line 4  lc rgb 'green' lt 1 lw 1.2
-set style line 8  lc rgb 'dark-violet' lt 1 lw 1.2
-set style line 10  lc rgb 'orange' lt 1 lw 1.2
-set style line 12  lc rgb 'cyan' lt 1 lw 1.2
+set style line 2  lc rgb 'blue' lt 3 lw 1.2
+set style line 4  lc rgb 'green' lt 2 lw 1.2
+set style line 8  lc rgb 'dark-violet' lt 4 lw 1.2
+set style line 10  lc rgb 'orange' lt 5 lw 1.2
+set style line 12  lc rgb 'cyan' lt 6 lw 1.2
 set style line 100 lc rgb 'black' pt 3   # star
 
 plot './comparativa_metodos.txt' using 1:2 with linespoints ls 1 title 'media', \
