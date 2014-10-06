@@ -2,7 +2,7 @@
 
 	\paragraph{Árbol aleatorio} ~\\
 	
-	Un árbol aleatorio es un árbol construido a través de un proceso no determinístico. A diferencia de los algoritmos \textit{ID3} y \textit{C4.5}, explicados en la sección anterior, donde la elección del valor del nodo se da a través de la función de entropía, en los árboles aleatorios cada nodo del árbol se construye a partir de un proceso aleatorio que le asigna su valor. Dentro de los árboles aleatorios más comunes, podemos encontrarnos a  los \textit{árboles binarios} los cuales son construido insertando un nodo a la vez de acuerdo a una permutación aleatoria.
+	Un árbol aleatorio es un árbol construido a través de un proceso no determinístico. A diferencia de los algoritmos \textit{ID3} y \textit{C4.5}, explicados en la sección anterior, donde la elección del valor del nodo se da a través de la función de entropía, en los árboles aleatorios cada nodo del árbol se construye a partir de un proceso aleatorio que le asigna su valor. Dentro de los árboles aleatorios más conocidos, podemos encontrarnos a \textit{Random Forest} el cual se va a proceder a explicar a continuación.
 
 	\paragraph{Random Forest} ~\\
 
@@ -45,7 +45,7 @@
 		\item Si hay $M$ variables de entrada, se especifica un número $m<<M$ (constante durante el crecimiento del bosque o forest) tal que en cada nodo se seleccionen $m$ variables al azar de las $M$. Posteriormente se eligen entre las $m$ variables aquellas que mejor dividan al nodo, es decir, aquellas que generen al final un árbol compacto y simple.
 		\item Cada árbol se construye hasta su máxima extensión posible. No hay pruning(poda).
 	\end{itemize}
-	Las ventajas random forests son:
+	Las ventajas de Random forests son:
 	\begin{itemize}
 		\item Correr eficientemente en grandes bases de datos.
 		\item Poder manejar cientos de variables entrantes sin excluir ninguna.

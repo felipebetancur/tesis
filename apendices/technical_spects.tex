@@ -2,28 +2,35 @@
 	La mayor parte de los algoritmos fueron desarrollados en el Sistema Operativo \textit{Ubuntu (Linux)}. Al haber elegido Python como lenguaje de programación permite utilizarlos en distintas plataformas, como \textit{Mac} y \textit{Windows}, sin problemas.
 	
 	\subsection{Datos Específicos sobre Hardware Utilizado}
-		\textbf{Computadora:}
+		\textbf{Computadora\footnote{Utilizada solamente para procesar los resultados obtenidos del servidor y generar los gráficos necesarios.}:}
 		\begin{itemize}
-			\item Procesador: 2.4 GHz Intel Core i7
+			\item Procesador: Intel\textregistered ~Core\texttrademark ~i7-4700MQ CPU @ 2.40GHz $\times$ 8 
 			\item Memoria Ram: 16 GB 1333 Mhz DDR3
-			\item Tipo de Arquitectura: i386-64bit
+			\item Sistema Operativo: Ubuntu 14.04 LTS x64
 		\end{itemize}
 		
+		\textbf{Servidor ``Ganesh''\footnote{Servidor proporcionado por la \textit{FaMAF} para correr los experimentos.}:}
+		\begin{itemize}
+			\item Micros: 4xDualCore AMD Opteron\texttrademark ~Processor 8212.
+			\item Placa madre: SuperMicro H8QM8.
+			\item Memoria Ram: 32 GB DDR2.
+			\item Sistema Operativo: Ubuntu 12.04.5 LTS x64. 
+		\end{itemize}
+				
 	\subsection{Datos Específicos sobre Software Utilizado}
 		\begin{itemize}
-			\item Python 2.7.6 (Mar 22 2014, 22:59:56) 
-			\item Pillow Version 2.4.0
-			\item GCC 4.8.2
-			\item numpy Version 1.8.1
-			\item matplotlib Version 1.3.1
-			\item ipython Version 2.1.0
-			\item ipdb Version 0.8
-			\item git Version 1.9.1
-			\item scikit-image Version 0.10.0
-			\item scipy Version 0.14.0
+			\item Python Versión 2.7.6
+			\item Pillow Versión 2.4.0
+			\item GCC Versión 4.8.2
+			\item numpy Versión 1.8.1
+			\item matplotlib Versión 1.3.1
+			\item ipython Versión 2.1.0
+			\item ipdb Versión 0.8
+			\item git Versión 1.9.1
+			\item scikit-image Versión 0.10.0
+			\item scipy Versión 0.14.0
 		\end{itemize}
 
-    \newpage
 	\subsection{Herramientas de Software utilizadas}
 	    Durante la realización de la tesis, se usaron varias herramientas \textit{de software libre} que fueron indispensables y de una utilidad crucial. \\
 	    \\
@@ -58,6 +65,20 @@
 					\end{figure}
 	   \end{itemize}
 	
+	\subsection{Por qué Python?}	
 	
+	El lenguaje que se ha elegido para programar al clasificador como así también todos los módulos de procesamiento de resultados es Python. Las razones por las cuales se elige este lenguaje y no otro son muchas, entre las cuales algunas de las más importantes son:
 	
+			\begin{itemize}
+	
+			\item Python tiene una comunidad muy activa y cooperativa: La comunidad de programadores que programan con Python es muy grande (y tiende a seguir creciendo), y se caracteriza fuertemente por una muy buena aceptación de nuevos miembros y una gran predisposición a la ayuda mutua en medios como foros y listas de correos, como la lista de correo de PyAr (Python Argentina). Esto muestra que Python es un lenguaje vivo y en crecimiento.
+			
+			\item Python es un lenguaje con una sintaxis sencilla y es fácil de entender y aprender.
+			
+			\item Python es rápido: Python cuenta con una enorme cantidad de librerías magníficas implementadas en C (como NumPy o SciPy) que permiten realizar operaciones complejas en cuanto a procesamiento de manera sumamente rápida y eficiente. Incluso si no existiera una librería en particular en C para la funcionalidad que se desea, se puede implementar la porción de código que realiza la función crítica en C y utilizarla desde Python.
+			
+			\item Python tiene un gran soporte para computación científica: con librerías sólidas, fuertemente mantenidas, bien documentadas y áltamente eficientes, como SciPy, NumPy, matplotlib, entre otros.
+			
+			\item Python es multiplataforma: el código Python de este trabajo podrá ser utilizado prácticamente en cualquier sistema operativo. Esto es una ventaja importantísima y no limita al usuario a un sistema operativo o hardware en particular.
+			\end{itemize}
 	

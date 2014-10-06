@@ -1,16 +1,16 @@
-\subsubsection{Árboles de decisión} ~\\
+\subsubsection{Árboles de decisión}
 \label{subsection:arboles_decision}
 
 %Dado que las características en un clasificador Naive Bayes son independientes entre %sí luego, representar el mismo a través de un árbol de decisión es un buena idea. %Esto se debe a que cada rama es 
 
 Desde el punto de vista de las ciencias de la computación y las matemáticas, un
 árbol es un grafo conexo simple y sin ciclos, y sus propiedades son básicas de
-la teoría de grafos. Formalmente, un grado es una estructura de la forma $G=(V,E)$, donde $V$ es un conjunto de vértices o nodos y $E=\{ (v_i, v_j), v_j,v_i \in V \}$ es un
+la teoría de grafos. Formalmente, un grafo es una estructura de la forma $G=(V,E)$, donde $V$ es un conjunto de vértices o nodos y $E=\{ (v_i, v_j), v_j,v_i \in V \}$ es un
 conjunto de pares donde cada par representa una arista o rama que conecta a dos nodos.
 
 %	Además, definimos un \textit{camino} o \textit{path} entre los nodos $v_i, v_j \in V, i \neq j$ en $G$ (lo denotamos $P_{v_i, v_j}^G$), como el conjunto $\{ v_i, v_{i+1}, \dots, v_{j-1}, v_j \}$ de nodos talque  $(v_k, v_{k+1}) \in E, k = i, \dots, (j-1)$. Luego, decimos que $G$ es conexo si $\forall v_i, v_j \in V, i \neq j, \exists P_{v_i, v_j}^G$ y no tiene ciclos si $\forall v_i, v_j \in V, i \neq j, \exists ! P_{v_i, v_j}^G $.
 
-	En un árbol existen dos tipos de nodos. La diferencia radica en la cantidad de nodos adyacente al mismo o grado del nodo, que denotamos $d(v_i), v_i \in V$. Los nodos con grado $\leq 1$ se denominan hojas y el resto son nodos internos. Los árboles que consideramos en este trabajo tienen un tercer tipo de nodo que llamamos raíz. Los árboles con raíz son muy comunes en el área de aprendizaje automático y formalmente se pueden definir en términos de \textit{generaciones} o \textit{niveles}. Es decir, consideramos al nodo raíz como el nivel 0, los vecinos del mismo constituyen el primer nivel y los que están a distancia $k$, forman el $k$-esimo nivel.
+	En un árbol existen dos tipos de nodos. La diferencia radica en la cantidad de nodos adyacente al mismo o grado del nodo, que se denota como $d(v_i), v_i \in V$. Los nodos con grado $\leq 1$ se denominan hojas y el resto son nodos internos. Los árboles que se consideran en este trabajo tienen un tercer tipo de nodo que llamamos raíz. Los árboles con raíz son muy comunes en el área de aprendizaje automático y formalmente se pueden definir en términos de \textit{generaciones} o \textit{niveles}. Es decir, se toma al nodo raíz como el nivel 0, los vecinos del mismo constituyen el primer nivel y los que están a distancia $k$, forman el $k$-esimo nivel.
 
 	Los árboles, en el área de la computación, son estructuras de datos capaces de almacenar y representar información de forma jerárquica (a través de sus nodos). En general y en especial en el área de aprendizaje supervisado son de mucha utilidad ya que computacionalmente son eficientes a la hora de buscar información dentro de ellos (a diferencia de otras estructuras de datos). Además, su representación es fácil de interpretar y su implementación es sencilla.
 
@@ -33,7 +33,7 @@ conjunto de pares donde cada par representa una arista o rama que conecta a dos 
 	
 	Posteriormente, se elige aquel atributo que tenga menor entropía (mayor ganancia de información) y se lo utiliza para partir el conjunto $S$. Construir un árbol de decisión se basa en encontrar atributos que retornen la mayor ganancia de información con lo cual se obtienen ramas más homogéneas.
 	
-	Los árboles de decisión crecen hasta que se cumplen ciertos criterios algunos de los cuales son: que se haya alcanzado la máxima profundidad del árbol, todas las instancias del conjunto de entrenamiento pertenezcan a un solo valor de salida, entre otros.
+	Los árboles de decisión crecen hasta que se cumplen ciertos criterios algunos de los cuales son: que se haya alcanzado la máxima profundidad del árbol, que todas las instancias del conjunto de entrenamiento pertenezcan a un solo valor de salida, entre otros.
 
 	Se puede dar el caso de que el árbol resultante sea excesivamente complejo, por ejemplo, al tener demasiados parámetros relativos al número de observaciones. Esto es lo que se conoce como \textit{sobreajuste} (\textit{overfitting}, de su traducción al inglés). Un modelo que ha sido sobreajustado, tendrá generalmente una baja tasa de predicción. Este tipo de problemas se generan cuando se eligen pobremente los criterios de parada. El caso contrario generaría árboles pequeños o débilmente ajustados.
 	
