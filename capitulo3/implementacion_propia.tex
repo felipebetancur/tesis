@@ -1,7 +1,7 @@
 \subsection{Arquitectura del sistema}
 \label{subsection:impl_propia}
 
-	El enfoque del presente trabajo se centra en los problemas de reconocimiento de caracteres y el reconocimiento de palabras. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver ambos problemas.
+	El enfoque del presente trabajo se centra en el problema de reconocimiento de caracteres. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver este problema.
 
 	\subsubsection{Reconocimiento de caracteres}
 		\label{subsubsection:recon-caracteres}
@@ -9,7 +9,7 @@
 	
 	\paragraph{Pipeline de procesamiento} ~\\
 
-			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. El pipeline se puede apreciar en la figura \ref{fig: Pipeline entrenamiento}.
+			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. Los pipelines se pueden apreciar en las figuras \ref{fig: Pipeline entrenamiento} y \ref{fig: Pipeline evaluacion}.
 
 			\begin{figure}[htbp]
 				\centering
@@ -19,7 +19,16 @@
 				\caption[Pipeline de entrenamiento]{La figura representa el pipeline de entrenamiento que se sigue en el trabajo a la hora de entrenar el clasificador.}
 				\label{fig: Pipeline entrenamiento}
 			\end{figure}
-
+			
+			\begin{figure}[htbp]
+				\centering
+				\centerline{
+					\includegraphics[scale=0.4]{img/pipeline_evaluacion.jpg}
+				}
+				\caption[Pipeline de evaluación]{La figura representa el pipeline de evaluación que se sigue en el trabajo al momento de evaluar el clasificador.}
+				\label{fig: Pipeline evaluacion}
+			\end{figure}
+			
 		\paragraph{Conjunto de entrenamiento} ~\\
 		
 			La primera etapa de este pipeline de procesamiento es la obtención de un conjunto de entrenamiento que se va a utilizar para entrenar al clasificador por lo que es importante tener una buena cantidad de imágenes ya que esto impacta en la performance de reconocimiento. Este trabajo hace uso del dataset \textit{Chars74k} \cite{dCBV09} del cual se generan todos los conjuntos de entrenamiento que se utilizan en los experimentos. Se destacan dos grupos de imágenes al momento de entrenar, el de  caracteres segmentados de escenas naturales y el de caracteres sintéticos. El primero viene incluido en el dataset nombrado, en cambio, el segundo, tiene que ser generado como se procederá a explicar a continuación.
@@ -128,7 +137,7 @@
 		
 		\paragraph{Traslación}		
 			
-			La traslación es el último tipo de transformación afín que usamos en este trabajo y a diferencia del resto de las transformaciones, esta no hace uso de $M$, sino de $b$ que es el vector de desplazamiento. Formalmente:
+			La traslación es el último tipo de transformación afín que se usa en este trabajo y a diferencia del resto de las transformaciones, esta no hace uso de $M$, sino de $b$ que es el vector de desplazamiento. Formalmente:
 			\begin{equation*}
 				M =  
 					\begin{bmatrix}
@@ -141,12 +150,12 @@
 						b_2 \\
 					\end{bmatrix}	
 			\end{equation*}
-		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. Particularmente no usamos esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen.
+		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. Particularmente no se usa esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen.
 		
 		\paragraph{Otras transformaciones:} ~\\
 		\paragraph{Suavizado Gaussiano}
 		
-			Es una técnica que consta de la difuminación de una imagen a partir de la convolución con una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dados das las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente
+			Es una técnica que consta de la difuminación de una imagen a partir de la convolución con una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dadas las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente:
 			\begin{align*}
 				G(x,y) = \frac{1}{2\pi\sigma^2}\epsilon^{-\frac{x^2+y^2}{2\sigma^2}}
 			\end{align*}
@@ -221,13 +230,13 @@
 
 		\paragraph{Entrenamiento del clasificador}  ~\\
 
-			En esta etapa, al igual que los autores del trabajo original, se utiliza como clasificador a Random Ferns. Para poder entrenar al clasificador, los vectores modificados de la etapa anterior se almacenan en un diccionario. Este último, esta estructurado como un conjunto de diccionarios anidados y representa la ``base de datos'' del sistema. Los detalles del porqué se eligió esta forma de almacenar la información se puede encontrar en el apéndice B.
+			En esta etapa, al igual que los autores del trabajo original, se utiliza como clasificador a Random Ferns. Para poder entrenar al clasificador, los vectores modificados de la etapa anterior se almacenan en un diccionario. Este último, esta estructurado como un conjunto de diccionarios anidados y representa la ``base de datos'' del sistema. Los detalles del porqué se eligió esta forma de almacenar la información se puede encontrar en el apéndice \ref{section:Apendice-B}.
 
-			Dado que los vectores binarizados pertenecen al conjunto $\{ 0,1 \}^{N}$ si los quisiéramos almacenar en una sola tabla (habría una tabla por clase), cada una debería tener $2^{N}$ entradas lo cual si $N$ es muy grande sería imposible por la cantidad de memoria necesitada para mantener estas tablas en memoria. Luego, basándonos en lo explicado sobre Random Fern en \cite{subsection:ferns}, la solución pasa por dividir cada vector en $M$ grupos de dimensión $S = \frac{N}{M}$. Con esto, un vector completo esta almacenado en $M$ tablas diferentes (tablas correspondiente a la clase del vector). En total estaríamos trabajando con $M \times 62$ tablas (pues hay 62 clases diferentes).
+			Dado que los vectores binarizados pertenecen al conjunto $\{ 0,1 \}^{N}$ si los quisiéramos almacenar en una sola tabla (habría una tabla por clase), cada una debería tener $2^{N}$ entradas lo cual si $N$ es muy grande sería imposible por la cantidad de memoria necesitada para mantener estas tablas en memoria. Luego, basándonos en lo explicado sobre Random Fern en \ref{subsection:ferns}, la solución pasa por dividir cada vector en $M$ grupos de dimensión $S = \frac{N}{M}$. Con esto, un vector completo esta almacenado en $M$ tablas diferentes (tablas correspondiente a la clase del vector). En total estaríamos trabajando con $M \times 62$ tablas.
 
 			Dado un vector $v=(v_1, \dots, v_s)$ donde $v_i \in \{ 0,1 \}^{M}$, $z$ sea la clase de $v$ y sean $t_i i=1, \dots, s$ las tablas de $z$. Cada grupo $v_i i=1, \dots, s$ va a tener una entrada en su tabla correspondiente $z_i$ equivalente a su representación decimal. Inicialmente cada tabla está inicializada dado un parámetro $\alpha \neq 0$ que se explicará en detalle en el próximo capítulo.
 
 		\paragraph{Evaluación del clasificador} ~\\
 
-			Para la evaluación del clasificador, se toma como conjunto de test el descrito en la sección de descripción del dataset. A cada imagen del conjunto de test, se le extrae el descriptor HOG, se lo binariza y con el vector resultante se calcula la probabilidad de que dicho vector pertenezca a cada una de las clases involucradas. El calculo para cada clase es el mismo y consiste en dividir el vector de prueba en $M$ grupos y por cada grupo obtener el valor en la tabla correspondiente. Por cada clase entonces tendríamos $M$ valores. Finalmente se realiza la suma de los logaritmos de cada valor y el resultado es la probabilidad de que ese vector pertenezca a la clase evaluada. Como es claro, al final se le asigna a la imagen evaluada la clase que haya obtenido la mayor probabilidad.
+			Para la evaluación del clasificador, se toma como conjunto de test el descrito en la sección de descripción del dataset. A cada imagen del conjunto de test, se le extrae el descriptor HOG, se lo binariza y con el vector resultante se calcula la probabilidad de que dicho vector pertenezca a cada una de las clases involucradas. El calculo para cada clase es el mismo y consiste en dividir el vector de prueba en $M$ grupos y por cada grupo obtener el valor en la tabla correspondiente. Por cada clase entonces, tendríamos $M$ valores. Finalmente, se realiza la suma de los logaritmos de cada valor y el resultado es la probabilidad de que ese vector pertenezca a la clase evaluada. Al final se le asigna a la imagen de prueba la clase que haya obtenido la mayor probabilidad.
 
