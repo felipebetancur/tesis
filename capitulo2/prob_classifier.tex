@@ -1,8 +1,6 @@
 \subsubsection{Clasificadores Probabilísticos}
 
-		Los clasificadores probabilísticos determinan, dada una entrada nueva, la probabilidad de que esta pertenezca a un conjunto de clases, a diferencia de otros clasificadores, que simplemente predicen a que clase pertenece la misma. Esto lo realiza asignando una distribución de probabilidad al conjunto de clases.
-	
-	Formalmente un clasificador probabilístico es una distribución condicional $p(Y|X)$ sobre un conjunto finito de clases $Y$ dada $X$ entradas. Una forma de determinar cual es la mejor clase $\hat{y} \in Y$ para $X$ sería elegir la clase con la probabilidad más alta
+	Dado un conjuntos de clases $Y$ y una entrada $X$, un clasificador probabilístico determina la probabilidad de que $X$ pertenezca al conjunto de clases $Y$. Como expresa Bishop en \cite{Bis07}, un clasificador probabilístico es una distribución condicional $p(Y|X)$ sobre un conjunto finito de clases $Y$ dada $X$ de entrada. Una forma de determinar cuál es la mejor clase $\hat{y} \in Y$ para $X$ sería elegir la clase con la probabilidad más alta
 	$$\hat{y} = argmax_{y}p(Y=y|X) $$
 	
-	Uno de los clasificadores más populares es \textit{na\"{i}ve Bayes} (que se procede a explicar en las próximas secciones). Este clasificador junto con el resto, derivan de modelos de probabilidad generativos que proporcionan un principio para el estudio de la clasificación estadística en dominios complejos tales como el lenguaje natural y el procesamiento visual \cite{GargRo01}.
+	Uno de los clasificadores más populares es \textit{Na\"{i}ve Bayes} (explicado en las próximas secciones). Este clasificador, deriva de modelos de probabilidad generativos que proporcionan un principio para el estudio de la clasificación estadística en dominios complejos tales como el lenguaje natural y el procesamiento visual \cite{GargRo01}.
