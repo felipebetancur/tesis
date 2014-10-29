@@ -11,9 +11,9 @@
 		\begin{align}\label{eq:class}
 			c_i  = \underset{c_i}{argmax}P(f_1,f_2,\dots,f_N \vert C=c_i)
 		\end{align}
-		Una representación completa de la probabilidad conjunta mediante tablas en la ecuación \ref{eq:class} no es factible dado que requeriría estimar y almacenar $2^N$ entradas por cada clase. Una forma de comprimir la representación es asumir independencia entre características. Una versión extrema es la de asumir independencia completa, es decir
+		Una representación completa de la probabilidad conjunta mediante tablas en la ecuación \ref{eq:class} no es factible dado que requeriría estimar y almacenar $2^N$ entradas por cada clase. Una forma de comprimir la representación es asumir independencia entre características como Na\"{i}ve Bayes. Una versión extrema es la de asumir independencia completa, es decir
 		$$P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{j=1}^NP(f_j \vert C=c_i)$$
-		Sin embargo, esto ignora completamente la correlación entra las características. Para hacer el problema manejable, un buen método es partir las características en $M$ grupos de tamaño $S=\lfloor \frac{N}{M} \rfloor$. Estos grupos son los que se denominan \textit{ferns} y se calcula la probabilidad conjunta de cada característica en cada fern. La probabilidad condicional se vuelve
+		Sin embargo, esto ignora completamente la correlación entra las características. Para hacer el problema manejable, manteniendo alguna correlación, un buen método es partir las características en $M$ grupos de tamaño $S=\lfloor \frac{N}{M} \rfloor$. Estos grupos son los que se denominan \textit{ferns} y se calcula la probabilidad conjunta de cada característica en cada fern. La probabilidad condicional se vuelve
 		\begin{align}\label{eq:class2}
 			P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{k=1}^MP(F_k \vert C=c_i)
 		\end{align}
