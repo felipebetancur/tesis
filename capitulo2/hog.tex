@@ -1,64 +1,47 @@
 \paragraph{Histograma de gradientes orientados} ~\\
 \label{subsection:hog}
 
-	Histograma de Gradientes Orientados o HOG (por sus siglas en inglés), son descriptores de características utilizados en visión por computadora y en el procesamiento de imágenes con el objetivo de realizar detección de objetos. Fueron introducidos por N. Dalal y B. Triggs en~\cite{DT05} con el propósito de realizar detección de personas; sin embargo, su uso no se limita solamente a esa área, sino que pueden ser utilizados en otras áreas como la detección de caracteres tal y como hicieron Wang et al. en \cite{wang}.
+	Los Histogramas de Gradientes Orientados o HOG (por sus siglas en inglés), son descriptores de características utilizados en visión por computadora y en el procesamiento de imágenes con el objetivo de realizar detección de objetos. Fueron introducidos por N. Dalal y B. Triggs en~\cite{DT05} con el propósito de realizar detección de personas; sin embargo, su uso no se limita solamente a esa área, sino que pueden ser utilizados en otras áreas como la detección de caracteres tal como hicieron Wang et al. en \cite{wang}.
 	
-	Todas las imágenes, como por ejemplo la presentada en la figura~\ref{fig: Imagen Letra original}, contienen estructuras locales cuyas apariencias y formas pueden ser descritas por la distribución de los gradientes de intensidad como se puede observar en la figura~\ref{fig: Image HOG}.	Un descriptor HOG, es un vector compuesto por una combinación de histogramas que representan los gradientes de intensidad en distintas regiones de una imagen. La implementación de estos descriptores, se obtiene dividiendo a la imagen en regiones de tamaño fijo llamadas celdas como se puede observar en la figura~\ref{fig: Division por bloques en imagen} y posteriormente, por cada celda, se calcula un histograma de gradientes para los píxeles en la celda ~\ref{fig: Histograma de Celda}. Finalmente, como se explico anteriormente, el descriptor se obtiene de combinar los histogramas obtenidos como muestra la figura~\ref{fig: Vector HOG}. La robustez ante cambios en la iluminación en una imagen se puede incrementar si se normalizan los histogramas, es decir, si se calcula una medida de la intensidad en una región más grande de la imagen, denominada bloque y se utiliza dicho valor para normalizar las celdas contenidas en el bloque.
+	Todas las imágenes, como por ejemplo la presentada en la Figura~\ref{fig: Vector HOG}\textit{A}, contienen estructuras locales cuyas apariencias y formas pueden ser descritas por la distribución de los gradientes de intensidad como se puede observar en la Figura~\ref{fig: Vector HOG}\textit{B}.
+	Un descriptor HOG es un vector compuesto por una combinación de histogramas que representan los gradientes de intensidad en distintas regiones de una imagen. La implementación de estos descriptores, se obtiene dividiendo a la imagen en regiones de tamaño fijo llamadas celdas, como se puede observar en la Figura~\ref{fig: Vector HOG}\textit{B}, y posteriormente, por cada celda, se calcula un histograma de gradientes para los píxeles en la celda ~\ref{fig: Vector HOG}\textit{C}.
+	Luego, se agrupan las celdas en bloques (Figura \ref{fig: Vector HOG}\textit{C}) y se normaliza cada uno utilizando la norma \textit{L2}. Esto se hace con el objetivo de obtener un descriptor robusto ante los cambios en la iluminación entre otros. Consideremos la Figura \ref{fig: Vector HOG}\textit{C}, sea $b_{nm}~n,m=1,\dots,3$ un bloque $2 \times 2$ tal que 
+	
+	$$b_{nm} = (h_{nm}, h_{n(m+1)}, h_{(n+1)m}, h_{(n+1)(m+1)})$$
+	
+	En este ejemplo, $h_{ij}$ representa la celda ubicada en la fila $i$ columna $j$. Como se puede observar, en la figura aparece un área resaltada que hace referencia al bloque $b_{11}$. La norma \textit{L2} para $b_{11} = (h_{11}, h_{12}, h_{21}, h_{22})$ se obtiene de la siguiente manera:
+	
+	 $$||b_{11}||_2 = \sqrt{h_{11}^{2} + h_{12}^{2} + h_{21}^{2} + h_{22}^{2}}$$
+	 luego se normaliza el bloque $b_{11}$ 
+     $$b_{11}' = \frac{b_{11}}{||b_{11}||_2} $$
+     
+	 Finalmente, el descriptor HOG se obtiene de concatenar los histogramas obtenidos como muestra la Figura~\ref{fig: Vector HOG}\textit{D}.
 	
 	%El descriptor HOG mantiene una cuantas ventajas con respecto a otros métodos descriptores. Dado que el descriptor HOG opera en celdas localizadas, el método mantiene la invarianza a transformaciones geométricas y fotométricas, excepto para la orientación de objetos. Dichos cambios sólo aparecerían en regiones espaciales grandes~\cite{DT05}.
 	
-	En el área de visión por computadora, los descriptores HOG son considerados estado del arte. Los mismos han demostrado ser útiles en la clasificación como se puede apreciar en el trabajo de Wang et al.~\cite{wang} donde se ha entrenado el clasificador Random Ferns con estos. Incluso, se puede decir que la performance obtenida con estos descriptores en dicho trabajo supera a la mayoría de los descriptores evaluados en el trabajo de De Campos et al.~\cite{dCBV09} bajo las mismas condiciones de entrenamiento. Si bien Wang et al. usan como clasificador a Random Ferns y De Campos et al. usan en su evaluación SVM, se puede apreciar en la clasificación el impacto positivo al utilizar los descriptores HOG.
+	En el área de visión por computadora, los descriptores HOG son considerados estado del arte. Los mismos han demostrado ser útiles en la clasificación como se puede apreciar en el trabajo de Wang et al.~\cite{wang} donde se ha entrenado el clasificador Random Ferns con estos. Incluso, se puede decir que la performance obtenida con estos descriptores en dicho trabajo supera a la mayoría de los descriptores evaluados en el trabajo de De Campos et al.~\cite{dCBV09} bajo las mismas condiciones de entrenamiento.
 	
-	La binarización de los descriptores HOG es necesaria, ya que permite usar clasificadores rápidos y eficientes como Random Ferns el cual escala bien con la cantidad de categorías o clases. Además, dichos descriptores son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
+	La binarización de los descriptores HOG es necesaria, ya que permite usar clasificadores rápidos y eficientes como Random Ferns que escala bien con la cantidad de categorías o clases. Además, dichos descriptores son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
 
 	
 	\paragraph{Binarización} ~\\
 	
-		Como se detalla en \ref{subsection:ferns}, Random Ferns utiliza descriptores binarios tanto para el entrenamiento como para la evaluación del clasificador.
+		Como se dijo en \ref{subsection:ferns}, Random Ferns utiliza descriptores binarios tanto para el entrenamiento como para la evaluación del clasificador.
 		
-		Dado que en este trabajo se utilizan descriptores HOG, los cuales no son binarios, es necesario establecer un método para su binarización. Para lograr esto, es necesario establecer un vector umbral. El mismo, una vez  calculado, se encarga de binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación. Dicho umbral se calcula utilizando solamente el conjunto de entrenamiento y se obtiene de la siguiente manera:
+		Dado que los descriptores HOG no son binarios, es necesario establecer un método para su binarización para puder usarlos con Random Ferns. Para lograr esto se requiere de un vector umbral. El mismo, una vez  calculado, se encarga de binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación. Dicho umbral se calcula utilizando solamente el conjunto de entrenamiento y se obtiene de la siguiente manera:
 		
 		\begin{itemize}
+		
 			\item Dado $N$ descriptores HOG de dimensión $D$, se forma una matriz de tamaño $N \times D$ donde cada fila representa un vector.
 			\item Se seleccionan $X$ columnas al azar de la matriz con reemplazo.
-			\item Respetando el orden en que fueron seleccionadas, se aplica una función sobre cada columna (la función puede ser el calculo de la mediana, la media, bootstrap, entre otros), obteniendo de esta manera un vector nuevo $W$ de dimensión $X$ tal que cada dimensión de $W$ está compuesta por un par $(z,y)$ donde $y$ es un número talque $0 \leq y \leq D$ que representa una de las columnas elegidas de la matriz y $z$ representa el valor resultante de haber aplicado la función elegida a dicha columna. Cabe aclarar que $X$ puede ser mayor o menor a $D$ por lo cual el umbral $W$ puede tener mayor o menor dimensión al final.
+			\item Respetando el orden en que fueron seleccionadas, se aplica una función sobre cada columna (la función puede ser el calculo de la mediana, la media, bootstrap, entre otros). Se obtiene de esta manera un vector nuevo $W$ de dimensión $X$ tal que cada dimensión de $W$ está compuesta por un par $(z,y)$. $y$ es un número talque $0 \leq y \leq D$ que representa una de las columnas elegidas de la matriz y $z$ representa el valor resultante de haber aplicado la función elegida a dicha columna. Cabe aclarar que $X$ puede ser mayor o menor a $D$ por lo cual el umbral $W$ puede tener mayor o menor dimensión al final.
+			\item Posteriormente dicho umbral $W$ se utiliza para binarizar los vectores originales de manera sencilla: sea $v_j$ con $j \in \{1,\dots,N\}$ uno de los $N$ vectores originales y tal que $v_j = d_1,d_2,\dots,d_D$. Luego se compara cada dimensión del umbral $W$ con la $y$-esima dimensión del vector $v_j$. Si $d_y \leq z$ se asigna 0, caso contrario 1. De esta manera binarizamos el vector $v_j$ obteniendo un nuevo vector binario de dimensión $X$.
+			
 		\end{itemize}
-		
-		Posteriormente dicho umbral $W$ se utiliza para binarizar los vectores originales de manera sencilla: sea $v_j$ con $j \in \{1,\dots,N\}$ uno de los $N$ vectores originales y tal que $v_j = d_1,d_2,\dots,d_D$. Luego se compara cada dimensión del umbral $W$ con la $y$-esima dimensión del vector $v_j$. Si $d_y \leq z$ se asigna 0, caso contrario 1. De esta manera binarizamos el vector $v_j$ obteniendo un nuevo vector binario de dimensión $X$.
-		
-		%Cuando se entrena este clasificador, cada clase almacena en tablas el descriptor binario. En particular se almacena cada ``fern'' que surge de la división del vector de características en tablas separadas dentro de la clase. Este enfoque es posible dado que se binariza el vector de características que se obtiene en el entrenamiento.
-
 
 		\begin{figure}[htbp]
 			\centering
-			\subfloat[Imagen original\label{fig: Imagen Letra original}]{
-				\fbox{ \includegraphics[scale=0.3]{img/letter_A.jpg} }
-			}
-			\\
-			\subfloat[Descriptores HOG de la imagen original\label{fig: Image HOG}]{
-				\fbox{ \includegraphics[scale=0.35]{img/letter_A_HOG_inv.jpg} }
-			}
-			\caption{Descriptores HOG de la imagen de un carácter}
-			\label{fig: HOG features}
-		\end{figure}	
-		
-		\begin{figure}[htbp]
-			\centering
-			\centerline{ \includegraphics[scale=0.7]{img/letter_A_with_cells_inv.jpg} }
-			\caption[División por bloques de una imagen]{División de una imagen en bloques de 4x4 celdas}
-			\label{fig: Division por bloques en imagen}
-		\end{figure}
-		
-		\begin{figure}[htbp]
-			\centering
-			\centerline{ \includegraphics[scale=0.5]{img/letter_A_histogram_inv.jpg} }
-			\caption[Histograma de una celda]{Histograma de una celda de un bloque de la imagen del carácter.}
-			\label{fig: Histograma de Celda}
-		\end{figure}
-		
-		\begin{figure}[htbp]
-			\centering
-			\fbox{ \includegraphics[scale=1]{img/feature_vector.jpg} }
-			\caption[Vector HOG]{Formación del vector de características a partir de la concatenación de los histogramas.}
+			\centerline{ \includegraphics[scale=0.27]{img/hog/hog.png} }
+			\caption[Extracción HOG]{Formación del vector de características HOG}
 			\label{fig: Vector HOG}
 		\end{figure}
