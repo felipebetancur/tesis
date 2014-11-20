@@ -1,14 +1,48 @@
 \subsection{Introducción}
 
-	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, el texto adquirido en entornos naturales (también referido como texto de escena) se ha vuelto más frecuente. Todo esto debido al aumento de dispositivos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
+	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, todavía encuentran problemas cuando tratan de procesar texto adquirido en entornos naturales (también referido como texto de escena). Este tipo de texto se ha vuelto más frecuente debido al aumento de dispositivos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
 	
 	Con la salida del primer dataset público denominado \textit{ICDAR} en 2003, los autores del mismo lo establecieron como punto común de referencia. Esto fue con el objetivo de ver cual era el estado del arte de los algoritmos de reconocimiento de texto en imágenes naturales. Observaron que habían imágenes con texto que los motores de OCR del momento no podían procesar, por lo tanto, decidieron dividir el problema general que era reconocer palabras en imágenes naturales en tres subproblemas:
+	
 	\begin{itemize}
-		\item La clasificación de caracteres recortados.
-		\item Detección de zonas con texto en la imagen completa.
-		\item El reconocimiento de palabras recortadas.
+		\item La clasificación de caracteres recortados (ver Figura \ref{fig: Caracteres recortados}).
+		
+		El reconocimiento de caracteres recortados de escenas naturales es un desafio que requiere tener presente algunas cosas. Inicialmente, y como se mostrará más adelante, existe el problema de que algunos caracteres no son fácilmente diferenciables de su versión mayúscula (para los caracteres alfabéticos). Incluso, es posible confundir algunos de ellos con caracteres numérico u otros símbolos. Esto resulta de la falta de ``contexto'' en que se encuentra cada caracter, es decir, no poder tener las imágenes originales para comparar. Es común que surgan este tipo de problemas al momento de clasificar.
+				
+		Otro elemento que se tiene que tener presente al momento de clasificar caracteres, es el tipo de características locales que se van a obtener de cada imagen. Como se ha explicado en la sección \ref{subsection:feature}, las características son importantes dado que representa los aspectos o cualidades más significativas de un objeto. Si se hace una buena elección de las características locales, se va a ver reflejado en la performance de clasificación.
+		
+		Las condiciones en que fueron tomadas las imágenes donde se extrajeron los caracteres influye posteriormente en su reconocimiento. Se puede realizar un pre-procesamiento que ayude a ``limpiar'' la imagen para poder facilitar su reconocimiento posterior.
+		
+		\item Detección de zonas con texto en la imagen completa (ver Figura \ref{fig: Zona texto}).
+		
+		Para poder resolver este problema, se debe considerar que las palabras que conforman el texto a detectar, pueden estar a diferentes escalas. Tal es el caso del texto de casi la mayoría de los carteles publicitarios que es posible encontrar en las calles de una ciudad. Otro factor a considerar es la inclinación del texto, pués este puede encontrarse inclinado en cualquier ángulo. Además, esta tarea se dificulta si consideramos, al igual que en el reconocimiento de caracteres, las condiciones de la imagen (iluminación, distorsiones, estilo y fuente de las palabras en el texto, etc).
+		
+		En el trabajo de Chen H. et. al. \cite{ChenH11}, los autores destacan que hay dos categorías al momento de clasificar las técnicas de reconocimiento de texto. La primera categoría, son las técnicas \textit{basadas en textura} (\textit{texture based} de su traducción al inglés) que destacan al texto como una ``textura'' especial que es distinguible del fondo. Las características se extraen de ciertas regiones de la imagen y se utiliza un clasificador para identificar la existencia de texto. La segunda categoría, son las técnicas basadas en \textit{componentes conectados} (\textit{connected component} de su traducción al inglés), donde se extraen regiones de la imagen y se utilizan restricciones geométricas para descartar candidatos que no sean texto.
+		
+		\item El reconocimiento de palabras recortadas (ver Figura \ref{fig: Reconocimiento palabras}).
 	\end{itemize}
 	
+	\begin{figure}[htbp]
+		\centering
+  		\centerline{ \includegraphics[scale=0.5]{img/hog/confusing_english.png} }
+		\caption[Clasificación de caracteres recortados]{Conjunto de caracteres recortados. Imagen extraida del paper de T. E. de Campos et. al. \cite{dCBV09}}
+		\label{fig: Caracteres recortados}
+	\end{figure}
+	
+	\begin{figure}[htbp]
+		\centering
+		\centerline{ \includegraphics[scale=0.25]{img/zone_with_text.png} }
+		\caption[Detección de zonas con texto]{Imagen natural donde las zonas con texto están encasilladas.Imagen tomada del sitio \url{http://libccv.org/post/introducing-ccv-milestone/} }
+		\label{fig: Zona texto}
+	\end{figure}
+	
+	\begin{figure}[htbp]
+		\centering
+		\centerline{ \includegraphics[scale=0.5]{img/cropped_words.png} }
+		\caption[Reconocimiento de palabras recortadas]{Conjunto de palabras recortadas de diferentes escenas naturales. Imagen extraida del sitio de \textit{Graphics and Media Lab}, \url{http://graphics.cs.msu.ru/en/science/research/machinelearning/text}}
+		\label{fig: Reconocimiento palabras}
+	\end{figure}
+
 	Dada esta problemática, Wang et al. se enfocaron en cada uno de los subproblemas. Para poder encarar esto, incorporaron una lista de palabras (i.e., un lexicón) para detectar y leer.
 		
 	Para esto, ellos construyen y evalúan dos sistemas. El primero consiste en un pipeline de dos etapas que se basa en la detección de texto seguido del reconocimiento a partir de un destacado motor de OCR. El segundo, es un sistema arraigado en el reconocimiento de objetos genéricos, el cual es una extensión de un trabajo que realizaron anteriormente \cite{WB10}.
