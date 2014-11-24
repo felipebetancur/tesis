@@ -19,16 +19,23 @@
 	
 	%El descriptor HOG mantiene una cuantas ventajas con respecto a otros métodos descriptores. Dado que el descriptor HOG opera en celdas localizadas, el método mantiene la invarianza a transformaciones geométricas y fotométricas, excepto para la orientación de objetos. Dichos cambios sólo aparecerían en regiones espaciales grandes~\cite{DT05}.
 	
+		\begin{figure}[htbp]
+			\centering
+			\centerline{ \includegraphics[scale=0.27]{img/hog/hog.png} }
+			\caption[Extracción HOG]{Formación del vector de características HOG}
+			\label{fig: Vector HOG}
+		\end{figure}
+		
 	En el área de visión por computadora, los descriptores HOG son considerados estado del arte. Los mismos han demostrado ser útiles en la clasificación como se puede apreciar en el trabajo de Wang et al.~\cite{wang} donde se ha entrenado el clasificador Random Ferns con estos. Incluso, se puede decir que la performance obtenida con estos descriptores en dicho trabajo supera a la mayoría de los descriptores evaluados en el trabajo de De Campos et al.~\cite{dCBV09} bajo las mismas condiciones de entrenamiento.
 	
-	La binarización de los descriptores HOG es necesaria, ya que permite usar clasificadores rápidos y eficientes como Random Ferns que escala bien con la cantidad de categorías o clases. Además, dichos descriptores son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
+	Una de las condiciones para poder usar los descriptores HOG en el clasificador \textit{Random Ferns}, es que los mismos tienen que estar binarizados. Los descriptores binarios son fáciles de computar, son compactos, se pueden almacenar fácilmente y son fáciles de comparar. En cambio, los descriptores originales tienen alta dimensionalidad y requieren sistemas con más memoria, capacidad de almacenamiento y procesamiento. Muchos sistemas en tiempo real como el reconocimiento de objetos~\cite{SJC08} y en el agrupamiento de puntos clave~\cite{OFL07} han incorporado este enfoque por su utilidad.
 
 	
 	\paragraph{Binarización} ~\\
 	
 		Como se dijo en \ref{subsection:ferns}, Random Ferns utiliza descriptores binarios tanto para el entrenamiento como para la evaluación del clasificador.
 		
-		Dado que los descriptores HOG no son binarios, es necesario establecer un método para su binarización para puder usarlos con Random Ferns. Para lograr esto se requiere de un vector umbral. El mismo, una vez  calculado, se encarga de binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación. Dicho umbral se calcula utilizando solamente el conjunto de entrenamiento y se obtiene de la siguiente manera:
+		Dado que los descriptores HOG no son binarios, es necesario establecer un método para su binarización. De esta forma es posible usarlos con Random Ferns. Para lograr esto se requiere de un vector umbral. El mismo, una vez  calculado, se encarga de binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación. Dicho umbral se calcula utilizando solamente el conjunto de entrenamiento y se obtiene de la siguiente manera:
 		
 		\begin{itemize}
 		
@@ -39,9 +46,54 @@
 			
 		\end{itemize}
 
-		\begin{figure}[htbp]
-			\centering
-			\centerline{ \includegraphics[scale=0.27]{img/hog/hog.png} }
-			\caption[Extracción HOG]{Formación del vector de características HOG}
-			\label{fig: Vector HOG}
-		\end{figure}
+	Cada dimensión del vector umbral $W \in \mathbb{R}^{D}$ resulta de la aplicación de una función sobre una columna de la matriz de vectores. Dichas funciones representan los distintos métodos de binarización que se utilizan en el presente trabajo.
+	
+	A la binarización se la puede expresar como una función $\textit{b:}\mathbb{R}^{D} \rightarrow \{ 0, 1\}^{D} $ tal que dado un vector $x=(x_1, \dots, x_D)$:
+	
+	$$ b(x) = (b_{1}(x_1), b_{2}(x_2), \dots, b_{D}(x_D)) $$
+	
+	donde los $b_i: \mathbb{R} \rightarrow \{0, 1\}$ son funciones talque:
+	\[
+    		b_{i}(x_i) = 
+		\begin{cases}
+    			1 & \text{si } x_i \geq b_{i}^{0}\\
+    			0 & \text{caso contrario}
+		\end{cases}
+	\]
+	$b_{i}^{0} \in \mathbb{R}$ representa al valor obtenido de haber aplicado una función de binarización a la columna \textit{i-esima} de la matriz de vectores $N \times D$. Las funciones de binarización que se utilizan en este trabajo y que forman los vectores umbrales son: \textit{media}, \textit{mediana}, \textit{exponencial} y \textit{bootstrap}. A continuación se procede a explicar en detalle cada función.
+	
+	Dada la columna ``\textit{i-esima}'' de la matriz de vectores $N \times D$ representada por $C_i = (c_{i}^1, \dots, c_{i}^j)$ con $j=1, \dots, N$ luego:
+
+	\begin{itemize}
+	
+	\item \textbf{Media:}
+	
+	La \textbf{media} es una función de $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ tal que:
+	
+	$$b_{i}^{0\text{(media)}} = \frac{\sum_{j=1}^N c_j}{N} $$
+
+	\item \textbf{Mediana:}
+	
+	La \textbf{mediana} es una función de $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ cuyo único requisito a nivel implementación es que el vector esté ordenado. Sea \textit{dim(C)} la dimensión del vector $C$, luego:
+	
+	\[
+    		b_{i}^{0\text{(mediana)}} = 
+		\begin{cases}
+    			\frac{c_{\frac{dim(C)}{2}} + c_{\frac{dim(C)}{2}+1}}{2} & \text{si dim(C) es par}\\
+    			\frac{c_{\frac{dim(C)}{2}}}{2} & \text{caso contrario}
+		\end{cases}
+	\]
+	
+	\item \textbf{Bootstrap}
+	
+	Al igual que la \textit{media} y la \textit{mediana}, \textbf{bootstrap} es una función $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ tal que, dado $c_k \in C$ una dimensión aleatoria de C luego:
+	
+	$$ b_{i}^{0\text{(bootstrap)}} = c_k $$
+
+	\item \textbf{Exponencial}
+	
+	La función \textbf{exponencial} $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$, surge de analizar la distribución de los datos para una columna de la matriz $N \times D$. Como se puede observar en la Figura Z, los datos se ajustan a una función exponencial con parámetro ... \RC{Completar}
+	
+	\end{itemize}
+
+	
