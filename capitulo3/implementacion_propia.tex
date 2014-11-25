@@ -1,7 +1,7 @@
 \subsection{Arquitectura del sistema}
 \label{subsection:impl_propia}
 
-	El enfoque del presente trabajo se centra en el problema de reconocimiento de caracteres. En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta al momento de resolver este problema.
+	En las próximas subsecciones, se procederá a explicar cuestiones de implementación que se tuvieron en cuenta, en este trabajo, al momento de resolver el problema del reconocimiento de caracteres.
 
 	\subsubsection{Reconocimiento de caracteres}
 		\label{subsubsection:recon-caracteres}
@@ -9,7 +9,7 @@
 	
 	\paragraph{Pipeline de procesamiento} ~\\
 
-			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que constituyen el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba y posteriormente la evaluación del clasificador para cada una de estas. Los pipelines se pueden apreciar en las figuras \ref{fig: Pipeline entrenamiento} y \ref{fig: Pipeline evaluacion}.
+			La implementación que se realizó en este trabajo, está basada en un pipeline similar al que realizaron Wang et al. que comprende de dos instancias: la instancia de entrenamiento y la instancia de evaluación. La primera esta constituida por la generación de datos sintéticos que forman el conjunto de entrenamiento, la extracción de las características, la binarización y el entrenamiento del clasificador. La segunda instancia consiste en la evaluación del clasificador que abarca desde la extracción y binarización de las características del conjunto de prueba hasta la evaluación del clasificador para cada imagen de este conjunto. Los pipelines se pueden apreciar en las figuras \ref{fig: Pipeline entrenamiento} y \ref{fig: Pipeline evaluacion}.
 
 			\begin{figure}[htbp]
 				\centering
@@ -31,18 +31,20 @@
 			
 		\paragraph{Conjunto de entrenamiento} ~\\
 		
-			La primera etapa de este pipeline de procesamiento es la obtención de un conjunto de entrenamiento que se va a utilizar para entrenar al clasificador por lo que es importante tener una buena cantidad de imágenes ya que esto impacta en la performance de reconocimiento. Este trabajo hace uso del dataset \textit{Chars74k} \cite{dCBV09} del cual se generan todos los conjuntos de entrenamiento que se utilizan en los experimentos. Se destacan dos grupos de imágenes al momento de entrenar, el de  caracteres segmentados de escenas naturales y el de caracteres sintéticos. El primero viene incluido en el dataset nombrado, en cambio, el segundo, tiene que ser generado como se procederá a explicar a continuación.
+			La primera etapa de este pipeline de procesamiento consiste en la obtención de un conjunto de entrenamiento para utilizar en el entrenamiento del clasificador. Se destacan dos grupos de imágenes al momento de entrenar, el de caracteres segmentados de escenas naturales y el de caracteres sintéticos. A continuación se procederá a explicar como se genera el grupo de datos sintéticos.
 			
 
 		\paragraph{Generación de datos sintéticos} ~\\
 
-			La datos sintéticos que se generan y utilizan en este trabajo son extraídos del dataset \textit{Chars74K} el cual está compuesto, entre otras cosas, por 62992 imágenes de caracteres sintéticos extraidos de fuentes de computadora. Cada una de las clases involucradas en la clasificación tienen un poco más de 1000 de estas imágenes (son 62 clases en total). El objetivo detrás de la generación de estos datos sintéticos es agregar vistas de los caracteres que no están reflejadas en el dataset original pero que son plausibles de ser observadas en la realidad.
+			Supongamos que se tiene un conjunto limitado de imágenes reales de caracteres. Uno querría poder trabajar con más imágenes, sin embargo, el tiempo y el esfuerzo que conlleva la recolección de este tipo de datos lo hacen una tarea poco práctica. Se busca una forma de automatizar la forma en que se pueden obtener este tipo de datos. Es por eso que el objetivo detrás de la generación de los datos sintéticos es agregar vistas de los caracteres que no están reflejadas en el conjunto de imágenes reales original pero que son plausibles de ser observadas en la realidad.
 			
-			Inicialmente, se tiene como base un conjunto el cual contiene imágenes de caracteres de diversas fuentes. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener una imagen nueva con la apariencia  lo más cercana a una real. Una transformación afín consiste en una transformación lineal seguida de una traslación. Formalmente, cada transformación afín es de la forma $x\mapsto Mx + b$, donde $M$ es una transformación lineal y $b$ es un vector. Se usan las multiplicaciones entre matrices para representar las transformaciones lineales y la suma de vectores para representar las traslaciones. Mediante matrices ampliadas, sin embargo, es posible representar ambos tipos de transformaciones.	La matriz $M$ presentada anteriormente es una matriz $2\times 2$ y permite realizar transformaciones en imágenes de 2 dimensiones. En este trabajo, para generar los datos sintéticos se hacen uso de las siguientes transformaciones:
+			Inicialmente, se tiene como base un conjunto que contiene imágenes de caracteres de diversas tipografías generadas de forma artificial. Lo que se busca, es aplicar a cada imagen un conjunto de transformaciones afines aleatorias con el objetivo final de obtener imagenes nuevas cuyas apariencias sean lo más cercanas a una real. Una transformación afín consiste en una transformación lineal seguida de una traslación. 
+			
+			Existen 2 tipos de transformaciones: \textit{geométricas} y \textit{fotométricas}. Las primeras son de la forma $x\mapsto Mx + b$, donde $M$ es una transformación lineal y $b$ es un vector. Se usan las multiplicaciones entre matrices para representar las transformaciones lineales y la suma de vectores para representar las traslaciones. Mediante matrices ampliadas, sin embargo, es posible representar ambos tipos de transformaciones.	La matriz $M$ presentada anteriormente es una matriz $2\times 2$ y permite realizar transformaciones en imágenes de 2 dimensiones. En este trabajo, para generar los datos sintéticos se hacen uso de las siguientes transformaciones geométricas:
 			
 			\paragraph{Rotación}
 			
-				La rotación es una transformación afín que consta en rotar el ángulo de la imagen en el sentido anti-horario. El parámetro usado para el mismo son los radianes y las diferentes variaciones se pueden apreciar en la figura \ref{fig: Transformacion Afin - Rotacion}. Teniendo en cuenta la definición formal de una transformación afín anterior, la rotación formalmente se puede representar de la siguiente manera:
+				La rotación es una transformación que consta en rotar la imagen un ángulo $\theta$ entorno al origen (el centro de la imagen). El parámetro usado para el mismo son los radianes y las diferentes variaciones se pueden apreciar en la Figura \ref{fig: Transformacion Afin - Rotacion}. Teniendo en cuenta la definición formal de una transformación afín anterior, la rotación se puede representar formalmente de la siguiente manera:
 
 			\begin{equation*}
 					M =  
@@ -79,7 +81,7 @@
 			
 		\paragraph{Escala}
 			
-			La escala es una transformación que busca modificar el tamaño del objeto al cual se la aplica haciéndola más chica o más grande lo que era originalmente. Formalmente, se puede representar por la siguiente configuración de la matriz $M$:
+			La escala es una transformación que busca modificar el tamaño del objeto relativo a la ventana. Formalmente, se puede representar por la siguiente configuración de la matriz $M$:
 			\begin{equation}
 				M = 
 				\begin{bmatrix}
@@ -87,7 +89,7 @@
 					0 & d \\
 				\end{bmatrix}
 			\end{equation}
-		donde $a$ y $d$ representan los cambios en los ejes $x$ e $y$ de la imagen respectivamente. Se puede apreciar la aplicación de esta transformación en la figura \ref{fig: Transformacion Afin - Escala}.
+		donde $a$ y $d$ representan los cambios en los ejes $x$ e $y$ de la imagen respectivamente. Se puede apreciar la aplicación de esta transformación en la Figura \ref{fig: Transformacion Afin - Escala}.
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: escala original}]{
@@ -105,7 +107,7 @@
 			
 		\paragraph{Transvección}
 		
-			La transvección es una transformación donde la imagen se rota en un solo eje. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquierda si $n < 0$. Nuestra matriz $M$ va a ser de la forma:
+			La transvección es una transformación donde la imagen se rota en un solo eje. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$ donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquierda si $n < 0$. La matriz $M$ va a ser de la forma:
 			\begin{equation}
 				M = 
 				\begin{bmatrix}
@@ -113,7 +115,7 @@
 					0 & 1 \\
 				\end{bmatrix}.
 			\end{equation}
-		Se puede observar en la figura \ref{fig: Transformacion Afin - Transveccion} los diferentes efectos de aplicar diferentes valores de $n$ en la aplicación de la transvección en una imagen.
+		Se puede observar en la Figura \ref{fig: Transformacion Afin - Transveccion} los diferentes efectos de aplicar diferentes valores de $n$ en la aplicación de la transvección en una imagen.
 		\begin{figure}[htbp]
 			\centering
 			\subfloat[\label{fig: Imagen transveccion 0.5}]{
@@ -150,16 +152,17 @@
 						b_2 \\
 					\end{bmatrix}	
 			\end{equation*}
-		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. Particularmente no se usa esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen.
+		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. \RC{Particularmente no se usa esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen}.
 		
-		\paragraph{Otras transformaciones:} ~\\
+	El siguiente tipo de transformaciones son las \textit{fotométricas}. Este tipo de transformaciones se caracterizan por surguir de variaciones en la iluminación de una imagen. Por ejemplo, el ruido Gaussiano se origina, entre otras cosas, por la pobre iluminación del entorno donde se toma la imagen (en el caso de las imágenes digitales). Dentro de este grupo podemos encontrar las siguientes transformaciones:
+		
 		\paragraph{Suavizado Gaussiano}
 		
-			Es una técnica que consta de la difuminación de una imagen a partir de la convolución con una función gaussiana. Se usa principalmente para reducir el ruido en una imagen. Dadas las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente:
+			Es una técnica que consta de la difuminación de una imagen a partir de la convolución con una función Gaussiana. Se usa principalmente para reducir el ruido en una imagen simulando el efecto de ``blur''. Dadas las coordenadas de un punto $(x, y)$ en una imagen, la función de suavizado es la siguiente:
 			\begin{align*}
 				G(x,y) = \frac{1}{2\pi\sigma^2}\epsilon^{-\frac{x^2+y^2}{2\sigma^2}}
 			\end{align*}
-			donde $\sigma$ es la desviación estándard de la distribución gaussiana. En la figura \ref{fig: Suavizado Gaussiano}, se puede observar como distintos valores para $\sigma$ a medida que aumenta va distorsionando la imagen un poco más.
+			donde $\sigma$ es la desviación estándard de la distribución gaussiana. En la figura \ref{fig: Suavizado Gaussiano}, se puede observar el efecto para valores crecientes de $\sigma$.
 			
 		\begin{figure}[htbp]
 			\centering
