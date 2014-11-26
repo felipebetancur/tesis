@@ -182,7 +182,13 @@
 			
 		\paragraph{Ruido Gaussiano}			
 			
-			El ruido en una imagen es una variación en la información sobre el color o la iluminación en la misma. Puede ser producido por un sensor, la circuitería de una escáner o una cámara digital. Condiciones de poca iluminación o interferencia electromagnética durante la transmisión de las imágenes son factores para que aparezca este tipo de distorsiones. El ruido gaussiano en las imágenes es un tipo de ruido que se caracteriza por tener una distribución gaussiana. La figura \ref{fig: Ruido Gaussiano} presenta 2 ejemplos de imágenes de caracteres con ruido gaussiano. A medida que el parámetro $\sigma$  aumenta, el ruido en la imagen se hace más notorio.
+			El ruido en una imagen es una variación en la información sobre el color o la iluminación en la misma. Puede ser producido por un sensor, la circuitería de un escáner o una cámara digital. Condiciones de poca iluminación o interferencia electromagnética durante la transmisión de las imágenes son factores para que aparezcan este tipo de distorsiones. El ruido Gaussiano en las imágenes es un tipo de ruido que se caracteriza por tener una distribución Gaussiana. La figura \ref{fig: Ruido Gaussiano} presenta 2 ejemplos de imágenes de caracteres con esta transformación. A medida que el parámetro $\sigma$  aumenta, el ruido en la imagen se hace más notorio.
+			
+			Formalmente se puede expresar esta transformación de la siguiente manera:
+			
+			$$x \rightarrow x + \epsilon $$
+			
+			donde $\epsilon$ es una muestra asociada a una variable aleatoria con distribución $\mathcal{N}(0, \sigma^2)$
 			
 		\begin{figure}[htbp]
 			\centering
@@ -199,8 +205,7 @@
 			\label{fig: Ruido Gaussiano}
 		\end{figure}
 			
-			Un punto a destacar en este proceso, es que las fuentes de letras están en una escala de grises y se mantienen de esta forma. Esto es debido a que, durante el entrenamiento, solo es posible obtener las características de las imágenes sí y sólo sí estas están en escala de grises (requerimiento del algoritmo HOG). 
-			
+	Dado que HOG requiere imágenes en escala de grises para poder extraer las características, en este trabajo sólo se consideran imágenes con esa condición.\RC{Reformular}.
 			
 			%\paragraph{Anexar caracteres}
 					
