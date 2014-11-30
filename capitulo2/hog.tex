@@ -48,21 +48,41 @@
 
 	Cada dimensión del vector umbral $W \in \mathbb{R}^{D}$ resulta de la aplicación de una función sobre una columna de la matriz de vectores. Dichas funciones representan los distintos métodos de binarización que se utilizan en el presente trabajo.
 	
-	A la binarización se la puede expresar como una función $\textit{b:}\mathbb{R}^{D} \rightarrow \{ 0, 1\}^{D} $ tal que dado un vector $x=(x_1, \dots, x_D)$:
+	A la binarización se la puede expresar con la siguiente composición de funciones:
 	
-	$$ b(x) = (b_{1}(x_1), b_{2}(x_2), \dots, b_{D}(x_D)) $$
+	$$h \circ g:\mathbb{R}^{D} \rightarrow \{ 0, 1\}^{X}$$
 	
-	donde los $b_i: \mathbb{R} \rightarrow \{0, 1\}$ son funciones talque:
+	donde
+	
+	$$\textit{h: }\mathbb{R}^{X} \rightarrow \{ 0, 1\}^{X}$$
+	
+	$$\textit{g: }\mathbb{R}^{D} \rightarrow \mathbb{R}^{X}$$
+	
+	
+	$\textit{g: }\mathbb{R}^{D} \rightarrow \mathbb{R}^{X}$ es una función definida de la siguiente manera. Dado un vector  $x=(x_1, \dots, x_D)$:
+
+	\begin{equation}
+	\label{eq: g_equation}
+		g(x) = z = (z_1,\dots,z_X) \textit{ con } z_i=x_{\hat{i}},~\hat{i} \in \{1,\dots,D\}
+	\end{equation}		
+	
+	En \ref{eq: g_equation} $\hat{i}$ representa un entero elegido de manera aleatoria en el rango $\{1,\dots,D\}$. Luego, un vez obtenido $z$, aplicamos la función $h$
+	\begin{equation}
+	\label{eq: h_equation}
+		(y_1,\dots,y_X) = h(z) = (h_1(z_1),\dots,h_X(z_X))
+	\end{equation}
+	donde
 	\[
-    		b_{i}(x_i) = 
+    		h_{i}(z_i) = 
 		\begin{cases}
-    			1 & \text{si } x_i \geq b_{i}^{0}\\
+    			1 & \text{si } z_i \geq u_{i}\\
     			0 & \text{caso contrario}
 		\end{cases}
 	\]
-	$b_{i}^{0} \in \mathbb{R}$ representa al valor obtenido de haber aplicado una función de binarización a la columna \textit{i-esima} de la matriz de vectores $N \times D$. Las funciones de binarización que se utilizan en este trabajo y que forman los vectores umbrales son: \textit{media}, \textit{mediana}, \textit{exponencial} y \textit{bootstrap}. A continuación se procede a explicar en detalle cada función.
+
+	$u_{i} \in \mathbb{R}$ representa al valor obtenido de haber aplicado una función de binarización a la columna \textit{i-esima} de la matriz  $N \times D$. Las funciones de binarización que se utilizan en este trabajo y que forman los vectores umbrales son: \textit{media}, \textit{mediana}, \textit{exponencial} y \textit{bootstrap}. A continuación se procede a explicar en detalle cada función.
 	
-	Dada la columna ``\textit{i-esima}'' de la matriz de vectores $N \times D$ representada por $C_i = (c_{i}^1, \dots, c_{i}^j)$ con $j=1, \dots, N$ luego:
+	Dada la columna ``\textit{i-esima}'' de la matriz $N \times D$ representada por $C_i = (c_{i_1}, \dots, c_{i_j})$ con $j=1, \dots, N$ luego:
 
 	\begin{itemize}
 	
@@ -70,29 +90,29 @@
 	
 	La \textbf{media} es una función de $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ tal que:
 	
-	$$b_{i}^{0\text{(media)}} = \frac{\sum_{j=1}^N c_j}{N} $$
+	$$b(C_i) = \frac{\sum_{j=1}^N c_{i_j}}{N} $$
 
 	\item \textbf{Mediana:}
 	
-	La \textbf{mediana} es una función de $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ cuyo único requisito a nivel implementación es que el vector esté ordenado. Sea \textit{dim(C)} la dimensión del vector $C$, luego:
+	La \textbf{mediana} es una función de $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ cuyo único requisito es que el vector esté ordenado. Sea \textit{dim(C)} la dimensión del vector $C$, luego:
 	
 	\[
-    		b_{i}^{0\text{(mediana)}} = 
+    		b(C_i) = 
 		\begin{cases}
-    			\frac{c_{\frac{dim(C)}{2}} + c_{\frac{dim(C)}{2}+1}}{2} & \text{si dim(C) es par}\\
-    			\frac{c_{\frac{dim(C)}{2}}}{2} & \text{caso contrario}
+    			\frac{c_{i_{\frac{dim(C)}{2}}} + c_{i_{\frac{dim(C)}{2}+1}}}{2} & \text{si dim(C) es par}\\
+    			\frac{c_{i_{\frac{dim(C)}{2}}}}{2} & \text{caso contrario}
 		\end{cases}
 	\]
 	
 	\item \textbf{Bootstrap}
 	
-	Al igual que la \textit{media} y la \textit{mediana}, \textbf{bootstrap} es una función $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ tal que, dado $c_k \in C$ una dimensión aleatoria de C luego:
+	Al igual que la \textit{media} y la \textit{mediana}, \textbf{bootstrap} es una función $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$ tal que, dado $c_{i_k} \in C_{i}$ una dimensión aleatoria de $C_{i}$ luego:
 	
-	$$ b_{i}^{0\text{(bootstrap)}} = c_k $$
+	$$ b(C_i) = c_{i_k} $$
 
 	\item \textbf{Exponencial}
 	
-	La función \textbf{exponencial} $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$, surge de analizar la distribución de los datos para una columna de la matriz $N \times D$. Como se puede observar en la Figura Z, los datos se ajustan a una función exponencial con parámetro ... \RC{Completar}
+	La función \textbf{exponencial} $\textit{b:}\mathbb{R}^{N} \rightarrow \mathbb{R}$, surge de analizar la distribución de los datos para una columna de la matriz $N \times D$. Como se puede observar en la Figura Z, los datos del descriptor HOG extraidos de una imagen utilizada en el trabajo se justan a una distribución exponencial. Luego:
 	
 	\end{itemize}
 
