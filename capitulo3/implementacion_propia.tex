@@ -152,9 +152,9 @@
 						b_2 \\
 					\end{bmatrix}	
 			\end{equation*}
-		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente. \RC{Particularmente no se usa esta transformación para mover los caracteres, sino más bien para mantener la imagen del carácter centrada durante las diferentes transformaciones que le aplicamos a la imagen}.
+		donde $b_1$ y $b_2$ representan el movimiento en el eje $x$ e $y$ respectivamente.
 		
-	El siguiente tipo de transformaciones son las \textit{fotométricas}. Este tipo de transformaciones se caracterizan por surguir de variaciones en la iluminación de una imagen. Por ejemplo, el ruido Gaussiano se origina, entre otras cosas, por la pobre iluminación del entorno donde se toma la imagen (en el caso de las imágenes digitales). Dentro de este grupo podemos encontrar las siguientes transformaciones:
+	El siguiente tipo de transformaciones son las \textit{fotométricas}. Este tipo de transformaciones se caracterizan por surgir de variaciones en la iluminación de una imagen, es decir, es una variación en la función de intensidad de la misma. En general, este tipo de transformaciones no cambian la forma de la imagen. Por ejemplo, el ruido Gaussiano se origina, entre otras cosas, por la pobre iluminación del entorno (en el caso de las imágenes digitales). Dentro de este grupo podemos encontrar las siguientes transformaciones:
 		
 		\paragraph{Suavizado Gaussiano}
 		
@@ -205,7 +205,7 @@
 			\label{fig: Ruido Gaussiano}
 		\end{figure}
 			
-	Dado que HOG requiere imágenes en escala de grises para poder extraer las características, en este trabajo sólo se consideran imágenes con esa condición.\RC{Reformular}.
+	%Dado que HOG requiere imágenes en escala de grises para poder extraer las características, en este trabajo sólo se consideran imágenes con esta condición.
 			
 			%\paragraph{Anexar caracteres}
 					
@@ -230,11 +230,20 @@
 
 		\paragraph{Extracción de características y binarización} ~\\
 		
-			La siguiente etapa en el pipeline es la extracción del vector de características (ver sección ``Vectores de características'' \ref{subsection:feature}) de cada imagen del conjunto de entrenamiento y la binarización posterior de dicho descriptor (ver sección ``Binarización'' \ref{subsection:hog}).
+			La siguiente etapa en el pipeline es la extracción del vector de características (ver sección ``Vectores de características'' \ref{subsection:feature}) de cada imagen del conjunto de entrenamiento y la binarización posterior de dicho descriptor (ver sección ``Binarización'' \ref{subsubsection:binarizacion}).
 			
-			Una de las condiciones para poder extraer el vector de características de una imagen con HOG, es que esta esté en escala de grises o en blanco y negro. Luego, dado un conjunto de entrenamiento con $J$ imágenes, se construye una matriz $J \times K$ donde $K$ es la dimensión del descriptor HOG para cada imagen. Cabe aclarar que todas las imágenes tienen que tener las mismas dimensiones (48x48 píxeles) de lo contrario no se podría construir la matriz. Esto se debe a que HOG devuelve en sí un vector $v \in \mathbb{R}^{K}$ (donde $K$ depende de los parámetros que se le pasen al algoritmo y a la dimensión de la imagen). Posteriormente se procede como se detalla en \ref{subsection:hog} donde se obtiene el umbral que después se utiliza para binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación.
+			Una de las condiciones para poder extraer el vector de características de una imagen con HOG, es que esta esté en escala de grises (requisito para el resto del trabajo). Luego, dada una imagen (ventana que contiene un carácter), se extrae el descriptor de características a través de HOG y se obtiene un vector $v \in \mathbb{R}^{K}$ (donde $K$ depende de los parámetros del algoritmo). Posteriormente se procede como se detalla en \ref{subsubsection:binarizacion} donde se obtiene el umbral que después se utiliza para binarizar a $v$.
 			
-		
+			%Dado un conjunto de entrenamiento con $J$ imágenes, se construye una matriz $J \times K$ donde $K$ es la dimensión del descriptor HOG para cada imagen. Cabe aclarar que todas las imágenes tienen que tener las mismas dimensiones (48x48 píxeles) de lo contrario no se podría construir la matriz. Esto se debe a que HOG devuelve en sí un vector $v \in \mathbb{R}^{K}$ (donde $K$ depende de los parámetros que se le pasen al algoritmo y a la dimensión de la imagen). Posteriormente se procede como se detalla en \ref{subsection:hog} donde se obtiene el umbral que después se utiliza para binarizar todos los descriptores tanto del conjunto de entrenamiento como del conjunto de evaluación.
+			Supongamos un conjunto de entrenamiento con $N$ imágenes. Luego, para generar el vector umbral en los experimentos, se propuso la siguiente implementación basada en la detallada en (referencia a binarizacion).
+			
+			\begin{itemize}
+				\item Dado $N$ descriptores HOG de dimensión $D$, se forma una matriz de tamaño $N \times D$ donde cada fila representa un vector.
+				\item Se seleccionan $X$ columnas al azar de la matriz (con reemplazo).
+				\item Se aplica una función de umbralización sobre cada columna (la función es una de las detalladas en X). Se obtiene de esta manera un vector nuevo $W$ de dimensión $X$ tal que cada dimensión de $W$ está compuesta por un par $(z,y)$. $y$ es un número talque $0 \leq y \leq D$ que representa una de las columnas elegidas de la matriz y $z$ representa el valor resultante de haber aplicado la función elegida a dicha columna. Cabe aclarar que $X$ puede ser mayor o menor a $D$ por lo cual el umbral $W$ puede tener mayor o menor dimensión al final.
+				\item Posteriormente dicho umbral $W$ se utiliza para binarizar los vectores originales de manera sencilla: sea $v_j$ con $j \in \{1,\dots,N\}$ uno de los $N$ vectores originales y tal que $v_j = d_1,d_2,\dots,d_D$. Luego se compara cada dimensión del umbral $W$ con la $y$-esima dimensión del vector $v_j$. Si $d_y \leq z$ se asigna 0, caso contrario 1. De esta manera binarizamos el vector $v_j$ obteniendo un nuevo vector binario de dimensión $X$.
+			
+			\end{itemize}
 
 		\paragraph{Entrenamiento del clasificador}  ~\\
 
@@ -242,7 +251,7 @@
 
 			Dado que los vectores binarizados pertenecen al conjunto $\{ 0,1 \}^{N}$ si los quisiéramos almacenar en una sola tabla (habría una tabla por clase), cada una debería tener $2^{N}$ entradas lo cual si $N$ es muy grande sería imposible por la cantidad de memoria necesitada para mantener estas tablas en memoria. Luego, basándonos en lo explicado sobre Random Fern en \ref{subsection:ferns}, la solución pasa por dividir cada vector en $M$ grupos de dimensión $S = \frac{N}{M}$. Con esto, un vector completo esta almacenado en $M$ tablas diferentes (tablas correspondiente a la clase del vector). En total estaríamos trabajando con $M \times 62$ tablas.
 
-			Dado un vector $v=(v_1, \dots, v_s)$ donde $v_i \in \{ 0,1 \}^{M}$, $z$ sea la clase de $v$ y sean $t_i i=1, \dots, s$ las tablas de $z$. Cada grupo $v_i i=1, \dots, s$ va a tener una entrada en su tabla correspondiente $z_i$ equivalente a su representación decimal. Inicialmente cada tabla está inicializada dado un parámetro $\alpha \neq 0$ que se explicará en detalle en el próximo capítulo.
+			Dado un vector $v=(v_1, \dots, v_s)$ donde $v_i \in \{ 0,1 \}^{M}$, $z$ sea la clase de $v$ y sean $t_i i=1, \dots, s$ las tablas de $z$. Cada grupo $v_i i=1, \dots, s$ va a tener una entrada en su tabla correspondiente $z_i$ equivalente a su representación decimal. Inicialmente cada tabla está inicializada dado un parámetro $\alpha \neq 0$.
 
 		\paragraph{Evaluación del clasificador} ~\\
 
