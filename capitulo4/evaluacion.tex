@@ -1,4 +1,4 @@
-\subsection{Conjunto de datos y Protocolo de Evaluación}
+\subsection{Conjunto de Datos y Protocolo de Evaluación}
 \label{subsection:evaluacion}
 
 
@@ -54,3 +54,5 @@
 	\end{itemize}		
 	
 	Lo que calcula sobre el conjunto de evaluación (compuesto por imágenes naturales), es el grado de precisión del clasificador al haber entrenado al mismo con los conjuntos de entrenamiento explicados. Es decir, se buscar ver la cantidad de instancias correctamente clasificadas sobre el total de evaluadas.
+	
+	%En los experimentos que se realizan en las próximas secciones, hay un parámetro que se analiza constantemente y es la cantidad de \textit{bits por grupo} (en adelante \textit{bpg}). El valor de \textit{bpg} determina la cantidad de grupos en los que se divide cada vector. La cantidad de grupos impacta en el tamaño de las tablas y en la clasificación posterior.  Por ejemplo, en el peor de los casos, si consideramos vectores binarios de tamaño $4080$ y grupos de $4080$ bits (1 solo grupo), luego se necesitaría una tabla con $2^{4080}$ entradas la cual es imposible de almacenar en memoria y mucho menos analizar. La cantidad de bits denota la cantidad de dimensiones de cada grupo, por lo cual  la cantidad de grupos está dado por la división entre la dimensión total del vector y la dimensión del grupo.
