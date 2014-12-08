@@ -1,6 +1,6 @@
 \subsection{Introducción}
 
-	En el trabajo que realizaron Wang et al., los autores identificador el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, todavía encuentran problemas cuando tratan de procesar texto adquirido en entornos naturales (también referido como texto de escena). Este tipo de texto se ha vuelto más frecuente debido al aumento de dispositivos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
+	En el trabajo que realizaron Wang et al., los autores identificaron el problema que había al detectar y reconocer palabras en imágenes naturales. Ellos identifican, que si bien las actuales aplicaciones de OCR se manejan bien con documentos escaneados, todavía encuentran problemas cuando tratan de procesar texto adquirido en entornos naturales (también referido como texto de escena). Este tipo de texto se ha vuelto más frecuente debido al aumento de dispositivos que son capaces de extraer dicha información, sean estos celulares, tabletas o cámaras.
 	
 	Durante la competencia de ICDAR (\textit{International Conference on Document Analysis and Recognition}) en 2003, los organizadores tenían como objetivo ver cual era el estado del arte en las diferentes etapas del reconocimiento de texto en escenas naturales. Observaron que habían imágenes con texto que los motores de OCR del momento no podían procesar, por lo tanto, decidieron dividir el problema general que era reconocer palabras en escenas naturales en tres subproblemas:
 	
@@ -24,7 +24,7 @@
 		
 		\item \textbf{Detección de zonas con texto en la imagen.}
 		
-		Este problema involucra la detección de zonas de la imagen que pueden contener texto. Esto se realiza con el objetivo de priorizar estas regiones en procesamientos posteriores para reducir la complejidad del problema del análisis de texto. La figura \ref{fig: Zona texto} expone un ejemplo de este problema.
+		Este problema involucra la detección de zonas de la imagen que pueden contener texto. Esto se realiza con el objetivo de priorizar estas regiones en procesamientos posteriores para reducir la complejidad del problema del análisis de texto. La Figura \ref{fig: Zona texto} expone un ejemplo de este problema.
 		
 		Para poder resolver este problema, se debe considerar que las palabras que conforman el texto a detectar, pueden haber sido adquiridas a distintas escalas. Tal es el caso del texto de casi la mayoría de los carteles publicitarios que es posible encontrar en las calles de una ciudad. Otro factor a considerar es la inclinación del texto que puede darse por la posición del observador. Además, esta tarea se dificulta si consideramos, al igual que en el reconocimiento de caracteres, las condiciones de la imagen (iluminación, distorsiones, estilo y fuente de las palabras en el texto, etc).
 		

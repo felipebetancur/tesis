@@ -62,7 +62,7 @@
 		
 		\begin{itemize}
 		
-			\item Dado $N$ descriptores HOG de dimensión $D$, se forma una matriz de tamaño $Q \in \mathbb{R}^{N \times D}$ donde cada fila representa un vector.
+			\item Dado $N$ descriptores HOG de dimensión $D$, se forma una matriz $Q \in \mathbb{R}^{N \times D}$ donde cada fila representa un vector.
 			\item Por cada uno de los $N$ vectores originales $v=(v_1,\dots,v_D)$, se seleccionan $X$ dimensiones al azar de $v$ (con reemplazo), obteniendo de esta manera un vector $z = (z_1,\dots,z_X) \textit{ con } z_i=x_{\hat{i}},~\hat{i} \in \{1,\dots,D\}$ donde $\hat{i}$ es un número al azar en el rango $\{1,\dots,D\}$.
 			\item Posteriormente, se procede a binarizar $z$ de la siguiente manera. Dado una dimensión $z_i$ de $z$, se aplica una función de umbralización sobre la \textit{i-esima} columna de $Q$ (la función puede ser el calculo de la mediana, la media, bootstrap, entre otros). Se obtiene de esta manera $w_i \in \mathbb{R}$. Luego, si $z_i \geq w_i$ se le asigna $1$ a esa dimensión y $0$ en caso contrario. El vector umbral $W$ surge de aplicar $X$ veces la función de umbralización sobre la matriz $Q$ (recordar que hay dimensiones repetidas en $z$).
 						
@@ -132,8 +132,16 @@
 
 	\item \textbf{Exponencial}
 	
-	La elección de la distribución exponencial se basa en las observaciones de que las dimensiones, de manera individual, se las puede aproximar con una distribución exponencial (ver Figura Z). Para una dimensión en particular, el parámetro lambda fue estimado en base a un criterio de máxima verosimilitud a partir de las muestras para esa dimensión.
+	La elección de la distribución exponencial se basa en las observaciones de que las dimensiones, de manera individual, se las puede aproximar con una distribución exponencial (ver Figura \ref{fig: exponential-fit}). Para una dimensión en particular, el parámetro lambda fue estimado en base a un criterio de máxima verosimilitud a partir de las muestras para esa dimensión.
 	
 	$$\hat{\lambda} = \frac{\sum_{j=1}^N c_{i_j}}{N} $$
+	
+		\begin{figure}[htbp]
+			\centering
+			\centerline{ \includegraphics[scale=0.50]{img/histograma-curva.png} }
+			\caption[Histograma con curva exponencial]{En la Figura se puede observar el histograma obtenido para una dimensión individual y la aproximación de esta a una distribución exponencial a través de la curva en rojo.}
+			\label{fig: exponential-fit}
+		\end{figure}
+		
 	
 	\end{itemize}
