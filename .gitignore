@@ -1,4 +1,4 @@
-#TEX FILES TO IGNORE
+# TEX FILES
 *.log
 *.lof
 *.lot
@@ -7,6 +7,9 @@
 *.synctex.gz
 *.toc
 *.pdf
+# BEAMER FILER
+*.nav
+*.snm
 
-#COMMON EXTENSIONS
+# COMMON EXTENSIONS
 *.*~
