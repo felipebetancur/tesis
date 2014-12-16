@@ -1,9 +1,9 @@
 \section{Reconocimiento de texto en escenas naturales}
 	\begin{frame}
 		\frametitle{Reconocimiento de texto en escenas naturales}
-		Kai Wang, Boris Babenko y Serge Belongie publicaron el paper \textit{End-to-end scene text recognition} en el que se basa este trabajo.
+		Kai Wang, Boris Babenko y Serge Belongie publicaron, en 2011, el paper \textit{End-to-end scene text recognition} en el que se basa este trabajo.
 		
-		Los autores establecen un conjunto de etapas para el reconocimiento de texto en imágenes naturales. Este trabajo está enfocado en la etapa de \textbf{reconocimiento de caracteres}.
+		Los autores establecen un conjunto de etapas para el reconocimiento de texto en imágenes naturales. Este trabajo está enfocado específicamente en la etapa de \textbf{reconocimiento de caracteres}.
 	\end{frame}
 	\subsection{Reconocimiento de caracteres}
 		\begin{frame}
@@ -14,9 +14,10 @@
 			\end{center}
 		\end{frame}
 		\begin{frame}
-			Los esquemas que emplean esquemas de reconocimiento de caracteres usualmente deben funcionar en tiempo real y evaluar una gran cantidad de ventanas.
+			Los sistemas que emplean esquemas de reconocimiento de caracteres usualmente deben funcionar en tiempo real y evaluar una gran cantidad de ventanas.
 			\begin{itemize}
-				\item<1->[] Se decide usar \textit{Random Ferns} como clasificador.
+				\item<1->[]
+				\item<2->[] Se decide usar \textbf{Random Ferns} como clasificador.
 					\begin{itemize}
 						\item<2-> Es eficiente.
 						\item<3-> Puede manejar múltiples clases.
@@ -69,6 +70,13 @@
 			Para poder utilizar los descriptores \textit{HOG} con \textit{Random Ferns} es necesario establecer esquemas de binarización.
 		\end{frame}
 		\begin{frame}
+			\frametitle{Ejemplo}
+			\begin{center}
+				\includegraphics<1>[height=1\paperheight]{imgs/binarizacion_1.png}
+				\includegraphics<2>[height=0.75\paperheight]{imgs/binarizacion_2.png}						\includegraphics<3>[height=0.70\paperheight]{imgs/binarizacion_3.png}		
+			\end{center}
+		\end{frame}
+		\begin{frame}
 			\frametitle{Esquemas de binarización}
 			\begin{itemize}
 				\item<1-> Media
@@ -86,4 +94,12 @@
 				\item<4-> Exponencial
 					$$\hat{\lambda} = \frac{\sum_{j=1}^N c_{i_j}}{N} $$
 			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Continuación Ejemplo}
+			\begin{center}
+				\includegraphics<1>[height=0.8\paperheight]{imgs/binarizacion_4.png}
+				\includegraphics<2>[height=0.8\paperheight]{imgs/binarizacion_5.png}						\includegraphics<3>[height=0.8\paperheight]{imgs/binarizacion_6.png}
+				\includegraphics<4>[height=0.8\paperheight]{imgs/binarizacion_7.png}						\includegraphics<5>[height=0.8\paperheight]{imgs/binarizacion_8.png}				
+			\end{center}
 		\end{frame}
