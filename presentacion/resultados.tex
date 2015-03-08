@@ -8,20 +8,20 @@
 	\end{frame}
 	\subsection{Baselines}
 		\begin{frame}
-				\frametitle{Baselines}
-				\framesubtitle{Parámetros iniciales}
-				\textit{Parámetros iniciales con el que se corrió el primer experimento}
-				\begin{itemize}
-					\item<1-> \textit{Cantidad de grupos:} \textbf{256}
-					\item<2-> \textit{Bits por grupo:} \textbf{6}
-					\item<3-> \textit{Método de umbralización:} \textbf{Generación de variables aleatorias uniformes}
-					\item<4-> $\alpha$: $\{0.01, 0.1, 1\}$
-					\item<5-> \textit{HOG:}
-						\begin{itemize}
-							\item<6-> \textit{Orientaciones:} $\{8, 9\}$
-							\item<7-> \textit{Celdas por bloque:} $\{4, 9\}$
-						\end{itemize}
-				\end{itemize}
+			\frametitle{Baselines}
+			\framesubtitle{Parámetros iniciales}
+			\textit{Parámetros iniciales con el que se corrió el primer experimento}
+			\begin{itemize}
+				\item<1-> \textit{Cantidad de grupos:} \textbf{256}
+				\item<2-> \textit{Bits por grupo:} \textbf{6}
+				\item<3-> \textit{Método de binarización:} \textbf{Generación de variables aleatorias uniformes}
+				\item<4-> $\alpha$: $\{0,01; 0,1; 1\}$
+				\item<5-> \textit{HOG:}
+					\begin{itemize}
+						\item<6-> \textit{Orientaciones:} $\{8, 9\}$
+						\item<7-> \textit{Celdas por bloque:} $\{4, 9\}$
+					\end{itemize}
+			\end{itemize}
 		\end{frame}
 		\begin{frame}
 				\frametitle{Resultados del primer experimento}
@@ -105,6 +105,22 @@
 				\item<1-> Mejor esquema de binarización:~\textit{Media}.
 			\end{itemize}
 		\end{frame}
+		\begin{frame}
+			\frametitle{Cuadro de resultados}
+			\begin{center}
+				\begin{table}
+					\begin{tabular}{ | l | l | l | p{5cm} |}
+    					\hline
+    					\textbf{NATIVE + FERNS} & \textbf{Score} \\ \hline
+    					Media & 53\% \\ \hline
+    					Mediana & 46\%\\ \hline
+    					Exponencial & 52\% \\ \hline
+    					Bootstrap & 50\%\\
+    					\hline
+    					\end{tabular}
+   			 	\end{table}
+			\end{center}
+		\end{frame}
 	\subsection{Resultados imagenes sinteticas}
 		\begin{frame}
 			\frametitle{Conjunto sintético}
@@ -127,7 +143,7 @@
 		\begin{frame}
 			\frametitle{Errores de clasificación}
 			\begin{itemize}
-				\item Confundir un caracter por otro similar.
+				\item No poder distinguir mayúsculas de minúsculas para los caracteres involucrados.
 			\end{itemize}
 			\begin{figure}[htbp!]
 				\centering
@@ -139,7 +155,7 @@
 		\begin{frame}
 			\frametitle{Errores de clasificación}
 			\begin{itemize}
-				\item No poder distinguir mayúsculas de minúsculas para los caracteres involucrados.
+				\item Confundir un caracter por otro similar.
 			\end{itemize}
 			\begin{figure}[htbp!]
 				\centering

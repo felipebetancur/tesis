@@ -24,6 +24,16 @@
 					\end{itemize}
 			\end{itemize}
 		\end{frame}
+		% RANDOM FERNS
+		\begin{frame}
+			\frametitle{Random Ferns}
+			\begin{itemize}
+				\item<1-> Es un clasificador probabilístico propuesto por Ozuysal et. al. en 2010.
+				\item<2-> Es ``ensemble'', compuesto por un determinado número de entidades o clasificadores.
+				\item<3-> Hace uso de descriptores de características binarios.
+			\end{itemize}
+		\end{frame}
+		%%%%%%%%%%%%%
 		\begin{frame}
 			\frametitle{Extracción de características}
 			\framesubtitle{Característica}
@@ -62,20 +72,26 @@
 			\begin{center}
 				\includegraphics[height=0.45\paperheight]{../img/hog/hog.png}
 			\end{center}
-		\end{frame}
+		\end{frame}	
+		%\begin{frame}
+		%	\frametitle{Gradientes}
+		%	\begin{center}
+		%		\includegraphics[height=0.45\paperheight]{../img/hog/grid.png}
+		%	\end{center}
+		%\end{frame}
 		\begin{frame}
 			\frametitle{Binarización}
 			\alert{Warning!}	\textit{Random Ferns necesita de vectores binarizados}.
 			
 			Para poder utilizar los descriptores \textit{HOG} con \textit{Random Ferns} es necesario establecer esquemas de binarización.
 		\end{frame}
-		\begin{frame}
-			\frametitle{Ejemplo}
-			\begin{center}
-				\includegraphics<1>[height=1\paperheight]{imgs/binarizacion_1.png}
-				\includegraphics<2>[height=0.75\paperheight]{imgs/binarizacion_2.png}						\includegraphics<3>[height=0.70\paperheight]{imgs/binarizacion_3.png}		
-			\end{center}
-		\end{frame}
+		%\begin{frame}
+		%	\frametitle{Ejemplo}
+		%	\begin{center}
+		%		\includegraphics<1>[height=1\paperheight]{imgs/binarizacion_1.png}
+		%		\includegraphics<2>[height=0.75\paperheight]{imgs/binarizacion_2.png}				%		\includegraphics<3>[height=0.70\paperheight]{imgs/binarizacion_3.png}		
+		%	\end{center}
+		%\end{frame}
 		\begin{frame}
 			\frametitle{Esquemas de binarización}
 			\begin{itemize}
@@ -95,11 +111,40 @@
 					$$\hat{\lambda} = \frac{\sum_{j=1}^N c_{i_j}}{N} $$
 			\end{itemize}
 		\end{frame}
+		%\begin{frame}
+		%	\frametitle{Ejemplo (continuación)}
+		%	\begin{center}
+		%		\includegraphics<1>[height=0.8\paperheight]{imgs/binarizacion_4.png}
+		%		\includegraphics<2>[height=0.8\paperheight]{imgs/binarizacion_5.png}				%		\includegraphics<3>[height=0.8\paperheight]{imgs/binarizacion_6.png}
+		%		\includegraphics<4>[height=0.8\paperheight]{imgs/binarizacion_7.png}				%		\includegraphics<5>[height=0.8\paperheight]{imgs/binarizacion_8.png}
+		%	\end{center}
+		%\end{frame}
 		\begin{frame}
-			\frametitle{Ejemplo (continuación)}
+			\frametitle{Random Ferns (continuación)}
+			\framesubtitle{Entrenamiento}
 			\begin{center}
-				\includegraphics<1>[height=0.8\paperheight]{imgs/binarizacion_4.png}
-				\includegraphics<2>[height=0.8\paperheight]{imgs/binarizacion_5.png}						\includegraphics<3>[height=0.8\paperheight]{imgs/binarizacion_6.png}
-				\includegraphics<4>[height=0.8\paperheight]{imgs/binarizacion_7.png}						\includegraphics<5>[height=0.8\paperheight]{imgs/binarizacion_8.png}				
+				\includegraphics[height=0.30\paperheight]{../img/pipeline_entrenamiento.jpg}
+			\end{center}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Random Ferns (continuación)}
+			\framesubtitle{Aprendizaje}
+			\begin{center}
+				\includegraphics[height=0.30\paperheight]{imgs/aprendizaje_1_1.png}
+			\end{center}
+			Se necesitaría una tabla con $2^{1536}$ entradas lo cual es computacionalmente imposible de procesar.
+		\end{frame}
+		\begin{frame}
+			\frametitle{Random Ferns (continuación)}
+			\framesubtitle{Aprendizaje}
+			\begin{itemize}
+				\item<1-> Se divide el vector en $M$ grupos o \textit{ferns} de dimensión $S$ y se genera una tabla por cada grupo. Si $M=192 \rightarrow S=8$ entonces:
+				\begin{itemize}
+					\item<2-> Cada tabla tendría $256$ entradas.
+					\item<3-> Se necesitarían $11904$ tablas en total, $192$ por clase.
+				\end{itemize}
+			\end{itemize}
+			\begin{center}
+				\includegraphics<1->[height=0.8\paperheight]{imgs/aprendizaje_2.png}		
 			\end{center}
 		\end{frame}
