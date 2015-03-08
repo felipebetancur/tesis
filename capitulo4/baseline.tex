@@ -8,7 +8,7 @@
 	
 \subsubsection{Reimplementación de Wang et. al.}
 
-	En este experimento se utilizan, para el entrenamiento del clasificador, solamente imágenes de caracteres segmentados de escenas naturales e imágenes sintéticas sin transformaciones (ver \ref{subsection:evaluacion}) siguiendo lo detallado por Wang et. al. en \cite{wang}. La evaluación del clasificador se realiza sobre un conjunto de prueba proporcionado por el dataset \textit{Chars74k-15} y se mantiene fijo durante todos los experimentos del presente trabajo.
+	En este experimento se utilizan, para el entrenamiento del clasificador, solamente imágenes de caracteres segmentados de escenas naturales e imágenes sintéticas (ver \ref{subsection:evaluacion}) siguiendo lo detallado por Wang et. al. en \cite{wang}. La evaluación del clasificador se realiza sobre un conjunto de prueba proporcionado por el dataset \textit{Chars74k-15} y se mantiene fijo durante todos los experimentos del presente trabajo.
 	
 	De la implementación de los autores, se pudieron obtener los siguientes parámetros para los experimentos:
 	\begin{itemize}
@@ -66,7 +66,7 @@
 		\item \textbf{$\alpha$}: se establece en $0.01$ pues es el valor que más impacto positivo produjo en estos experimentos.
 	\end{itemize}		
 	
-	El esquema de binarización utilizado en este experimento sirve solamente para establecer el baseline para el resto de los experimentos. En la siguiente subsección se evalúan, a través de experiementos con imágenes reales, nuevos métodos de binarización (explicados en \ref{subsubsection:binarizacion}) y se va a considerar como baseline el valor $0.50$. De la misma manera, en la sección de los experimentos con imágenes sintéticas, el baseline pasará a ser $0.43$.
+	El esquema de binarización utilizado en este experimento sirve solamente para establecer el baseline para el resto de los experimentos. En la siguiente subsección se evalúan, a través de experimentos con imágenes reales, nuevos métodos de binarización (explicados en \ref{subsubsection:binarizacion}) y se va a considerar como baseline el valor $0.50$. De la misma manera, en la sección de los experimentos con imágenes sintéticas, el baseline pasará a ser $0.43$.
 	
 \subsubsection{Evaluación de Esquemas de Binarización}
 \label{subsubsection: eval_esquemas}
