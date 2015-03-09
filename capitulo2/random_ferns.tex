@@ -3,17 +3,17 @@
 	
 		Random Ferns es un clasificador propuesto por Ozuysal et. al.~\cite{Ozuysal}. Al igual que Random Forest, es un clasificador ensemble, compuesto de un determinado número de entidades o clasificadores y es una alternativa más rápida y simple que este último. En oposición a Random Forest, Ferns es una estructura no jerárquica donde cada entidad que constituye el clasificador es básicamente un conjunto de prueba binario. En Random Forest el conjunto de prueba de cada árbol es la colección de diferentes pruebas que se distribuyen a lo largo de los nodos que forman el árbol. Debido a la estructura plana de cada entidad en un clasificador Ferns, el conjunto de prueba es una sencilla lista ordenada de las posiciones de los features o características a ser evaluados.
 		
-		Sea $c_i, i=1,\dots,H$ el conjunto de clases y  sea $f_j, j=1,\dots,N$ el conjunto de características binarias. Formalmente, se busca:
-		$$\underset{c_i}{argmax}P(C=c_i \vert f_1,f_2,\dots,f_N),$$
+		Sea $c_i, i=1,\dots,H$, el conjunto de clases y  sea $f_j, j=1,\dots,N$, el conjunto de características binarias. Formalmente, se busca:
+		$$\underset{c_i}{argmax}~P(C=c_i \vert f_1,f_2,\dots,f_N),$$
 		donde $C$ es una variable aleatoria que representa a la clase. La fórmula de Bayes produce:
 		$$P(C=c_i \vert f_1,f_2,\dots,f_N) = \frac{P(f_1,f_2,\dots,f_N \vert C=c_i)P(C=c_i)}{P(f_1,f_2,\dots,f_N)}$$
-		Asumiendo una probabilidad uniforme a prior $P(C)$, dado que el denominador es simplemente un factor de escala que es independiente de la clase, el problema se reduce a encontrar:
+		Asumiendo una probabilidad uniforme a priori $P(C)$, dado que el denominador es simplemente un factor de escala que es independiente de la clase, el problema se reduce a encontrar:
 		\begin{align}\label{eq:class}
-			c_i  = \underset{c_i}{argmax}P(f_1,f_2,\dots,f_N \vert C=c_i)
+			c_i  = \underset{c_i}{argmax}~P(f_1,f_2,\dots,f_N \vert C=c_i)
 		\end{align}
 		Una representación completa de la probabilidad conjunta mediante tablas en la ecuación \ref{eq:class} no es factible dado que requeriría estimar y almacenar $2^N$ entradas por cada clase. Una forma de comprimir la representación es asumir independencia entre características como Na\"{i}ve Bayes. Una versión extrema es la de asumir independencia completa, es decir
 		$$P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{j=1}^NP(f_j \vert C=c_i)$$
-		Sin embargo, esto ignora completamente la correlación entra las características. Para hacer el problema manejable, manteniendo alguna correlación, un buen método es partir las características en $M$ grupos de tamaño $S=\lfloor \frac{N}{M} \rfloor$. Estos grupos son los que se denominan \textit{ferns} y se calcula la probabilidad conjunta de cada característica en cada fern. La probabilidad condicional se vuelve
+		Sin embargo, esto ignora completamente la correlación entre las características. Para hacer el problema manejable, manteniendo alguna correlación, un buen método es partir las características en $M$ grupos de tamaño $S=\lfloor \frac{N}{M} \rfloor$. Estos grupos son los que se denominan \textit{ferns} y se calcula la probabilidad conjunta de cada característica en cada fern. La probabilidad condicional se vuelve
 		\begin{align}\label{eq:class2}
 			P(f_1,f_2,\dots,f_N \vert C=c_i) = \prod_{k=1}^MP(F_k \vert C=c_i)
 		\end{align}
