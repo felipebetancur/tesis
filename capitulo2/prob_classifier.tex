@@ -1,7 +1,7 @@
 \subsubsection{Clasificadores Probabilísticos}
 \label{subsubsection:clas_prob}
 
-	Dado un conjuntos de clases $Y$ y una entrada $X$, un clasificador probabilístico determina la probabilidad de que $X$ pertenezca al conjunto de clases $Y$. Como expresa Bishop en \cite{Bis07}, un clasificador probabilístico es una distribución condicional $p(Y|X)$ sobre un conjunto finito de clases $Y$ dada $X$ de entrada. Una forma de determinar cuál es la mejor clase $\hat{y} \in Y$ para $X$ sería elegir la clase con la probabilidad más alta
+	Dado un conjuntos de clases $Y$ y una entrada $X$, un clasificador pro\-ba\-bi\-lís\-ti\-co determina la probabilidad de que $X$ pertenezca al conjunto de clases $Y$. Como expresa Bishop en \cite{Bis07}, un clasificador probabilístico es una distribución condicional $p(Y|X)$ sobre un conjunto finito de clases $Y$ dada $X$ de entrada. Una forma de determinar cuál es la mejor clase $\hat{y} \in Y$ para $X$ sería elegir la clase con la probabilidad más alta
 	$$\hat{y} = \underset{y}{argmax}p(Y=y|X) $$
 	
 	Uno de los clasificadores más populares es \textit{Na\"{i}ve Bayes} (explicado en las próximas secciones). Este clasificador, deriva de modelos de probabilidad generativos que proporcionan un principio para el estudio de la clasificación estadística en dominios complejos tales como el lenguaje natural y el procesamiento visual \cite{GargRo01}.
@@ -23,19 +23,19 @@
 			p(C_k|x) = \frac{p(x|C_k)p(C_k)}{p(x)}
 		\end{align*}
 
-	Luego se toma a $p(C_k)$ como la probabilidad a priori para la clase $C_k$, y $p(C_k|x)$ como la correspondiente probabilidad a posteriori. Por ejemplo, $p(C_1)$ representa la probabilidad de pertenecer a la clase $C_1$, antes de observar la muestra $x$.
+	Luego se toma a $p(C_k)$ como la probabilidad a priori para la clase $C_k$, y $p(C_k|x)$ como la correspondiente probabilidad a posteriori. Por e\-jem\-plo, $p(C_1)$ representa la probabilidad de pertenecer a la clase $C_1$, antes de observar la muestra $x$.
 	
 	Según Bishop, se pueden distinguir dos etapas en el problema de clasificación, la \textit{etapa de inferencia} (entrenamiento) en el cual se usan los datos para entrenar el modelo para $p(C_k|x)$, y la subsecuente \textit{etapa de decisión} (evaluación) en la cual se usan las probabilidades a posteriori para poder asignar las clases de manera óptima. Una alternativa es la de resolver ambos problemas en conjunto y simplemente entrenar una función que mapee las entradas $x$ directamente con las decisiones. Dicha función es llamada \textit{función discriminante}.
 	
 	De hecho, el autor identifica tres enfoques diferentes al momento de resolver problemas de decisión. En orden decreciente de complejidad, estos son:
 		\begin{enumerate}
-			\item Primero, resolver el problema para determinar las densidades condicionales $p(x \vert C_k)$ para cada clase $C_k$ individualmente. También de forma separada, inferir las probabilidades de clases a priori $p(C_k)$. Después, usar el teorema de Bayes en la forma:
+			\item Primero, resolver el problema para determinar las densidades condicionales $p(x \vert C_k)$ para cada clase $C_k$ individualmente. También de forma separada, inferir las probabilidades de clases a priori $p(C_k)$. Des\-pués, usar el teorema de Bayes en la forma:
 			$$p(C_k \vert x) = \frac{p(x \vert C_k)p(C_k)}{p(x)} $$
 			para encontrar las probabilidades a posteriori $p(C_k \vert x)$. Como es usual, el denominador en el teorema de Bayes puede ser encontrado en término de las cantidades que aparecen en el numerador, como:
 			 $$p(x) = \sum_k p(x \vert C_k)p(C_k) $$
 			Equivalentemente, se puede modelar la distribución conjunta $p(x,C_k)$ directamente y después normalizar para obtener las probabilidades a priori. Habiendo encontrado las probabilidades a posteriori, se puede usar la teoría de decisión para determinar la pertenencia a una clase para cada entrada nueva $x$. Los enfoques que explícitamente o implícitamente modelan la distribución de las entradas, así también como las salidas, son conocidos como \textit{modelos generativos}, debido a que tomando muestras de ellos es posible generar puntos de datos sintéticos en el espacio de entrada.
 			\item Inicialmente, resolver el problema de inferencia para determinar las  probabilidades de clase a posteriori $p(C_k \vert x)$, y luego, subsecuentemente, usar la teoría de decisión para asignar a cada $x$ nueva una de estas clases. Los enfoques que modelan las probabilidades a posteriori directas son llamados \textit{modelos discriminativos}.
-			\item Encontrar una función $f(x)$, llamada función discriminante, que mapea directamente cada entrada $x$ con una etiqueta de clase. Por ejemplo, en el caso del problema de dos clases, $f(\cdot)$ puede ser valuada de manera binaria, de manera que $f = 0$ represente a la clase $C_1$ y $f = 1$ represente a la clase $C_2$. En este caso, las probabilidades no toman partido. 
+			\item Encontrar una función $f(x)$, llamada función discriminante, que mapea directamente cada entrada $x$ con una etiqueta de clase. Por ejemplo, en el caso del problema de dos clases, $f(\cdot)$ puede ser valuada de ma\-ne\-ra binaria, de manera que $f = 0$ represente a la clase $C_1$ y $f = 1$ represente a la clase $C_2$. En este caso, las probabilidades no toman partido. 
 		\end{enumerate}
 		
 	En \cite{Bis07} se consideran los méritos relativos a estas tres alternativas. El enfoque (1) es el más demandante debido a que involucra encontrar la distribución conjunta tanto de $x$ como de $C_k$. Para muchas aplicaciones, $x$ tendrá alta dimensionalidad, y por consiguiente puede ser necesario un conjunto de entrenamiento grande con el fin de ser capaz de determinar las densidades de clase condicional con una exactitud razonable. Hay que tener en cuenta que la probabilidades a priori $p(C_k)$ de la clase a menudo pueden estimarse simplemente a partir de las proporciones de los punto de datos del conjunto de entrenamiento en cada una de las clases.

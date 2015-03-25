@@ -107,7 +107,7 @@
 			
 		\paragraph{Transvección}
 		
-			La transvección es una transformación donde la imagen se inclina en un solo eje. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$, donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos horizontalmente en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquierda si $n < 0$. La matriz $M$ va a ser de la forma:
+			La transvección es una transformación donde la imagen se inclina en un solo eje. Es una función que toma un punto con coordenadas $(x,y)$ al punto $(x +ny, y)$, donde $n$ es un parámetro fijo, denominado el factor de inclinación. El efecto es el desplazamiento de todos los puntos ho\-ri\-zon\-tal\-men\-te en una cantidad proporcional a su coordenada $y$. Todo punto encima del eje $x$ es desplazado a la derecha si $n > 0$, y a la izquierda si $n < 0$. La matriz $M$ va a ser de la forma:
 			\begin{equation}
 				M = 
 				\begin{bmatrix}
@@ -175,7 +175,7 @@
 			\subfloat[\label{fig: Imagen con blur 2}]{
 				\fbox{ \includegraphics[scale=1]{img/transformaciones/blur2.png} }
 			}
-			\caption[Suavizado Gaussiano de un carácter]{Aplicación de blur o suavizado gaussiano a un carácter. (a) Imagen original. (b) Imagen suavizada con un valor de $\sigma = 1$.  (c) Imagen aún más suavizada con un valor de $\sigma = 2$ .}
+			\caption[Suavizado Gaussiano de un carácter]{Aplicación de blur o suavizado gaussiano a un carácter. (a) I\-ma\-gen original. (b) Imagen suavizada con un valor de $\sigma = 1$.  (c) Imagen aún más suavizada con un valor de $\sigma = 2$ .}
 			\label{fig: Suavizado Gaussiano}
 		\end{figure}				
 			
@@ -251,7 +251,7 @@
 
 			Dado que los vectores binarizados pertenecen al conjunto $\{ 0,1 \}^{N}$, si los quisiéramos almacenar en una sola tabla por cada clase, cada una debería tener $2^{N}$ entradas. Si $N$ es muy grande esto sería imposible por la cantidad de memoria necesitada para mantener las tablas. Luego, basándonos en lo explicado sobre Random Ferns en \ref{subsection:ferns}, la solución pasa por dividir cada vector en $M$ grupos de longitud $S = \frac{N}{M}$. Con esto, un vector completo se almacena en $M$ tablas diferentes, tablas correspondiente a la clase del vector. En total estaríamos trabajando con $M \times 62$ tablas.
 
-			Dado un vector $v=(v_1, \dots, v_S)$ dividido en $M$ grupos de longitud $S$, es decir, $v=(w_1,\dots,w_M)$, donde $w_i=(w_i,\dots,w_{i+S})$. Sea $z$ la clase de $v$ y sean, $t_i~ i=1, \dots, S$, las tablas de $z$. Cada grupo $w_i$, $i=1, \dots, M$, va a tener una entrada en su tabla correspondiente $z_i$ equivalente a su representación decimal. Dicha entrada en la tabla tiene un contador que se va incrementando en $1$ a medida que se acceda a esta entrada. Luego, a medida que se van ``entrenando'' las tablas de cada clase, se puede dar la situación, más a medida que la dimensión de cada grupo crece, que algunas entradas no se hayan accedido nunca. Esto supone un problema para los cálculos posteriores del clasificador, por lo que se propone inicializar cada entrada de cada tabla con un valor $\alpha \neq 0$. 
+			Dado un vector $v=(v_1, \dots, v_S)$ dividido en $M$ grupos de longitud $S$, es decir, $v=(w_1,\dots,w_M)$, donde $w_i=(w_i,\dots,w_{i+S})$. Sea $z$ la clase de $v$ y sean, $t_i~ i=1, \dots, S$, las tablas de $z$. Cada grupo $w_i$, $i=1, \dots, M$, va a tener una entrada en su tabla correspondiente $z_i$ equivalente a su representación decimal. Dicha entrada en la tabla tiene un contador que se va incrementando en $1$ a medida que se acceda a esta entrada. Luego, a medida que se van ``entrenando'' las tablas de cada clase, se puede dar la situación, más a medida que la dimensión de cada grupo crece, que algunas entradas no se hayan accedido nunca. Esto supone un problema para los cálculos pos\-te\-rio\-res del clasificador, por lo que se propone inicializar cada entrada de cada tabla con un valor $\alpha \neq 0$. 
 
 		\paragraph{Evaluación del clasificador} ~\\
 

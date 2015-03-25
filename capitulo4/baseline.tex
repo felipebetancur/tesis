@@ -1,14 +1,14 @@
 \subsection{Baselines}
 \label{subsection:baseline}
 
-	En esta sección se detallan los experimentos y los resultados obtenidos de realizar una reimplementación del trabajo de Wang et. al. en \cite{wang}. El objetivo es definir el baseline para el resto de los experimentos con imágenes reales y sintéticas. Así también, se definen los parámetros comunes a todos los experimentos como la configuración de HOG, $\alpha$, parámetro de inicialización de las tablas, entre otros.
+	En esta sección se detallan los experimentos y los resultados obtenidos de realizar una reimplementación del trabajo de Wang et. al. en \cite{wang}. El objetivo es definir el baseline para el resto de los experimentos con imágenes reales y sintéticas. Así también, se definen los parámetros comunes a todos los experimentos como la configuración de HOG, $\alpha$, parámetro de i\-ni\-cia\-li\-za\-ción de las tablas, entre otros.
 	
 	Posteriormente se van a mostrar y explicar los resultados de los experimentos con imágenes reales. Se detalla el impacto de los diferentes esquemas de binarización con el fin de seleccionar el más adecuado para el resto de los experimentos.
 	
 	
 \subsubsection{Reimplementación de Wang et. al.}
 
-	En este experimento se utilizan, para el entrenamiento del clasificador, solamente imágenes de caracteres segmentados de escenas naturales e imágenes sintéticas, ver \ref{subsection:evaluacion}, siguiendo lo detallado por Wang et. al. en \cite{wang}. La evaluación del clasificador se realiza sobre un conjunto de prueba proporcionado por el dataset \textit{Chars74k-15} y se mantiene fijo durante todos los experimentos del presente trabajo.
+	En este experimento se utilizan, para el entrenamiento del clasificador, solamente imágenes de caracteres segmentados de escenas naturales e i\-má\-ge\-nes sintéticas, ver \ref{subsection:evaluacion}, siguiendo lo detallado por Wang et. al. en \cite{wang}. La e\-va\-lua\-ción del clasificador se realiza sobre un conjunto de prueba proporcionado por el dataset \textit{Chars74k-15} y se mantiene fijo durante todos los experimentos del presente trabajo.
 	
 	De la implementación de los autores, se pudieron obtener los siguientes parámetros para los experimentos:
 	\begin{itemize}
@@ -18,7 +18,7 @@
 	
 	Estos dos valores generan vectores de características de longitud 1536.
 	
-	Para la función HOG,	 se utilizan dos parámetros, la cantidad de \textit{orientaciones} y la cantidad de \textit{celdas por bloque}. En los experimentos realizados, se prueban los siguientes conjuntos de valores:
+	Para la función HOG,	 se utilizan dos parámetros, la cantidad de \textit{o\-rien\-ta\-cio\-nes} y la cantidad de \textit{celdas por bloque}. En los experimentos realizados, se prueban los siguientes conjuntos de valores:
 	
 	\begin{itemize}
 		\item Orientaciones: $\textit{o} \in \{8, 9\}$
@@ -33,7 +33,7 @@
 		\item $\alpha \in \{0,01; 0,1; 1\}$.
 	\end{itemize}
 	
-	Teniendo en cuenta estos parámetros, se obtuvieron los resultados que se pueden apreciar en el cuadro \ref{table: Baseline-Table}. En la misma, expresamos como ``NATIVE+FERNS'' a los resultados obtenidos al haber entrenado y evaluado el clasificador Random Ferns con imágenes reales. De la misma manera, ``SYNTH+FERNS'' se  refiere a los experimentos donde se usaron $1000$ imágenes sintéticas durante el entrenamiento.
+	Teniendo en cuenta estos parámetros, se obtuvieron los resultados que se pueden apreciar en el cuadro \ref{table: Baseline-Table}. En la misma, expresamos como ``NATIVE+FERNS'' a los resultados obtenidos al haber entrenado y evaluado el clasificador Random Ferns con imágenes reales. De la misma ma\-ne\-ra, ``SYNTH+FERNS'' se  refiere a los experimentos donde se usaron $1000$ imágenes sintéticas durante el entrenamiento.
 
 	\begin{table}
 		\centering
@@ -113,7 +113,7 @@
 
 	Teniendo en cuenta los resultados de los primeros $4$ gráficos, a simple vista se puede observar que los resultados obtenidos usando la media como método para binarizar los vectores son los mejores, llegando estos a un máximo cercano al $55\%$ de precisión. En el caso opuesto, el usar la mediana arrojó los peores resultados, ya que, en el mejor de los casos, se supera el $47\%$ a diferencia de bootstrap que llega a $51\%$ . El uso de la distribución exponencial en los casos donde la longitud de los grupos es baja, $1$ bit por grupo, no supera a la media en performance pero aumenta a medida que aumentamos este valor, casos $\{ 4, 8, 10\}$ bits por grupo. Los valores que podemos encontrar en \ref{fig: Reales-expon} se acercan a los de la media llegando a un máximo en la precisión de $53\%$. En cuanto al uso de bootstrap, se puede apreciar que los resultados se mantienen por debajo de los obtenidos con la distribución exponencial y la media con valores que rondan entre $45\%$ y $52\%$, en el mejor de los casos.
 
-	En cuanto a las dimensiones del vector binario evaluadas en el experimento $\{ 240, 480, 1080, 2040, 4080 \}$, es claro que a medida que aumentamos la longitud de los vectores aumenta la performance. Se puede ver que, cuando se usan vectores de longitud reducida, en este caso $240$, se marca una diferencia importante en la precisión entre los experimentos realizados con grupos de dimensionalidad baja $\{ 1, 4 \}$ y alta $\{8, 10\}$. Es decir, dejando fija la dimensión de los vectores en $240$, mientras más chico es el tamaño de los grupos mejor es el resultado, se puede observar en cualquiera de las figuras. En el otro extremo, si usamos grupos de $10$ bits la precisión disminuye considerablemente. La misma relación se mantiene a medida que aumentamos el tamaño de los vectores de características hasta cierto punto. Por ejemplo, en la Figura \ref{fig: Reales-media} es claro que a partir del uso de $1080$ como tamaño de vector en adelante, el uso de grupos de longitud mayor arroja mejores resultados. Lo mismo sucede en las otras figuras en diferentes puntos.
+	En cuanto a las dimensiones del vector binario evaluadas en el ex\-pe\-ri\-men\-to $\{ 240, 480, 1080, 2040, 4080 \}$, es claro que a medida que aumentamos la longitud de los vectores aumenta la performance. Se puede ver que, cuando se usan vectores de longitud reducida, en este caso $240$, se marca una diferencia importante en la precisión entre los experimentos realizados con grupos de dimensionalidad baja $\{ 1, 4 \}$ y alta $\{8, 10\}$. Es decir, dejando fija la dimensión de los vectores en $240$, mientras más chico es el tamaño de los grupos mejor es el resultado, se puede observar en cualquiera de las figuras. En el otro extremo, si usamos grupos de $10$ bits la precisión disminuye considerablemente. La misma relación se mantiene a medida que aumentamos el tamaño de los vectores de características hasta cierto punto. Por ejemplo, en la Figura \ref{fig: Reales-media} es claro que a partir del uso de $1080$ como tamaño de vector en adelante, el uso de grupos de longitud mayor arroja mejores resultados. Lo mismo sucede en las otras figuras en diferentes puntos.
 
 	En cuanto al uso del valor $4080$, se puede ver que no hay un aumento considerable en la performance que lo diferencie del uso de $2040$. Con esto en mente, es conveniente hacer uso de este último valor ya que usa vectores mucho más chicos incrementando la eficiencia en el cómputo.
 
@@ -128,7 +128,7 @@
 				\label{fig: Reales-Comparativa metodos}
 			\end{figure}
 
-	Del análisis realizado surge que la mejor configuración está dada por: \textit{bits por grupo = $4$} y \textit{dimensión del vector = $2040$}. Se puede observar en la Figura \ref{fig: Reales-Comparativa metodos} las mejores curvas para cada método, utilizando la mejor configuración, a excepción de la longitud del vector con el objetivo de ver la curva de crecimiento. Queda claro que la media se puede establecer como el mejor método para la binarización por lo que en los próximos experimentos se procederá a trabajar con este método de binarización. La diferencia en precisión entre usar vectores de longitud $2040$ y $4080$ no es notable en los $4$ casos por lo cual como dijimos anteriormente, el uso de $2040$ dimensiones permite obtener buenos resultados con un menor costo computacional. En todos los casos, salvo cuando se usa la mediana como método de binarización, se supera el baseline propuesto en diferentes puntos. La media logra una diferencia de $4\%$ con respecto al baseline pero usando vectores de dimensión $4080$, la misma diferencia baja a un $3\%$ si consideramos $2040$.
+	Del análisis realizado surge que la mejor configuración está dada por: \textit{bits por grupo = $4$} y \textit{dimensión del vector = $2040$}. Se puede observar en la Figura \ref{fig: Reales-Comparativa metodos} las mejores curvas para cada método, utilizando la mejor configuración, a excepción de la longitud del vector con el objetivo de ver la curva de crecimiento. Queda claro que la media se puede establecer como el mejor método para la binarización por lo que en los próximos experimentos se procederá a trabajar con este método de binarización. La diferencia en precisión entre usar vectores de longitud $2040$ y $4080$ no es notable en los $4$ casos por lo cual como dijimos anteriormente, el uso de $2040$ dimensiones permite ob\-te\-ner buenos resultados con un menor costo computacional. En todos los casos, salvo cuando se usa la mediana como método de binarización, se supera el baseline propuesto en diferentes puntos. La media logra una diferencia de $4\%$ con respecto al baseline pero usando vectores de dimensión $4080$, la misma diferencia baja a un $3\%$ si consideramos $2040$.
 
 	La tabla \ref{table: reales-comparativa} muestra un resumen de los valores obtenidos con la mejor configuración para cada método.
 
